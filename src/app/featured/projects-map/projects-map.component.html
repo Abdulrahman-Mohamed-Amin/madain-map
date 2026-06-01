@@ -1,0 +1,53 @@
+<div class="map-page" [attr.dir]="lang === 'ar' ? 'rtl' : 'ltr'">
+
+  <!-- ── Map (full screen) ───────────────────────────────── -->
+  <div class="map-wrap">
+    <div #mapContainer class="map-container"></div>
+
+    @if (loading) {
+      <div class="map-loading">
+        <div class="spinner"></div>
+        <p>{{ lang === 'ar' ? 'جاري تحميل المشاريع…' : 'Loading projects…' }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- ── Floating header (above map) ────────────────────── -->
+  <div class="map-header ">
+
+    <div class="header-brand" routerLink="/home">
+      <img
+        [src]="lang === 'ar'
+          ? 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1760708047/%D9%84%D9%88%D8%AC%D9%88_%D8%A7%D8%A8%D9%8A%D8%B6_%D9%A1%D9%A5%D9%A0_%D8%A8%D9%83%D8%B3%D9%84_cbm0mm.png'
+          : 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1761725145/logo_left_doy3cf.png'"
+        alt="مدائن العقارية"
+        class="logo-img"
+      />
+
+    </div>
+
+    <div class="header-divider"></div>
+
+    <div class="select-wrap">
+      <svg class="select-icon" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+      </svg>
+      <select class="region-select" (change)="onRegionChange($event)">
+        @for (r of regions; track r.id) {
+          <option [value]="r.id" [selected]="r.id === selectedRegion.id">
+            {{ lang === 'ar' ? r.arName : r.enName }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="stat-badge">
+      <span class="stat-num">{{ stats.total }}</span>
+      <span class="stat-lbl">{{ lang === 'ar' ? 'مشروع' : 'Projects' }}</span>
+    </div>
+
+  </div>
+
+</div>

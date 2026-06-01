@@ -1,0 +1,14 @@
+
+User-agent: *
+Allow: /
+
+ 
+Disallow: /assets/
+Disallow: /environments/
+Disallow: /api/
+Disallow: /admin/
+
+
+Sitemap: https://madain.sa/sitemap.xml
+
+

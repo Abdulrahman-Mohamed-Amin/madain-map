@@ -1,0 +1,31 @@
+<section class="overview">
+  <div class="lay"></div>
+  <div class="container">
+    <div class="row align-items-center gy-3">
+      <div class="col-md-6 col-12 order-last order-md-0" data-aos="fade-up">
+        <div class="box text">
+          <p class="">
+            {{ "overview.text" | translate }}
+          </p>
+
+          <a routerLink="/about" class=" d-block">
+            <span>{{"overview.btn" | translate}}</span>
+            <i [class]="getCurrent() == 'ar' ? 'fa-solid fa-angles-left' : 'fa-solid fa-angles-right'"></i>
+     
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-12 order-first order-md-1" data-aos="fade-up">
+        <div class="logo text-center">
+          <img
+            src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585408/logo_lch1hw.png"
+            alt="شعار الشركة"
+            style="width: 300px"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

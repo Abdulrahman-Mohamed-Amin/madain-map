@@ -1,0 +1,42 @@
+<section class="news">
+    <header class="section-title container">
+        <h2 class="">{{'news.title' | translate}}</h2>
+    </header>
+    <div class="container-fluid">
+
+
+            <div class="swiper mySwiper2 mt-5">
+                <div class="swiper-wrapper">
+
+                    @for(n of news ; track $index){
+                    <div class="swiper-slide news-card">
+
+                            <div class="news-card__image">
+
+                                @if(n.imagePaths.length > 0){
+                                <img [src]="url + n.imagePaths[0]" alt="Project Delivery" loading="lazy">
+                                }@else {
+                                <video [src]="url + n.videoPath " controls></video>
+                                }
+                            </div>
+                            <div class="news-card__content">
+                                <h3 class="news-card__title">
+                                    {{lang == "ar" ? n.arTitle : n.enTitle}}
+                                </h3>
+                                <p class="news-card__desc">
+                                    {{lang == "ar" ? n.arDescription : n.enDescription}}
+                                </p>
+                            </div>
+
+                    </div>
+
+                }
+
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+        </div>
+
+</section>

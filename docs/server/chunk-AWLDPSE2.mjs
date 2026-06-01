@@ -1,0 +1,2 @@
+import './polyfills.server.mjs';
+import{a as n}from"./chunk-HEAZBUU3.mjs";import{$b as i,L as e,Q as o}from"./chunk-NTIEUW7B.mjs";var c=class t{constructor(r){this.http=r}url=n.apiUrl+"Project";getProjets(){return this.http.get(this.url)}getProjetById(r){return this.http.get(this.url+"/"+r)}static \u0275fac=function(p){return new(p||t)(o(i))};static \u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"})};export{c as a};

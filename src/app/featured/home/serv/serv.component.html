@@ -1,0 +1,38 @@
+
+
+  <div class="services-section p-60">
+    <div class="container">
+
+      <div class="section-title">
+
+        <h2 class=" mt-5" [attr.data-title]="'serv.title' | translate" data-aos="fade-up">
+          {{ "serv.title" | translate }}
+        </h2>
+      </div>
+
+
+      <div class="row g-4">
+        @for(service of services ; track $index){
+        <!-- خدمة 1 -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card always-visible">
+            <img [src]="url + service.imagePaths[0]"
+              alt="التطوير العقاري" loading="lazy"/>
+            <div class="overlay">
+              <h3>{{lang == "ar" ? service.arTitle :service.enTitle}}</h3>
+              <p>
+                {{lang == "ar" ? service.arDescription :service.enDescription}}
+              </p>
+              <button class="btn-gold-sm" routerLink="/services">
+                {{ "serv.find" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+
+<router-outlet></router-outlet>

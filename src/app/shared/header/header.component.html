@@ -1,0 +1,55 @@
+<header class="">
+  <div class="container d-flex justify-content-between align-items-center px-2">
+    <img [src]="
+        currentLang == 'ar'
+          ? 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1760708047/%D9%84%D9%88%D8%AC%D9%88_%D8%A7%D8%A8%D9%8A%D8%B6_%D9%A1%D9%A5%D9%A0_%D8%A8%D9%83%D8%B3%D9%84_cbm0mm.png'
+          : 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1761725145/logo_left_doy3cf.png'
+      " alt="شعار الشركة" style="width: 120px" routerLink="/home" loading="lazy" />
+
+    <ul class="links" [ngClass]="{ open: open, close: open }">
+      <li>
+        <a routerLink="/home" routerLinkActive="active">{{
+          "home" | translate
+          }}</a>
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active">{{
+          "about" | translate
+          }}</a>
+      </li>
+      <li>
+        <a [routerLink]="['/services']" routerLinkActive="active">{{
+          "services" | translate
+          }}</a>
+      </li>
+      <li>
+        <a [routerLink]="['/projects']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{
+          "projects" | translate }}
+        </a>
+      </li>
+      <li style="cursor: pointer">
+        <a routerLink="/contact" routerLinkActive="active">{{
+          "contact" | translate
+          }}</a>
+      </li>
+
+
+      <button class="language-btn" (click)="toggleLanguage()">
+        <span class="flag" [ngStyle]="{'background-image': 'url(' + currentFlag + ')'}"></span>
+        <span class="lang-text">{{ currentLang == "ar" ?"عر" : "en"  }}</span>
+      </button>
+
+    </ul>
+    <div class="d-lg-none d-block d-flex align-items-center gap-2">
+      <button class="language-btn" (click)="toggleLanguage()">
+        <span class="flag" [ngStyle]="{'background-image': 'url(' + currentFlag + ')'}"></span>
+        <span class="lang-text">{{ currentLang == "ar" ?"عر" : "en"  }}</span>
+      </button>
+      <i class="fa-solid fa-bars-staggered  bar" (click)="open = !open"></i>
+
+      <!-- language-toggle.component.html -->
+
+    </div>
+
+  </div>
+</header>

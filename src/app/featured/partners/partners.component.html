@@ -1,0 +1,35 @@
+<div class="p-60">
+    <div class="container-fluid ">
+
+        <div class="section-title">
+            <h2>{{lang == "ar" ? "شركاء النجاح" : "Partners"}}</h2>
+        </div>
+
+        <div class="swiper mySwiper3 mt-5">
+            <div class="swiper-wrapper">
+
+                @for(part of partner ; track $index){
+                <div class="swiper-slide news-card">
+                    <img [src]="url + part.imagePath" alt="partner" loading="lazy">
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+        <div class="swiper mySwiper4 mt-5">
+            <div class="swiper-wrapper">
+
+                @for(part of partner ; track $index){
+                <div class="swiper-slide news-card">
+                    <img [src]="url + part.imagePath" alt="partner" loading="lazy" >
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>

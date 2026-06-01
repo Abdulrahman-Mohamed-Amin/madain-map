@@ -1,0 +1,124 @@
+:root{
+  --dark:#003748;
+  --teal:#005773;
+  --gold:#CE8C5B;
+  --bg:#f7f8f9;
+  --card:#fff;
+  --stroke:rgba(0,55,72,.14);
+  --shadow:0 14px 34px rgba(0,55,72,.10);
+}
+*{
+  text-transform: capitalize;
+}
+.stats{
+  background:url(../../../../assets/hero.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  padding: 64px 0;
+  position: relative;
+}
+.lay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;left: 0;
+    background: linear-gradient(360deg , rgba(206, 141, 91, 1) 10% , rgba(206, 141, 91, 0.5) 60% , rgba(206, 141, 91, 0.2) 100%);
+}
+.stat-card{
+    background: #fff;
+}
+.stats__container{
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.stats__header{
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.stats__title{
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.stats__subtitle{
+  margin: 10px 0 0;
+  color: rgba(0,55,72,.65);
+  line-height: 1.7;
+}
+
+.stats__grid{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px){
+  .stats__grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 760px){
+  .stats__grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px){
+  .stats__grid{ grid-template-columns: 1fr; }
+}
+
+.stat-card{
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.stat-card:hover{
+  transform: translateY(-6px);
+  border-color: rgba(0,87,115,.35);
+  box-shadow: 0 22px 56px rgba(0,55,72,.14);
+}
+
+.stat-card__label{
+  font-weight: bold;
+  color: rgba(0,55,72,.85);
+  font-size: 17px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.stat-card__value{
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  gap: 10px;
+}
+
+.js-count{
+  font-size: 34px;
+  font-weight: 850;
+  letter-spacing: .2px;
+  color: var(--dark);
+}
+
+.stat-card small{
+  color: #CE8C5B;
+  font-weight: 650;
+}
+
+.stat-card__value div{
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  color: #111;
+}
+.stat-card__value div i{
+  font-size: 14px;
+  font-weight: bold;
+  color: #CE8C5B;
+}

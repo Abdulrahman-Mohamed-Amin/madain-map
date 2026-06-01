@@ -1,0 +1,64 @@
+<section class="stats" #statsSection>
+  <div class="lay"></div>
+  <div class="stats__container position-relative z-2 ">
+
+    <header class="stats__header">
+      <h2 class="stats__title">{{'stats.title' |translate}}</h2>
+    </header>
+
+    <div class="stats__grid overflow-hidden">
+
+      <div class="stat-card">
+        <div class="stat-card__label" data-aos="fade-left" data-aos-delay=""> {{'stats.projects' |translate}}</div>
+        <div class="stat-card__value">
+
+          <div>
+            <span class="count" [attr.data-target]="buildingNum">0</span>
+            <i class="fas fa-plus"></i>
+          </div>
+
+          <small>{{'stats.project' |translate}}</small>
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card__label" data-aos="fade-left" data-aos-delay=""> {{'stats.units' |translate}}</div>
+        <div class="stat-card__value">
+
+          <div>
+            <span class="count" [attr.data-target]="units">0</span>
+            <i class="fas fa-plus"></i>
+          </div>
+
+          <small> {{'stats.unit' |translate}}</small>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__label" data-aos="fade-left" data-aos-delay=""> {{'stats.surface' |translate}}</div>
+        <div class="stat-card__value">
+
+          <div>
+            <span class="count" [attr.data-target]="surface">0</span>
+            <i class="fas fa-plus"></i>
+          </div>
+          <small>{{'stats.metar' | translate}}</small>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__label" data-aos="fade-left" data-aos-delay=""> {{'stats.land' |translate}}</div>
+        <div class="stat-card__value">
+
+          <div>
+            <span class="count" [attr.data-target]="ground">0</span>
+            <i class="fas fa-plus"></i>
+          </div>
+          <small>{{'stats.metar' | translate}}</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

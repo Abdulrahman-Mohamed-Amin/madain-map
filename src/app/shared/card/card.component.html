@@ -1,0 +1,88 @@
+@if(project?.projectStatusArName !== "قريبا"){
+<div class="pCard position-relative" data-aos="fade-up" data-aos-delay="400">
+    @if (project?.isSealed) {
+    <!-- <div class="ribbon" [ngClass]="{'ribbon-top-left': lang == 'ar' , 'ribbon-top-right': lang == 'en'} ">
+        <span>{{lang == "ar" ? "مباع بالكامل" : "Sold Out"}}</span>
+    </div> -->
+  <img src="assets/تم البيع.svg" alt="" width="150" class="sold-budeg">
+
+    }
+    <div class="pCard__media">
+        <img [src]="url + project?.interfaceImagePath" alt="مشروع"  loading="lazy"/>
+
+        <div class="pCard__top">
+            <span class="tag tag--loc position-relative  z-3">{{lang == "ar" ? project?.arLocationName :
+                project?.enLocationName}}</span>
+            <span class="tag " [ngClass]="{
+  'tag--sold': project?.projectStatusArName === 'مباع',
+  'tag--status': project?.projectStatusArName === 'جاهز',
+  'tag--under': project?.projectStatusArName === 'تحت التشطيب',
+  'tag--under-c': project?.projectStatusArName === 'تحت الانشاء'
+}">{{lang == "ar" ? project?.projectStatusArName : project?.projectStatusEnName}}</span>
+        </div>
+
+        <div class="pCard__info">
+            <div class="pCard__titleWrap">
+                <h3 class="pCard__title">{{lang == "ar" ? project?.arTitle : project?.enTitle}}</h3>
+                <p class="pCard__sub">{{lang == "ar" ? project?.arProjectCategory :project?.enProjectCategory}}
+                    •{{'card.owner' | translate}}</p>
+            </div>
+
+            <div class="pCard__meta">
+                <span class="m">{{project?.buildingCount}} {{'card.build' | translate}}</span>
+                <span class="dot"></span>
+                <span class="m">{{project?.unitsCount}} {{'card.unit' | translate}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pCard__bottom">
+        @if(project?.projectStatusArName !== "قريبا"){
+        @if(project){
+                    <button (click)="openProject(project)">{{'card.more' | translate}} <i
+                class="fas fa-arrow-left"></i></button>
+        }
+        }@else {
+        <button disabled class="pBtn">{{lang == 'ar' ? project?.projectStatusArName : project?.projectStatusEnName}}
+        </button>
+
+        }
+    </div>
+</div>
+}@else{
+<div class="pCard position-relative" data-aos="fade-up" data-aos-delay="400">
+    @if (project?.isSealed) {
+    <div class="ribbon" [ngClass]="{'ribbon-top-left': lang == 'ar' , 'ribbon-top-right': lang == 'en'} "><span>مباع
+            بالكامل</span></div>
+    }
+    <div class="pCard__media position-relative">
+
+        <div class="img_cont position-absolute text-center text-white">
+            <img [src]="url + project?.interfaceImagePath" alt="مشروع" loading="lazy" />
+            <div class="lay"></div>
+            <div class="pCard__top">
+                <span class="tag tag--loc position-relative  z-3">{{lang == "ar" ? project?.arLocationName :
+                    project?.enLocationName}}</span>
+                <span class="tag " [ngClass]="{
+  'tag--sold': project?.projectStatusArName === 'مباع',
+  'tag--status': project?.projectStatusArName === 'جاهز',
+  'tag--under': project?.projectStatusArName === 'على الخارطة'
+}">{{lang == "ar" ? project?.projectStatusArName : project?.projectStatusEnName}}</span>
+            </div>
+            <div class="soon_div">
+                <img src="assets/logo.png" alt="">
+                <h2>{{lang == 'ar' ? project?.arTitle :project?.enTitle}}</h2>
+                <!-- <span class="m">{{project?.unitsCount}} {{'card.unit' | translate}}</span> -->
+                <h6>{{lang == "ar" ? "قريبا ..." : "Soon ..."}}</h6>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pCard__bottom">
+        <button disabled class="pBtn">{{lang == 'ar' ? project?.projectStatusArName : project?.projectStatusEnName}}
+        </button>
+    </div>
+</div>
+}

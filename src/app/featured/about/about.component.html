@@ -1,0 +1,217 @@
+<section class="about">
+  <div class="sec_1">
+    <div class="lay"></div>
+    <app-header></app-header>
+    <div class="container position-relative  h-100">
+
+      <div class="text_header">
+        <h1>{{ "about_sec.title" | translate }}</h1>
+
+        <div class="row gy-4 align-items-center text-center">
+
+          <div class="box">
+            <p class="">
+              {{ "about_sec.des" | translate }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <section class="vision-section">
+          <div class="container">
+
+            <div class="vision-grid">
+
+              <!-- Vision -->
+              <div class="vision-card">
+                <div class="vision-icon">
+                  <i class="fas fa-eye"></i>
+                </div>
+
+                <div class="vision-content">
+                  <h2>{{ 'vesion.ves' | translate }}</h2>
+                  <p>
+                    {{ 'vesion.ves_des' | translate }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Message -->
+              <div class="vision-card">
+                <div class="vision-icon">
+                  <i class="fas fa-bullseye"></i>
+                </div>
+
+                <div class="vision-content">
+                  <h2>{{ 'vesion.message' | translate }}</h2>
+                  <p>
+                    {{ 'vesion.message_des' | translate }}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- managers section  -->
+  <section class="team">
+    <div class="team__container">
+      <header class="team__header">
+        <span class="team__kicker"> {{ "about_sec.team.head1" | translate }}</span>
+        <h2 class="team__title"> {{ "about_sec.team.head2" | translate }} </h2>
+      </header>
+
+      <div class="team__grid">
+
+
+        <!-- Card 1 -->
+
+        <article class="team-card order-sm-0 order-1">
+          <div class="team-card__media">
+            <span class="blob blob--c" aria-hidden="true"></span>
+            <span class="ring" aria-hidden="true"></span>
+            <img class="avatar" src="../../../assets/d adel.png" alt="Omar Al Zahrani" />
+          </div>
+          <img src="assets/flags/canada.png" alt="" width="25">
+
+          <h3 class="team-card__name"> Dr. Adel Abokrais </h3>
+          <p class="team-card__role">{{ "about_sec.team.title2" | translate }}</p>
+
+          <span class="team-card__dash" aria-hidden="true"></span>
+        </article>
+        <!-- Card 2 -->
+
+        <article class="team-card">
+          <div class="team-card__media">
+            <span class="blob blob--a" aria-hidden="true"></span>
+            <span class="ring" aria-hidden="true"></span>
+            <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg" alt="manger"
+              class="avatar" loading="lazy" />
+          </div>
+          <img src="assets/flags/saudi.png" alt="" width="25">
+          <h3 class="team-card__name">{{ "about_sec.team.mem1" | translate }}</h3>
+          <p class="team-card__role">{{ "about_sec.team.title1" | translate }}</p>
+          <span class="team-card__dash" aria-hidden="true"></span>
+        </article>
+
+
+        <!-- Card 3 -->
+
+        <article class="team-card order-sm-0 order-2">
+          <div class="team-card__media">
+            <span class="blob blob--b" aria-hidden="true"></span>
+            <span class="ring" aria-hidden="true"></span>
+            <img class="avatar" src="assets/mostafa 2.png" alt=" MOSTAFA" />
+          </div>
+          <img src="assets/flags/eg.png" alt="" width="25">
+          <h3 class="team-card__name">{{ "about_sec.team.mem3" | translate }}</h3>
+          <p class="team-card__role">{{ "about_sec.team.title3" | translate }}</p>
+          <span class="team-card__dash" aria-hidden="true"></span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="sec_3">
+    <app-states></app-states>
+  </div>
+
+  <div class="sec_2 p-60 bg-white">
+    <div class="container">
+      <div class="row gy-4 align-items-center">
+        <div class="col-lg-8 col-12 order-lg-0 order-1" data-aos="fade-up" data-aos-delay="800">
+          <div class="quit">
+            <div class="content">
+              <div class="text">
+                <h2>{{ "about_sec.speech" | translate }}</h2>
+                <blockquote>
+                  <p>
+                    {{ "about_sec.word1" | translate }}
+                  </p>
+                  <p>
+                    {{ "about_sec.word2" | translate }}
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-12" data-aos="fade-up">
+          <div class="box">
+            <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg" alt="manger"
+              class="" loading="lazy" />
+            <div>
+              <h3>{{ "about_sec.jop" | translate }}</h3>
+              <p>{{ "about_sec.name" | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+
+    <div class="section-header">
+      <h2>{{"about_sec.values.title" | translate}}</h2>
+    </div>
+
+    <div class="values-grid">
+
+      <div class="value-box">
+        <div class="icon">
+          <i class="fas fa-award"></i>
+        </div>
+        <h3>{{"about_sec.values.box1.head" | translate}}</h3>
+        <p>
+          {{"about_sec.values.box1.des" | translate}}
+        </p>
+      </div>
+
+      <div class="value-box">
+        <div class="icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3>{{"about_sec.values.box2.head" | translate}}</h3>
+        <p>
+          {{"about_sec.values.box2.des" | translate}}
+        </p>
+      </div>
+
+      <div class="value-box">
+        <div class="icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3>{{"about_sec.values.box3.head" | translate}}</h3>
+        <p>
+          {{"about_sec.values.box3.des" | translate}} </p>
+      </div>
+
+      <div class="value-box">
+        <div class="icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>{{"about_sec.values.box4.head" | translate}}</h3>
+        <p>
+          {{"about_sec.values.box4.des" | translate}}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

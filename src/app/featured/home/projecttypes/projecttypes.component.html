@@ -1,0 +1,38 @@
+<section class="cities-section position-relative ">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-md-4" data-aos="fade-left" data-aos-delay="500">
+                <div class="city-box mecca">
+                    <div class="overlay">
+                        <h2>{{'proj.makkah' |translate}}</h2>
+                        <p>{{'proj.makkah-des' |translate}}</p>
+                        <a class="btn-city makkah" [routerLink]="['/projects' , 'makkah']">{{'proj.btn' |translate}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-right" data-aos-delay="500">
+                <div class="city-box jeddah">
+                    <div class="overlay">
+                        <h2>{{'proj.jeddah' |translate}}</h2>
+                        <p>{{'proj.jeddah-des' |translate}}</p>
+                        <a class="btn-city" [routerLink]="['/projects' , 'jeddah']">{{'proj.btn' |translate}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-right" data-aos-delay="500">
+                <div class="city-box madena">
+                    <div class="overlay">
+                        <h2>{{'proj.madena' |translate}}</h2>
+                        <p>{{'proj.madena-des' |translate}}</p>
+                        <a class="btn-city" [routerLink]="['/projects' , 'madena']">{{'proj.btn' |translate}}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <img src="../../../../assets/blue.svg" alt="" class="wave"> -->
+</section>

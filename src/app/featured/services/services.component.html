@@ -1,0 +1,29 @@
+<div style="background: var(--blue2)">
+  <app-header></app-header>
+</div>
+
+<div class="header">
+  <h1 class="">{{"services_sec.title" |translate}}</h1>
+</div>
+<div class="container p-60">
+
+  @for(s of services ; track $index){
+
+    <div class="service">
+      <div class="img_cont" >
+        <img [src]="url + s.imagePaths[0]" alt="service-img" loading="lazy">
+        <div class="lay"></div>
+      </div>
+  
+      <div class="text">
+        <h2>{{lang == "ar" ? s.arTitle : s.enTitle}}</h2>
+        <p>{{lang == "ar" ? s.arDescription : s.enDescription}}</p>
+      </div>
+    </div>
+  }
+
+
+</div>
+
+
+<app-footer></app-footer>

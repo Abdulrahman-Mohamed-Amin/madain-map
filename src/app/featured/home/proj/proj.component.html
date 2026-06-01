@@ -1,0 +1,25 @@
+<section class="p-60 ">
+  <div class="container">
+    <div class="section-title">
+      <h2>{{'projects_sec.title' | translate}}</h2>
+    </div>
+
+    <div class="row gy-4">
+
+      @for(project of projects.slice(0 , 6) ; track $index){
+
+       
+                <div class="col-lg-4 col-md-6 col-12">
+        <app-card [project]="project"></app-card>
+      </div>
+      
+      }
+
+    </div>
+    <button class="btn_sp2" routerLink="/projects">{{'projects_sec.btn' | translate}}</button>
+  </div>
+
+
+
+
+</section>

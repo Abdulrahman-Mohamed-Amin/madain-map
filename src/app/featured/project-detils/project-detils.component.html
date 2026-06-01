@@ -1,0 +1,301 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="">
+    <!-- =================== الصورة ==================== -->
+    <section class="pd-like text-uppercase">
+
+        <div class="container py-4">
+
+            <header class="pd-hero ">
+                <div class="pd-hero-top">
+                    <h1 class="pd-hero-title">{{ lang == "ar" ? project?.arTitle : project?.enTitle }}</h1>
+                    <div class="pd-hero-sub text-secondary "><i class="fas fa-location-dot"></i>{{ lang == 'ar' ?
+                        project?.arLocationName : project?.enLocationName }}
+                    </div>
+                </div>
+
+                <div class="img_cont">
+                    <img [src]="url + project?.interfaceImagePath" alt="interface img" loading="lazy">
+                </div>
+
+                <div class="project-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{project?.buildingCount}}</span>
+                        <span class="stat-label">{{"projects_info.buil_num" | translate}} </span>
+                    </div>
+
+                    <div class="stat-line"></div>
+
+                    <div class="stat-item">
+                        <span class="stat-number">{{project?.unitsCount}}</span>
+                        <span class="stat-label">{{"projects_info.unit_num" | translate}} </span>
+                    </div>
+                    <div class="stat-line"></div>
+
+                    <div class="stat-item">
+                        <span class="stat-number">
+                            {{groundArea}}
+                            <small class="unit">{{"projects_info.unit_des.metar" | translate}} <sup>2</sup></small>
+
+                        </span>
+                        <span class="stat-label">{{"projects_info.land_area" | translate}}</span>
+                    </div>
+                    <div class="stat-line"></div>
+
+                    <div class="stat-item">
+                        <span class="stat-number">
+                            {{surfaceArea}}
+                            <small class="unit">{{"projects_info.unit_des.metar" | translate}}<sup>2</sup></small>
+
+                        </span>
+                        <span class="stat-label">{{"projects_info.Surface_area" | translate}}</span>
+                    </div>
+                </div>
+
+            </header>
+
+        </div>
+    </section>
+
+    <!-- =================== الوصف ==================== -->
+
+    <div class="description ">
+        <div class="des">
+            <!-- <h2 class="title">{{"projects_info.des_title" | translate}} </h2> -->
+            <p>{{lang == "ar" ? project?.arDescription :project?.enDescription}}</p>
+        </div>
+
+        <div class="btns">
+            <a [href]="project?.locationUrl" class="link profile" target="_blank">
+                <i class="fa-solid fa-location-dot"></i>{{"projects_info.location" | translate}} </a>
+            @if(project?.proposalFilePath){
+            <a [href]="url + project?.proposalFilePath" class="link " target="_blank">
+                <i class="fa-solid fa-link"></i>{{"projects_info.profile" | translate}} </a>
+            }
+        </div>
+    </div>
+
+    <!-- =================== السلايدر ==================== -->
+
+    <div class="swiper mySwiper mt-5">
+        <div class="swiper-wrapper">
+            @for(img of project?.projectImages; track $index){
+            <div class="swiper-slide">
+                <img [src]="url + img" alt="project-img" class="w-100" loading="lazy">
+            </div>
+            }
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+
+    <!-- =================== الوحدات ==================== -->
+
+    <div class="buildings p-60 container">
+        @if(project?.buildings?.length !== 0){
+            <h2 class="title">{{"projects_info.unit_title" | translate}}</h2>
+        }
+        @for(b of project?.buildings; track $index){
+        <div class="building">
+
+            <div class="b_head d-flex justify-content-between align-items-center">
+                <h3>
+                    <i class="fa-regular fa-building"></i>
+                    <span>{{lang == 'ar' ? b.arTitle : b.enTitle}} </span>
+                </h3>
+                <div class="status">
+                    <div class="ava">
+                        <span>{{"projects_info.available" | translate}} :{{b.units.length - countSoldUnit[$index]?.sold
+                            }}</span>
+                        <span></span>
+                    </div>
+                    <div class="unava">
+                        <span>{{"projects_info.sold" | translate}} :</span>
+                        <span>{{countSoldUnit[$index]?.sold}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="units row gy-4 mt-4">
+                @for(u of b.units; track $index){
+                <div class="col-6 col-lg-2 col-md-3 col-sm-4">
+                    <div class="unit-card " [class.sold]="u.isSealed">
+
+                        <div class="sold-chip" [ngClass]="{'show': u.isSealed}">
+                            <span class="check">✓</span>
+                            {{"projects_info.unit_des.sold" | translate}}
+                        </div>
+
+                        <div class="price-box">
+                            <div class="price d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="amount">{{u.price | number}}</span>
+                                    <span class="currency">{{"projects_info.unit_des.price" | translate}}</span>
+                                </div>
+                                <h5 class="m-0 code">{{u.arTitle}}</h5>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="details row gy-1">
+
+                            <div class="col-12">
+                                <div class="item d-flex type" [ngClass]="{'roof': u.arDescription == 'ملحق'}">
+                                    <span class="ico">
+                                        <i class="far fa-home"></i>
+                                    </span>
+                                    <span class="label">{{lang == 'ar' ? u.arDescription : u.arDescription == 'شقة' ?
+                                        'Apartment' : 'Roof'}}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="item">
+                                    <div class="d-flex gap-1">
+                                        <i class="fas fa-bed"></i>
+                                        <span class="label">{{"projects_info.unit_des.rooms" | translate}}</span>
+                                    </div>
+                                    <strong class="mx-2">{{u.enTitle}}</strong>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="item">
+                                    <div class="d-flex gap-1">
+                                        <div class="fas fa-ruler"></div>
+                                        <span class="label">{{"projects_info.unit_des.area" | translate}}</span>
+                                    </div>
+                                    <strong class="mx-2">{{u.area}} {{"projects_info.unit_des.metar" |
+                                        translate}}</strong>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="item">
+                                    <span class="label">{{"projects_info.unit_des.floor" | translate}}</span>
+                                    <strong>{{u.floor}}</strong>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                }
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- =================== اللوكيشن  ==================== -->
+
+    <section class="location-section py-5">
+        <div class="container">
+
+            <div class="section-head mb-4">
+                <div class="section-title mb-4">
+
+                    <h2>{{lang == "ar" ? "وصف الموقع" : "Location description"}}</h2>
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-stretch">
+
+                <!-- Text -->
+                <div class="col-lg-12">
+                    <div class="info-card h-100">
+                        <div class="info-top">
+                            <div class="badge-dot"></div>
+                            <h3 class="info-title mb-0">{{"projects_sec.location.title" | translate}}</h3>
+                        </div>
+                        
+                        <p class="info-text mt-3">
+                            {{lang == 'ar' ? project?.arLocationDescription : project?.enLocationDescription}}
+                        </p>
+
+                        <div class="info-grid mt-4">
+                            <div class="feat">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <div>
+                                    <div class="feat-title">{{"projects_sec.location.box1.head" | translate}}</div>
+                                    <div class="feat-sub">{{"projects_sec.location.box1.des" | translate}}</div>
+                                </div>
+                            </div>
+
+                            <div class="feat">
+                                <i class="fa-solid fa-road"></i>
+                                <div>
+                                    <div class="feat-title">{{"projects_sec.location.box2.head" | translate}}</div>
+                                    <div class="feat-sub">{{"projects_sec.location.box2.des" | translate}}</div>
+                                </div>
+                            </div>
+
+                            <div class="feat">
+                                <i class="fa-solid fa-building"></i>
+                                <div>
+                                    <div class="feat-title">{{"projects_sec.location.box3.head" | translate}}</div>
+                                    <div class="feat-sub">{{"projects_sec.location.box3.des" | translate}}</div>
+                                </div>
+                            </div>
+
+                            <div class="feat">
+                                <i class="fa-solid fa-shield-heart"></i>
+                                <div>
+                                    <div class="feat-title">{{"projects_sec.location.box4.head" | translate}}</div>
+                                    <div class="feat-sub">{{"projects_sec.location.box4.des" | translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                
+                <!-- Map -->
+                <!-- <div class="col-lg-6">
+                    <div class="map-card h-100">
+                        <div class="map-frame">
+                            <iframe [src]=""
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
+                            </iframe>
+                        </div>
+
+                        <div class="map-meta">
+                            <span class="chip">حي بطحاء قريش • مكة</span>
+                            <span class="chip outline">وصول سريع للطرق</span>
+                        </div>
+                    </div>
+                </div> -->
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-footer></app-footer>

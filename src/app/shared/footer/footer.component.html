@@ -1,0 +1,89 @@
+<footer>
+  <div class="container p-2">
+    <div class="row gy-4">
+      <div class="col-lg-3 col-md-6 col-12">
+        <div class="logo">
+          <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585408/logo_lch1hw.png" alt="شعار الشركة" loading="lazy"/>
+          <div class="social">
+            <a href="https://www.tiktok.com/@madain.re" class="">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://x.com/almuslih1445" class="">
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/almuslih1445/" class="">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.snapchat.com/@madain.re" class="">
+              <i class="fab fa-snapchat"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-12">
+        <div class="box">
+          <h3>{{"footer.contact" | translate}}</h3>
+          <ul>
+
+            <li (click)="openWhatsApp()">
+              <i class="fab fa-whatsapp"></i>
+              <span>996539885580+</span>
+            </li>
+            <li (click)="openCall()">
+              <i class="fas fa-phone"></i>
+              <span>920016343</span>
+            </li>
+            <li (click)="sendEmail()">
+              <i class="fas fa-envelope"></i>
+              <span>info&#64;madain.sa</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-12">
+        <div class="box">
+          <h3>{{"footer.pages" | translate}}</h3>
+          <ul>
+            <li routerLink="/home">{{"home" | translate}}</li>
+            <li routerLink="/about">{{"about" | translate}}</li>
+            <li routerLink="/services">{{"services" | translate}}</li>
+            <li routerLink="/projects">{{"projects" | translate}}</li>
+            <li routerLink="/contact">{{"contact" | translate}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-12">
+        <div class="box">
+          <h3>{{"footer.location" | translate}}</h3>
+          <ul>
+            <li class="d-flex align-items-center">
+              <i class="fas fa-location-dot"></i>
+
+              <span>{{"footer.address1" | translate}}</span
+              >
+            </li>
+            <li  class="d-flex align-items-center">
+              <i class="fas fa-location-dot"></i>
+
+              <span>{{"footer.address2" | translate}}</span
+              >
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="copyright container">
+    Madain Real Estate 2025 © Developed by <span>Madain </span>
+  </div>
+</footer>
+
+
+
+
+

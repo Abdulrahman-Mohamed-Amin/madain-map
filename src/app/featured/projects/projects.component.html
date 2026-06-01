@@ -1,0 +1,33 @@
+<div style="background: var(--blue2);">
+    <app-header></app-header>
+</div>
+<div class="header">
+
+    @if (!city) {
+    <h1>{{"projects_sec.title" |translate}}</h1>
+    } @else if (city == 'makkah') {
+
+    <h1>{{lang == "ar" ? 'مشاريعنا في مكة ' : "Makkah Projects"}}</h1>
+    } 
+     @else if (city == 'madena') {
+
+     <h1>{{lang == "ar" ? 'مشاريعنا في المدينة المنورة ' : "Al Madinah Projects"}}</h1>
+    } 
+    @else {
+
+    <h1>{{lang == "ar" ? 'مشاريعنا في جدة ' : "Jeddah Projects"}}</h1>
+    }
+</div>
+
+<div class="container p-60">
+    <div class="row gy-4">
+        @for(project of projects ; track $index){
+        <div class="col-lg-4 col-md-6 col-12">
+            <app-card [project]="project"></app-card>
+        </div>
+        }
+    </div>
+</div>
+
+
+<app-footer></app-footer>

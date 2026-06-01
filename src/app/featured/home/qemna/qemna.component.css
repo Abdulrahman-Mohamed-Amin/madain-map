@@ -1,0 +1,89 @@
+
+.values-section {
+  background: #fff;
+  color: #333;
+  font-family: "Cairo", sans-serif;
+}
+
+.values-title {
+  font-weight: 800;
+  color: #3c3c3c;
+  font-size: 2rem;
+  line-height: 1.5;
+
+}
+
+/* الصندوق المنحني */
+.values-box {
+  background: #f6f5f3;
+  border-radius: 40px;
+  padding: 40px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 25px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* كل عنصر */
+.value-item {
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+/* الأيقونة */
+.value-item .icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border-radius: 10px;
+  background: rgba(206,140,91,0.15);
+  color: #CE8C5B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+/* العنوان */
+.value-item h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3e3e3e;
+  margin-bottom: 8px;
+}
+
+/* النص */
+.value-item p {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.7;
+  width: 70%;
+  margin: auto;
+}
+
+
+
+/* استجابة */
+@media (max-width: 992px) {
+  .values-box {
+    flex-direction: column;
+    align-items: center;
+  }
+  .value-item {
+    max-width: 300px;
+  }
+}
+
+
+@media (max-width: 578px) {
+.value-item p {
+  width: 90%;
+  margin: auto;
+}
+}
+
+

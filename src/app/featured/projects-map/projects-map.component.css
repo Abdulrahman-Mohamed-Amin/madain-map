@@ -1,0 +1,231 @@
+/* ── Page ──────────────────────────────────────────────── */
+.map-page {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #001a24;
+}
+
+/* ── Map full-screen ────────────────────────────────────── */
+.map-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Floating header ───────────────────────────────────── */
+.map-header {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(82%, 860px);
+  height: 52px;
+  padding: 40px;
+  background: linear-gradient(135deg, #002a38ee 0%, #003d52dd 60%, #004a62ee 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* Brand */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 70px;
+  width: auto;
+}
+
+.brand-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  font-family: "El Messiri", sans-serif;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+/* Divider */
+.header-divider {
+  width: 1px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* Region select */
+.select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 5px 10px;
+  transition: border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.select-wrap:focus-within {
+  border-color: rgba(206, 140, 91, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.select-icon {
+  width: 14px;
+  height: 14px;
+  color: #ce8c5b;
+  flex-shrink: 0;
+}
+
+.region-select {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-family: "El Messiri", sans-serif;
+  cursor: pointer;
+  outline: none;
+  min-width: 130px;
+}
+
+.region-select option {
+  background: #003748;
+  color: #fff;
+}
+
+/* Spacer */
+.header-spacer { flex: 1; }
+
+/* Stats badge */
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  background: rgba(206, 140, 91, 0.15);
+  border: 1px solid rgba(206, 140, 91, 0.35);
+  border-radius: 8px;
+  padding: 4px 14px;
+  flex-shrink: 0;
+}
+
+.stat-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ce8c5b;
+  font-family: "El Messiri", sans-serif;
+}
+
+.stat-lbl {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: "El Messiri", sans-serif;
+}
+
+/* ── Loading ────────────────────────────────────────────── */
+.map-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 26, 36, 0.78);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  color: #fff;
+  gap: 14px;
+  font-family: "El Messiri", sans-serif;
+  font-size: 15px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #ce8c5b;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Tablet ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .map-header {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    transform: none;
+    width: auto;
+    height: auto;
+    min-height: 50px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+
+  .header-brand {
+    order: 1;
+    flex: 1;
+  }
+
+  .header-divider { display: none; }
+  .header-spacer  { display: none; }
+
+  .stat-badge {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .select-wrap {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding: 6px 12px;
+  }
+
+  .region-select {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .select-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .map-header {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    border-radius: 10px;
+  }
+
+
+  .stat-num  { font-size: 15px; }
+  .stat-lbl  { font-size: 9px; }
+  .stat-badge { padding: 3px 10px; }
+}
