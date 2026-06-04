@@ -47,7 +47,7 @@ export const routes: Routes = [
   {
     path: "projects/:city",
     loadComponent: () =>
-      import("./featured/projects-map/projects-map.component").then(m => m.ProjectsMapComponent),
+      import("./featured/projects/projects.component").then(m => m.ProjectsComponent),
   },
   {
     path: "contact",

@@ -1,0 +1,34 @@
+@if(visible) {
+  <div class="loader" [class.loader--out]="loaderOut">
+
+    <!-- خلفية متحركة -->
+    <div class="loader-bg" aria-hidden="true">
+      <span class="ls ls-1"></span>
+      <span class="ls ls-2"></span>
+      <span class="ls ls-3"></span>
+      <span class="ls ls-4"></span>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="loader-stage">
+
+      <!-- المرحلة 1: النص -->
+      <div class="loader-intro" [class.loader-intro--out]="introOut">
+        <h1 class="li-headline">{{ lang === 'ar' ? 'نحن' : 'We' }}</h1>
+        <p class="li-sub">{{ lang === 'ar' ? 'نبني المستقبل' : 'Build the Future' }}</p>
+      </div>
+
+      <!-- المرحلة 2: اللوقو -->
+      <div class="loader-brand" [class.loader-brand--in]="brandIn">
+        <img src="../../../assets/logo.png" alt="مدائن العقارية" />
+      </div>
+
+    </div>
+
+    <!-- خط متحرك في الأسفل -->
+    <div class="loader-bar" aria-hidden="true">
+      <span class="lb-fill"></span>
+    </div>
+
+  </div>
+}

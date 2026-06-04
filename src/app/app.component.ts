@@ -1,65 +1,75 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
-import { NavigationEnd, RouterModule , Router, Scroll } from '@angular/router';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  RouterModule,
+  Router,
+  Scroll
+} from '@angular/router';
 import * as AOS from 'aos';
-import { filter } from 'rxjs';
-
-
+import { filter, skip } from 'rxjs';
+import { LoaderService } from './core/loader.service';
+import { LanguageService } from './core/language.service';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'madain';
 
-
-   constructor(
+  constructor(
     private router: Router,
     private ngZone: NgZone,
+    private loaderSvc: LoaderService,
+    private langSvc: LanguageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    // شغّل AOS فقط في المتصفح (خصوصاً لو عندك SSR)
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // تهيئة أولية
-    AOS.init({
-      duration: 1200,
-      once: true
+    // ── تحميل الصفحة الأولي ────────────────────────────────────
+    // اللودر يبدأ ظاهر تلقائياً في loader.component
+    // نطلب إخفاءه بعد انتهاء مدة minDuration
+    this.loaderSvc.hide();
+
+    // ── التنقل بين الصفحات ─────────────────────────────────────
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationStart) {
+        this.loaderSvc.show();
+      } else if (
+        e instanceof NavigationEnd ||
+        e instanceof NavigationCancel ||
+        e instanceof NavigationError
+      ) {
+        this.loaderSvc.hide();
+      }
     });
 
-    // الطريقة المفضّلة: استمع لأحداث Scroll من الراوتر (تضمن أن استعادة الـ scroll اكتملت)
-    this.router.events.pipe(
-      filter(e => e instanceof Scroll)
-    ).subscribe((e: Scroll) => {
-      // ننتظر الإطار التالي بعد انتهاء الـ scroll/layout ثم نعيد حساب AOS
-      // استخدام requestAnimationFrame مرتين يضمن أن DOM قد استقر
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          AOS.refresh(); // أخفّ من refreshHard
-        });
-      });
+    // ── تغيير اللغة ────────────────────────────────────────────
+    this.langSvc.currentLang$.pipe(skip(1)).subscribe(() => {
+      this.loaderSvc.show(2000);
+      this.loaderSvc.hide();
     });
 
-    // دعم احتياطي: لو لم تعمل Scroll events لأي سبب، نستخدم NavigationEnd كبديل
-    
-    this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
-    ).subscribe(() => {
-      // لو أنت تريد إجبار الصفحة للفوق:
+    // ── AOS ────────────────────────────────────────────────────
+    AOS.init({ duration: 1200, once: true });
+
+    this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => AOS.refresh()));
+    });
+
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       window.scrollTo(0, 0);
-
-      // ننتظر قليلًا ثم نحدّث AOS
-      setTimeout(() => {
-        AOS.refresh();
-      }, 3000);
+      setTimeout(() => AOS.refresh(), 3000);
     });
   }
-   
-
 }

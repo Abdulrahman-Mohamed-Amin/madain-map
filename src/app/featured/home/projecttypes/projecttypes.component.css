@@ -1,100 +1,190 @@
 .cities-section {
-    padding: 0 0 90px;
-    position: relative;
+  padding: 60px 0 80px;
 }
 
-.wave{
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    z-index: 0;
-}
-.city-box {
-    position: relative;
-    height: 350px;
-    border-radius: 20px;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    transition: transform 0.4s ease;
-    z-index: 3;
+/* ══ Grid ═════════════════════════════════════════════════════ */
+.cities-grid {
+  display: flex;
+  gap: 10px;
+  height: 480px;
 }
 
-.city-box:hover {
-    transform: scale(1.03);
+/* ══ Card ═════════════════════════════════════════════════════ */
+.city-card {
+  flex: 1;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  transition: flex 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
 }
 
-.city-box .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top,
-            rgba(0, 55, 72, 0.85),
-            rgba(0, 55, 72, 0.4),
-            rgba(0, 55, 72, 0.1));
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 30px;
-    color: #fff;
+/* الكارد اللي بيتعمله hover يتمدد */
+.city-card:hover { flex: 2.8; }
+
+/* الباقيين يتضغطوا */
+.cities-grid:has(.city-card:hover) .city-card:not(:hover) {
+  flex: 0.6;
 }
 
-.city-box h2 {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/* ── Gradient ─────────────────────────────────────────────── */
+.cc-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 20, 35, 0.96) 0%,
+    rgba(0, 20, 35, 0.55) 45%,
+    rgba(0, 20, 35, 0.15) 100%
+  );
+  transition: background 0.5s ease;
 }
 
-.city-box p {
-    font-size: 15px;
-    margin-bottom: 20px;
-    opacity: 0.9;
+.city-card:hover .cc-gradient {
+  background: linear-gradient(
+    to top,
+    rgba(0, 20, 35, 0.92) 0%,
+    rgba(0, 20, 35, 0.40) 50%,
+    rgba(0, 20, 35, 0.08) 100%
+  );
 }
 
-.btn-city {
-    background: #F6B281;
-    color: #003748;
-    padding: 8px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    width: fit-content;
-    transition: 0.3s;
+/* ── Body ─────────────────────────────────────────────────── */
+.cc-body {
+  position: absolute;
+  inset: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
-.btn-city:hover {
-    background: #CE8C5B;
-    color: #fff;
+/* ── Ghost number ─────────────────────────────────────────── */
+.cc-num {
+  position: absolute;
+  top: 18px;
+  inset-inline-start: 18px;
+  font-size: 88px;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  user-select: none;
+  transition: -webkit-text-stroke 0.4s;
 }
 
-/* خلفيات المدن */
+.city-card:hover .cc-num {
+  -webkit-text-stroke: 1px rgba(206, 140, 91, 0.2);
+}
+
+/* ── Text block ───────────────────────────────────────────── */
+.cc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cc-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: font-size 0.4s ease, white-space 0.4s;
+}
+
+.city-card:hover .cc-title {
+  font-size: 24px;
+  white-space: normal;
+}
+
+/* يظهر عند hover */
+.cc-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease 0.18s, transform 0.35s ease 0.18s;
+}
+
+.city-card:hover .cc-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cc-btn {
+  display: inline-block;
+  width: fit-content;
+  padding: 9px 22px;
+  border-radius: 50px;
+  background: var(--lighit2);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease 0.26s, transform 0.35s ease 0.26s,
+              background 0.25s;
+}
+
+.city-card:hover .cc-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cc-btn:hover {
+  background: var(--lighit1);
+}
+
+/* ══ City backgrounds ═════════════════════════════════════════ */
 .mecca {
-    background-image: url('../../../../assets/mecca\ \(2\).jpg');
-    background-size: cover;
-    background-position: center;
+  background-image: url('../../../../assets/mecca\ \(2\).jpg');
 }
 
 .jeddah {
-    background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/d3/4e/25/illuminate-the-fountain.jpg?chk=v1_012cd5d51096d2b363aa&cx=337&cy=320&h=-1&s=1&w=800');
-    background-size: cover;
-    background-position: center;
+  background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/d3/4e/25/illuminate-the-fountain.jpg?chk=v1_012cd5d51096d2b363aa&cx=337&cy=320&h=-1&s=1&w=800');
 }
 
-.madena{
-      background-image: url('https://images.unsplash.com/photo-1646424857576-2a66db82a65c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hZGluYWh8ZW58MHx8MHx8fDA%3D');
-    background-size: cover;
-    background-position: center;
-}
-@media(max-width:991px) {
-    .city-box {
-
-        height: 350px;
-
-    }
-
-    .cities-section {
-    padding: 80px 0 90px;
-    position: relative;
+.madena {
+  background-image: url('https://images.unsplash.com/photo-1646424857576-2a66db82a65c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hZGluYWh8ZW58MHx8MHx8fDA%3D');
 }
 
+/* ══ Mobile: stack vertically ════════════════════════════════ */
+@media (max-width: 768px) {
+  .cities-grid {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+  }
+
+  .city-card {
+    height: 220px;
+    flex: none !important;
+    border-radius: 16px;
+  }
+
+  /* على الموبايل: الكل يظهر دائماً */
+  .cc-desc,
+  .cc-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cc-title { font-size: 19px; white-space: normal; }
+  .cc-num   { font-size: 60px; top: 12px; }
 }

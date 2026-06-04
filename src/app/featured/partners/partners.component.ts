@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ElementRef, ViewChild, PLATFORM_ID } from '@angular/core';
 import { PartnerService } from '../../core/services/partner.service';
-import Swiper from 'swiper';
 import { environment } from '../../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { LanguageService } from '../../core/language.service';
@@ -12,72 +11,73 @@ import { LanguageService } from '../../core/language.service';
   templateUrl: './partners.component.html',
   styleUrl: './partners.component.css'
 })
-export class PartnersComponent implements OnInit{
-  url = environment.mediaUrl
-lang:string = ''
-  swiper3?: Swiper;
-swiper4?: Swiper;
-  partner:any[] = []
-  constructor(private _partenr:PartnerService , @Inject(PLATFORM_ID) private platformId: Object , private _lang:LanguageService){
-  }
+export class PartnersComponent implements OnInit, OnDestroy {
+  @ViewChild('swiperRef1') swiperRef1!: ElementRef;
+  @ViewChild('swiperRef2') swiperRef2!: ElementRef;
+
+  url = environment.mediaUrl;
+  lang = '';
+  partners: any[] = [];
+
+  private swiper1: any;
+  private swiper2: any;
+
+  constructor(
+    private _partner: PartnerService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private _lang: LanguageService
+  ) {}
 
   ngOnInit(): void {
-    this._lang.currentLang$.subscribe(res => {
-      this.lang =res
-    })
+    this._lang.currentLang$.subscribe(r => this.lang = r);
+
+    this._partner.get().subscribe(res => {
+      this.partners = res ?? [];
       if (isPlatformBrowser(this.platformId)) {
-    
-        this._partenr.get().subscribe(res =>{
-          this.partner = res
-    
-                if (isPlatformBrowser(this.platformId)) {
-                  setTimeout(() => this.initSwiper()); // بعد ما الـ DOM يتحدث
-                  setTimeout(() => this.iitSwiper()); // بعد ما الـ DOM يتحدث
-                }
-        })
-  }
-  }
-
-
-
-  initSwiper() {
-    if (this.swiper3) this.swiper3.destroy(true, true);
-    this.swiper3 = new Swiper('.mySwiper3', {
-      spaceBetween: 20,
-      breakpoints: {
-        1200: { slidesPerView: 8 },
-        768: { slidesPerView: 5 },
-        578: { slidesPerView: 4 },
-        300: { slidesPerView: 3 },
-      },
-      loop: true,
-      pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: true, dynamicMainBullets: 1 },
-      speed: 500,
-      autoplay:{
-        delay:500,
-        reverseDirection:true
-      },
-     
+        setTimeout(() => this.initSwiper(), 100);
+      }
     });
   }
-  iitSwiper() {
-    if (this.swiper4) this.swiper4.destroy(true, true);
-    this.swiper4 = new Swiper('.mySwiper4', {
-      spaceBetween: 20,
-      breakpoints: {
-        1200: { slidesPerView: 8 },
-        768: { slidesPerView: 5 },
-        578: { slidesPerView: 4 },
-        300: { slidesPerView: 3 },
-      },
+
+  private async initSwiper(): Promise<void> {
+    const [{ default: Swiper }, { Autoplay }] = await Promise.all([
+      import('swiper'),
+      import('swiper/modules'),
+    ]);
+
+    const commonConfig = {
+      modules: [Autoplay],
       loop: true,
-      pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: true, dynamicMainBullets: 1 },
-      speed: 500,
-      autoplay:{
-        delay:500,
-     
+      slidesPerView: 'auto' as const,
+      spaceBetween: 0,
+      speed: 2000,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       },
-     
-    });
+      allowTouchMove: false,
+    };
+
+    const el1 = this.swiperRef1?.nativeElement;
+    if (el1) {
+      this.swiper1 = new Swiper(el1, commonConfig);
+    }
+
+    const el2 = this.swiperRef2?.nativeElement;
+    if (el2) {
+      this.swiper2 = new Swiper(el2, {
+        ...commonConfig,
+        autoplay: {
+          ...commonConfig.autoplay,
+          reverseDirection: true,
+        },
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.swiper1?.destroy();
+    this.swiper2?.destroy();
   }
 }

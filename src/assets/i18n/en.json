@@ -6,11 +6,19 @@
   "projects": "projects",
   "contact": "contact",
   "landing": {
-    "name": "Madain Real Estate ",
-    "s1": "We build value... ",
-    "s2": "and develop a lifestyle",
-    "btn1": "Projects map",
-    "btn2": "Contact Us"
+    "eyebrow": "Real Estate Development · Vision 2030",
+    "name": "Madain Real Estate",
+    "s1": "We Build Real Value",
+    "s2": "and Elevate Lifestyles",
+    "subtitle": "We develop integrated residential communities across Saudi Arabia, delivering quality that matches Vision 2030 ambitions.",
+    "btn1": "Projects Map",
+    "btn2": "Contact Us",
+    "stat1_num": "+20",
+    "stat1_lbl": "Years Experience",
+    "stat2_num": "+700",
+    "stat2_lbl": "Residential Units",
+    "stat3_num": "3",
+    "stat3_lbl": "Saudi Cities"
   },
   "overview": {
     "text": "Since the establishment of Madain Real Estate, we have been committed to providing integrated real estate services characterized by transparency and credibility, meeting our clients' needs with the highest quality. Our vision goes beyond project development to creating integrated residential environments. We aspire for Madain Real Estate to be a landmark in building sustainable, modern communities and a source of trust for all those seeking secure investment and continuous comfort. We don't just sell a property; we offer a comprehensive living experience, carefully crafted to complement our clients' ambitions and aspirations.",

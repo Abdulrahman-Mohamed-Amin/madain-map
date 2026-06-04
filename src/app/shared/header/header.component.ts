@@ -19,7 +19,7 @@ import { LanguageService } from '../../core/language.service';
 })
 export class HeaderComponent implements OnInit {
 
-  open = true;
+  menuOpen = false;
   current = '';
 
   currentLan = 'عر';
@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleLanguage() {
+    this.menuOpen = false; // أغلق المينو قبل تغيير اللغة
 
     // التبديل بين العربية والإنجليزية
     this.currentLan = this.currentLan === 'عر' ? 'EN' : 'عر';

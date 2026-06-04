@@ -544,42 +544,51 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
     const slug = this.toSlug(project.enTitle);
     const dir = this.lang === 'ar' ? 'rtl' : 'ltr';
 
+    const isMobile = window.innerWidth < 480;
+    const popupW   = isMobile ? Math.min(160, window.innerWidth - 40) : 230;
+    const imgH     = isMobile ? '140px' : '120px';
+    const titleSz  = isMobile ? '11px' : '13px';
+    const statSz   = isMobile ? '12px' : '14px';
+    const btnPad   = isMobile ? '5px 2px' : '7px 4px';
+    const btnFsz   = isMobile ? '9px' : '11px';
+
     const html = `
-      <div style="width:250px;font-family:'El Messiri',sans-serif;direction:${dir};">
-        ${imgSrc ? `<img src="${imgSrc}" loading="lazy" style="width:100%;height:140px;object-fit:cover;border-radius:5px;margin-bottom:10px;" />` : ''}
-        <h3 style="font-size:14px;color:#003748;margin:0 0 4px;font-weight:700;">${name}</h3>
-        <p style="font-size:12px;color:#666;margin:0 0 8px;">📍 ${loc}</p>
-        <span style="background:${color};color:#fff;font-size:10px;padding:2px 10px;border-radius:10px;">${status ?? ''}</span>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
-          <div style="background:#f5f6f9;border-radius:5px;padding:7px;text-align:center;">
-            <div style="font-size:10px;color:#888;">${this.lang === 'ar' ? 'الوحدات' : 'Units'}</div>
-            <div style="font-size:15px;font-weight:700;color:#003748;">${project.unitsCount ?? '—'}</div>
+      <div style="width:${popupW}px;font-family:'El Messiri',sans-serif;direction:${dir};">
+        ${imgSrc ? `<img src="${imgSrc}" loading="lazy" style="width:100%;height:${imgH};object-fit:cover;border-radius:5px;margin-bottom:8px;" />` : ''}
+        <h3 style="font-size:${titleSz};color:#003748;margin:0 0 3px;font-weight:700;">${name}</h3>
+        <p style="font-size:11px;color:#666;margin:0 0 6px;">📍 ${loc}</p>
+        <span style="background:${color};color:#fff;font-size:9px;padding:2px 8px;border-radius:10px;">${status ?? ''}</span>
+        ${!isMobile ? `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px;">
+          <div style="background:#f5f6f9;border-radius:5px;padding:5px;text-align:center;">
+            <div style="font-size:9px;color:#888;">${this.lang === 'ar' ? 'الوحدات' : 'Units'}</div>
+            <div style="font-size:${statSz};font-weight:700;color:#003748;">${project.unitsCount ?? '—'}</div>
           </div>
-          <div style="background:#f5f6f9;border-radius:5px;padding:7px;text-align:center;">
-            <div style="font-size:10px;color:#888;">${this.lang === 'ar' ? 'المباني' : 'Buildings'}</div>
-            <div style="font-size:15px;font-weight:700;color:#003748;">${project.buildingCount ?? '—'}</div>
+          <div style="background:#f5f6f9;border-radius:5px;padding:5px;text-align:center;">
+            <div style="font-size:9px;color:#888;">${this.lang === 'ar' ? 'المباني' : 'Buildings'}</div>
+            <div style="font-size:${statSz};font-weight:700;color:#003748;">${project.buildingCount ?? '—'}</div>
           </div>
-          <div style="background:#f5f6f9;border-radius:5px;padding:7px;text-align:center;">
-            <div style="font-size:10px;color:#888;">${this.lang === 'ar' ? 'المساحة' : 'Area'}</div>
-            <div style="font-size:13px;font-weight:700;color:#003748;">${project.groundArea ?? '—'}</div>
+          <div style="background:#f5f6f9;border-radius:5px;padding:5px;text-align:center;">
+            <div style="font-size:9px;color:#888;">${this.lang === 'ar' ? 'المساحة' : 'Area'}</div>
+            <div style="font-size:11px;font-weight:700;color:#003748;">${project.groundArea ?? '—'}</div>
           </div>
-          <div style="background:#f5f6f9;border-radius:5px;padding:7px;text-align:center;">
-            <div style="font-size:10px;color:#888;">${this.lang === 'ar' ? 'الحالة' : 'Status'}</div>
-            <div style="font-size:11px;font-weight:700;color:${color};">${status ?? '—'}</div>
+          <div style="background:#f5f6f9;border-radius:5px;padding:5px;text-align:center;">
+            <div style="font-size:9px;color:#888;">${this.lang === 'ar' ? 'الحالة' : 'Status'}</div>
+            <div style="font-size:10px;font-weight:700;color:${color};">${status ?? '—'}</div>
           </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px;">
-          <a href="/${slug}/${project.id}" style="flex:1;background:#003748;color:#fff;text-align:center;padding:8px 4px;border-radius:20px;font-size:11px;text-decoration:none;display:block;">
+        </div>` : ''}
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <a href="/${slug}/${project.id}" style="flex:1;background:#003748;color:#fff;text-align:center;padding:${btnPad};border-radius:20px;font-size:${btnFsz};text-decoration:none;display:block;">
             ${this.lang === 'ar' ? 'تفاصيل المشروع' : 'View Project'}
           </a>
-          <a href="${project.locationUrl?.startsWith('http') ? project.locationUrl : `https://www.google.com/maps?q=${project.latitude},${project.longitude}`}" target="_blank" rel="noopener" style="flex:1;background:#CE8C5B;color:#fff;text-align:center;padding:8px 4px;border-radius:20px;font-size:11px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:4px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            ${this.lang === 'ar' ? 'خريطة قوقل' : 'Google Maps'}
+          <a href="${project.locationUrl?.startsWith('http') ? project.locationUrl : `https://www.google.com/maps?q=${project.latitude},${project.longitude}`}" target="_blank" rel="noopener" style="flex:1;background:#CE8C5B;color:#fff;text-align:center;padding:${btnPad};border-radius:20px;font-size:${btnFsz};text-decoration:none;display:flex;align-items:center;justify-content:center;gap:3px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            ${this.lang === 'ar' ? 'قوقل ماب' : 'Maps'}
           </a>
         </div>
       </div>`;
 
-    L.popup({ maxWidth: 280, className: 'madain-popup' })
+    L.popup({ maxWidth: isMobile ? popupW + 24 : 280, className: 'madain-popup' })
       .setLatLng([project.latitude, project.longitude])
       .setContent(html)
       .openOn(this.map);

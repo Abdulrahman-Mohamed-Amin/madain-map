@@ -1,55 +1,100 @@
-<header class="">
+<header>
   <div class="container d-flex justify-content-between align-items-center px-2">
-    <img [src]="
-        currentLang == 'ar'
-          ? 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1760708047/%D9%84%D9%88%D8%AC%D9%88_%D8%A7%D8%A8%D9%8A%D8%B6_%D9%A1%D9%A5%D9%A0_%D8%A8%D9%83%D8%B3%D9%84_cbm0mm.png'
-          : 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1761725145/logo_left_doy3cf.png'
-      " alt="شعار الشركة" style="width: 120px" routerLink="/home" loading="lazy" />
 
-    <ul class="links" [ngClass]="{ open: open, close: open }">
-      <li>
-        <a routerLink="/home" routerLinkActive="active">{{
-          "home" | translate
-          }}</a>
-      </li>
-      <li>
-        <a routerLink="/about" routerLinkActive="active">{{
-          "about" | translate
-          }}</a>
-      </li>
-      <li>
-        <a [routerLink]="['/services']" routerLinkActive="active">{{
-          "services" | translate
-          }}</a>
-      </li>
-      <li>
-        <a [routerLink]="['/projects']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{
-          "projects" | translate }}
-        </a>
-      </li>
-      <li style="cursor: pointer">
-        <a routerLink="/contact" routerLinkActive="active">{{
-          "contact" | translate
-          }}</a>
-      </li>
+    <!-- اللوقو -->
+    <img
+      [src]="currentLang === 'ar'
+        ? 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1760708047/%D9%84%D9%88%D8%AC%D9%88_%D8%A7%D8%A8%D9%8A%D8%B6_%D9%A1%D9%A5%D9%A0_%D8%A8%D9%83%D8%B3%D9%84_cbm0mm.png'
+        : 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1761725145/logo_left_doy3cf.png'"
+      alt="شعار الشركة" style="width:120px" routerLink="/home" loading="lazy" />
 
-
-      <button class="language-btn" (click)="toggleLanguage()">
-        <span class="flag" [ngStyle]="{'background-image': 'url(' + currentFlag + ')'}"></span>
-        <span class="lang-text">{{ currentLang == "ar" ?"عر" : "en"  }}</span>
+    <!-- ── Desktop nav ── -->
+    <ul class="links">
+      <li><a routerLink="/home"      routerLinkActive="active">{{ "home"     | translate }}</a></li>
+      <li><a routerLink="/about"     routerLinkActive="active">{{ "about"    | translate }}</a></li>
+      <li><a routerLink="/services"  routerLinkActive="active">{{ "services" | translate }}</a></li>
+      <li><a routerLink="/projects"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{ "projects" | translate }}</a></li>
+      <li><a routerLink="/contact"   routerLinkActive="active">{{ "contact"  | translate }}</a></li>
+      <button class="lang-toggle" [class.is-en]="currentLang === 'en'" (click)="toggleLanguage()">
+        <span class="lt-thumb"></span>
+        <span class="lt-opt" [class.lt-opt--active]="currentLang === 'ar'">ع</span>
+        <span class="lt-opt" [class.lt-opt--active]="currentLang === 'en'">EN</span>
       </button>
-
     </ul>
-    <div class="d-lg-none d-block d-flex align-items-center gap-2">
-      <button class="language-btn" (click)="toggleLanguage()">
-        <span class="flag" [ngStyle]="{'background-image': 'url(' + currentFlag + ')'}"></span>
-        <span class="lang-text">{{ currentLang == "ar" ?"عر" : "en"  }}</span>
+
+    <!-- ── Mobile top-bar controls ── -->
+    <div class="mobile-controls">
+      <button class="lang-toggle" [class.is-en]="currentLang === 'en'" (click)="toggleLanguage()">
+        <span class="lt-thumb"></span>
+        <span class="lt-opt" [class.lt-opt--active]="currentLang === 'ar'">ع</span>
+        <span class="lt-opt" [class.lt-opt--active]="currentLang === 'en'">EN</span>
       </button>
-      <i class="fa-solid fa-bars-staggered  bar" (click)="open = !open"></i>
 
-      <!-- language-toggle.component.html -->
-
+      <!-- زر الهامبرجر -->
+      <button class="hamburger" [class.hamburger--open]="menuOpen"
+              (click)="menuOpen = !menuOpen" aria-label="القائمة">
+        <span class="h-bar"></span>
+        <span class="h-bar"></span>
+        <span class="h-bar"></span>
+      </button>
     </div>
 
-  </div>
+  </div><!-- /container -->
 </header>
+
+<!-- ══ Mobile fullscreen overlay ══ -->
+<div class="mob-overlay" [class.mob-overlay--open]="menuOpen"
+     (click)="menuOpen = false" aria-hidden="true">
+</div>
+
+<nav class="mob-nav"
+     [class.mob-nav--open]="menuOpen"
+     [class.mob-nav--en]="currentLang === 'en'">
+
+  <!-- لوقو فوق المينو -->
+  <div class="mn-logo">
+    <img
+      [src]="currentLang === 'ar'
+        ? 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1760708047/%D9%84%D9%88%D8%AC%D9%88_%D8%A7%D8%A8%D9%8A%D8%B6_%D9%A1%D9%A5%D9%A0_%D8%A8%D9%83%D8%B3%D9%84_cbm0mm.png'
+        : 'https://res.cloudinary.com/drvtf0l8n/image/upload/v1761725145/logo_left_doy3cf.png'"
+      alt="مدائن العقارية" routerLink="/home" (click)="menuOpen = false" />
+  </div>
+
+  <!-- الروابط -->
+  <ul class="mob-links">
+    <li class="mn-item">
+      <a routerLink="/home"     routerLinkActive="mn-active"
+         (click)="menuOpen = false">
+        <span class="mn-num">01</span>{{ "home" | translate }}
+      </a>
+    </li>
+    <li class="mn-item">
+      <a routerLink="/about"    routerLinkActive="mn-active"
+         (click)="menuOpen = false">
+        <span class="mn-num">02</span>{{ "about" | translate }}
+      </a>
+    </li>
+    <li class="mn-item">
+      <a routerLink="/services" routerLinkActive="mn-active"
+         (click)="menuOpen = false">
+        <span class="mn-num">03</span>{{ "services" | translate }}
+      </a>
+    </li>
+    <li class="mn-item">
+      <a routerLink="/projects" routerLinkActive="mn-active"
+         [routerLinkActiveOptions]="{exact:true}"
+         (click)="menuOpen = false">
+        <span class="mn-num">04</span>{{ "projects" | translate }}
+      </a>
+    </li>
+    <li class="mn-item">
+      <a routerLink="/contact"  routerLinkActive="mn-active"
+         (click)="menuOpen = false">
+        <span class="mn-num">05</span>{{ "contact" | translate }}
+      </a>
+    </li>
+  </ul>
+
+
+
+</nav>

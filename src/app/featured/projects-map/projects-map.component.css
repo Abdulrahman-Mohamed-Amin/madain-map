@@ -218,14 +218,21 @@
 /* ── Mobile ─────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .map-header {
-    top: 8px;
-    left: 8px;
-    right: 8px;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    padding: 5px 10px;
+    gap: 6px;
     border-radius: 10px;
+    min-height: 40px;
   }
 
+  .logo-img   { height: 28px; }
+  .stat-num   { font-size: 13px; }
+  .stat-lbl   { font-size: 8px; }
+  .stat-badge { padding: 2px 8px; border-radius: 6px; }
 
-  .stat-num  { font-size: 15px; }
-  .stat-lbl  { font-size: 9px; }
-  .stat-badge { padding: 3px 10px; }
+  .select-wrap { padding: 4px 8px; gap: 4px; }
+  .select-icon { width: 13px; height: 13px; }
+  .region-select { font-size: 11px; min-width: 0; }
 }

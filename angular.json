@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/madain",
+            "outputPath": { "base": "docs", "browser": "browser" },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -62,7 +62,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/madain/server",
+            "outputPath": "docs/server",
             "main": "src/main.server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -70,7 +70,11 @@
             "production": {
               "outputHashing": "media",
               "sourceMap": false,
-              "optimization": true
+              "optimization": {
+                "scripts": true,
+                "styles": { "minify": true, "inlineCritical": true },
+                "fonts": { "inline": false }
+              }
             }
           }
         },

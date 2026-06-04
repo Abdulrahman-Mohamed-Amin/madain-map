@@ -1,38 +1,49 @@
-<section class="cities-section position-relative ">
-    <div class="container">
-        <div class="row g-4">
+<section class="cities-section">
 
-            <div class="col-md-4" data-aos="fade-left" data-aos-delay="500">
-                <div class="city-box mecca">
-                    <div class="overlay">
-                        <h2>{{'proj.makkah' |translate}}</h2>
-                        <p>{{'proj.makkah-des' |translate}}</p>
-                        <a class="btn-city makkah" [routerLink]="['/projects' , 'makkah']">{{'proj.btn' |translate}}</a>
-                    </div>
-                </div>
-            </div>
+  <header class="section-title container">
+    <h2>{{ 'proj.title' | translate }}</h2>
+  </header>
 
-            <div class="col-md-4" data-aos="fade-right" data-aos-delay="500">
-                <div class="city-box jeddah">
-                    <div class="overlay">
-                        <h2>{{'proj.jeddah' |translate}}</h2>
-                        <p>{{'proj.jeddah-des' |translate}}</p>
-                        <a class="btn-city" [routerLink]="['/projects' , 'jeddah']">{{'proj.btn' |translate}}</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-right" data-aos-delay="500">
-                <div class="city-box madena">
-                    <div class="overlay">
-                        <h2>{{'proj.madena' |translate}}</h2>
-                        <p>{{'proj.madena-des' |translate}}</p>
-                        <a class="btn-city" [routerLink]="['/projects' , 'madena']">{{'proj.btn' |translate}}</a>
-                    </div>
-                </div>
-            </div>
+  <div class="container-fluid px-4 px-md-5">
+    <div class="cities-grid">
 
+      <div class="city-card mecca">
+        <div class="cc-gradient"></div>
+        <div class="cc-body">
+          <span class="cc-num" aria-hidden="true">01</span>
+          <div class="cc-text">
+            <h2 class="cc-title">{{ 'proj.makkah' | translate }}</h2>
+            <p class="cc-desc">{{ 'proj.makkah-des' | translate }}</p>
+            <a class="cc-btn" [routerLink]="['/projects', 'makkah']">{{ 'proj.btn' | translate }}</a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- <img src="../../../../assets/blue.svg" alt="" class="wave"> -->
+      <div class="city-card jeddah">
+        <div class="cc-gradient"></div>
+        <div class="cc-body">
+          <span class="cc-num" aria-hidden="true">02</span>
+          <div class="cc-text">
+            <h2 class="cc-title">{{ 'proj.jeddah' | translate }}</h2>
+            <p class="cc-desc">{{ 'proj.jeddah-des' | translate }}</p>
+            <a class="cc-btn" [routerLink]="['/projects', 'jeddah']">{{ 'proj.btn' | translate }}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="city-card madena">
+        <div class="cc-gradient"></div>
+        <div class="cc-body">
+          <span class="cc-num" aria-hidden="true">03</span>
+          <div class="cc-text">
+            <h2 class="cc-title">{{ 'proj.madena' | translate }}</h2>
+            <p class="cc-desc">{{ 'proj.madena-des' | translate }}</p>
+            <a class="cc-btn" [routerLink]="['/projects', 'madena']">{{ 'proj.btn' | translate }}</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </section>

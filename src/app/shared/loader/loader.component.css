@@ -1,0 +1,232 @@
+/* ══ Overlay ══════════════════════════════════════════════════ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #001e2d;
+  background-image:
+    linear-gradient(rgba(0, 87, 115, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 87, 115, 0.04) 1px, transparent 1px);
+  background-size: 55px 55px;
+  overflow: hidden;
+  animation: loader-in 0.3s ease both;
+}
+
+.loader--out {
+  animation: loader-out 0.58s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes loader-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes loader-out { to   { opacity: 0; transform: scale(1.04); filter: blur(4px); } }
+
+
+/* ══ Background layers & shapes ══════════════════════════════ */
+.loader-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(206, 140, 91, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse at 80% 85%, rgba(0, 87, 115, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 18% 18%, rgba(0, 87, 115, 0.10) 0%, transparent 45%);
+  animation: bg-breathe 5s ease-in-out infinite;
+}
+
+@keyframes bg-breathe {
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1;    }
+}
+
+/* الأشكال الهندسية العائمة */
+.ls {
+  position: absolute;
+  border: 1px solid rgba(206, 140, 91, 0.1);
+  border-radius: 6px;
+}
+
+.ls-1 {
+  width: 190px; height: 190px;
+  top: 8%; left: 6%;
+  transform: rotate(45deg);
+  animation: ls-drift 11s ease-in-out infinite;
+}
+.ls-2 {
+  width: 340px; height: 340px;
+  top: 50%; left: 50%;
+  border-color: rgba(206, 140, 91, 0.055);
+  animation: ls-center 15s ease-in-out infinite;
+}
+.ls-3 {
+  width: 110px; height: 110px;
+  bottom: 12%; right: 8%;
+  transform: rotate(45deg);
+  animation: ls-drift 9s ease-in-out infinite;
+  animation-delay: -4s;
+}
+.ls-4 {
+  width: 65px; height: 65px;
+  top: 18%; right: 14%;
+  border-color: rgba(0, 87, 115, 0.25);
+  transform: rotate(45deg);
+  animation: ls-drift 7s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@keyframes ls-drift {
+  0%, 100% { transform: rotate(45deg) scale(1);    opacity: 0.4; }
+  50%       { transform: rotate(65deg) scale(1.07); opacity: 0.75; }
+}
+
+@keyframes ls-center {
+  0%, 100% { transform: translate(-50%, -50%) rotate(45deg)  scale(1);    opacity: 0.15; }
+  50%       { transform: translate(-50%, -50%) rotate(225deg) scale(1.05); opacity: 0.35; }
+}
+
+
+/* ══ Stage ════════════════════════════════════════════════════ */
+.loader-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 200px;
+}
+
+
+/* ══ المرحلة 1: النص ══════════════════════════════════════════ */
+.loader-intro {
+  position: absolute;
+  text-align: center;
+}
+
+.loader-intro--out {
+  animation: intro-out 0.5s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.li-headline {
+  margin: 0;
+  line-height: 1;
+  font-size: clamp(88px, 16vw, 140px);
+  font-weight: 900;
+  letter-spacing: -3px;
+  color: #fff;
+  text-shadow:
+    0 0 60px rgba(206, 140, 91, 0.45),
+    0 0 20px rgba(206, 140, 91, 0.2);
+  animation: headline-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.li-sub {
+  margin: 14px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(206, 140, 91, 0.85);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  animation: sub-in 0.6s ease 0.5s both;
+}
+
+@keyframes headline-in {
+  from {
+    opacity: 0;
+    transform: scale(1.7);
+    filter: blur(28px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sub-in {
+  from { opacity: 0; transform: translateY(10px); letter-spacing: 14px; }
+  to   { opacity: 1; transform: translateY(0);    letter-spacing: 6px; }
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    transform: scale(0.82);
+    filter: blur(14px);
+  }
+}
+
+
+/* ══ المرحلة 2: اللوقو ════════════════════════════════════════ */
+.loader-brand {
+  position: absolute;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.loader-brand--in {
+  animation: brand-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.loader-brand img {
+  width: 300px;
+  display: block;
+  filter: drop-shadow(0 0 30px rgba(206, 140, 91, 0.3));
+  animation: logo-pulse 3s ease-in-out 0.8s infinite;
+}
+
+.lb-tagline {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+}
+
+@keyframes brand-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.86);
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes logo-pulse {
+  0%, 100% { filter: drop-shadow(0 0 28px rgba(206, 140, 91, 0.25)); }
+  50%       { filter: drop-shadow(0 0 48px rgba(206, 140, 91, 0.50)); }
+}
+
+
+/* ══ خط المسح السفلي ═════════════════════════════════════════ */
+.loader-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 87, 115, 0.2);
+  overflow: hidden;
+}
+
+.lb-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #CE8C5B, rgba(206, 140, 91, 0.4), transparent);
+  animation: bar-sweep 2.2s ease-in-out infinite;
+}
+
+@keyframes bar-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}

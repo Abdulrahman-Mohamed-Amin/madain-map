@@ -146,44 +146,154 @@
 
 
 
+/* ── Video Player ────────────────────────────────────────── */
 .video-player {
   position: relative;
-  border-radius: 14px;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   background: #000;
+  overflow: hidden;
 }
 
 .video-player video {
   width: 100%;
-  height: 260px;
+  height: 100%;
   object-fit: cover;
+  display: block;
+  cursor: pointer;
 }
 
+/* Overlay (shown when paused, fades out when playing) */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.video-overlay.is-playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-player:hover .video-overlay.is-playing {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.play-icon-big {
+  width: 64px;
+  height: 64px;
+  background: rgba(206, 140, 91, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.video-overlay:hover .play-icon-big {
+  transform: scale(1.1);
+  background: #CE8C5B;
+}
+
+.play-icon-big svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 4px;
+}
+
+/* Controls bar */
 .video-controls {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 12px;
-  background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
+  padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  transition: opacity 0.3s ease;
 }
 
-.video-controls button {
-  width: 35px;
-  height: 38px;
-  border-radius: 50%;
+.vc-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  background: transparent;
   border: none;
-  background: #CFA76A;
-  color: white;
-  font-size: 16px;
+  color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 0;
+  transition: background 0.2s ease;
 }
 
-.video-controls input[type="range"] {
+.vc-btn:hover {
+  background: rgba(206, 140, 91, 0.75);
+}
+
+.vc-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.vc-time {
+  font-size: 11px;
+  color: #fff;
+  white-space: nowrap;
+  font-family: monospace;
+  min-width: 34px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* Progress bar */
+.vc-progress {
   flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: height 0.15s ease;
+}
+
+.vc-progress:hover {
+  height: 6px;
+}
+
+.vc-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #CE8C5B;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.vc-progress:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.vc-progress::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #CE8C5B;
+  cursor: pointer;
+  border: none;
 }
 
 
