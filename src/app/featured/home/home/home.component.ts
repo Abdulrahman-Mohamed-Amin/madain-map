@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit{
   constructor(private meta:MetaService){}
 
   ngOnInit(): void {
-    this.meta.updateTags({title:'Madain Real Estate | شركة مدائن العقارية' , description:"مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية ." , url:"https://madain.sa/home" , keywords:"عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة"})
+    this.meta.updateTags({title:'شركة مدائن العقارية | Madain Real Estate' , description:"مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية ." , url:"https://madain.sa/home" , keywords:"عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة"})
   }
 
   

@@ -131,10 +131,8 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
   private labelBoxEls = new Map<number, HTMLElement>();
   private labelsDiv!: HTMLElement;
   private linesSvg!: SVGSVGElement;
-  private regionRect: any = null;
-
   regions = REGIONS;
-  selectedRegion: Region = REGIONS.find(r => r.id === 'makkah')!;
+  selectedRegion: Region = REGIONS[0];
   activeFilter: 'all' | 'completed' | 'under' = 'all';
   lang = 'ar';
   mediaUrl = environment.mediaUrl;
@@ -267,6 +265,8 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
       attributionControl: false,
     });
 
+    this.map.fitBounds(r.maxBounds, { padding: [30, 30], animate: false });
+
     // Satellite base layer
     L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -283,7 +283,6 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
 
     this.buildLabelsOverlay();
     this.addAllMarkers();
-    this.drawRegionRect();
 
     this.map.on('move zoom moveend zoomend viewreset', () =>
       this.redrawLabels()
@@ -376,8 +375,7 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
     this.map.setMinZoom(r.minZoom);
     this.map.setMaxZoom(r.maxZoom);
     this.map.setMaxBounds(r.maxBounds);
-    this.map.flyTo(r.center, r.zoom, { duration: 1.2 });
-    this.drawRegionRect();
+    this.map.flyToBounds(r.maxBounds, { duration: 1.2, padding: [40, 40] });
     this.syncMarkerVisibility();
   }
 
@@ -402,28 +400,6 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
       }
     });
     this.redrawLabels();
-  }
-
-  drawRegionRect() {
-    if (!this.map) return;
-    if (this.regionRect) {
-      this.map.removeLayer(this.regionRect);
-      this.regionRect = null;
-    }
-    const r = this.selectedRegion;
-    if (r.id !== 'all' && r.boundary) {
-      this.regionRect = L.polygon(r.boundary, {
-        color: '#CE8C5B',
-        weight: 2,
-        dashArray: '10 6',
-        fill: true,
-        fillColor: '#CE8C5B',
-        fillOpacity: 0.06,
-        interactive: false,
-        lineCap: 'round',
-        lineJoin: 'round',
-      }).addTo(this.map);
-    }
   }
 
   redrawLabels() {

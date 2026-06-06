@@ -1,329 +1,570 @@
-section {
-  /* background: #f5f6f9; */
+/* ══════════════════════════════════════════════════════════
+   CONTACT PAGE — Premium redesign
+══════════════════════════════════════════════════════════ */
 
-}
-
-.header {
-  height: 30vh;
+/* ─── HERO ────────────────────────────────────────────────── */
+.c-hero {
+  position: relative;
+  min-height: 78vh;
   background: var(--blue2);
+  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #fff;
 }
 
-.container {
-  padding: 100px 0;
-}
-
-/* زرار فتح الفورم */
-.meeting-btn {
-  background: #c78b5a;
-  color: #fff;
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.meeting-btn:hover {
-  background: #a96e40;
-  transform: translateY(-2px);
-}
-
-/* المودال */
-.meeting-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  direction: rtl;
-}
-
-.modal-overlay {
+.c-hero__bg {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(3px);
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,87,115,0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 90% 30%, rgba(206,140,91,0.12) 0%, transparent 60%),
+    linear-gradient(150deg, #002533 0%, #003748 40%, #00455e 100%);
 }
 
-.modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 900px;
-  background: #fff;
-  margin: 5% auto;
-  border-radius: 16px;
-  padding: 40px;
-  z-index: 2;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  animation: fadeIn 0.3s ease;
+/* subtle diagonal grid */
+.c-hero__noise {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 60px
+  );
 }
 
-@keyframes fadeIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
+.c-hero__inner {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
   align-items: center;
-  margin-bottom: 30px;
+  padding-top: 60px;
+  padding-bottom: 100px;
 }
 
-.modal-header h2 {
-  color: #0f2b3a;
+/* Eyebrow */
+.c-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(206,140,91,0.12);
+  border: 1px solid rgba(206,140,91,0.25);
+  border-radius: 50px;
+  padding: 6px 16px;
+  color: var(--lighit1);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--lighit2);
+  display: inline-block;
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
+.c-hero__h1 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.c-hero__sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 420px;
+}
+
+/* Meeting CTA Button */
+.c-hero__meeting-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: linear-gradient(135deg, var(--lighit2) 0%, var(--lighit1) 100%);
+  color: #fff; border: none;
+  border-radius: 14px;
+  padding: 0;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(206,140,91,0.4);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.c-hero__meeting-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(206,140,91,0.5);
+}
+.btn-icon {
+  background: rgba(0,0,0,0.12);
+  padding: 0 18px;
+  display: flex; align-items: center; justify-content: center;
+  align-self: stretch;
+  font-size: 1.1rem;
+}
+.c-hero__meeting-btn > span:nth-child(2) {
+  padding: 16px 22px;
+}
+.btn-arrow {
+  background: rgba(0,0,0,0.1);
+  padding: 0 14px;
+  display: flex; align-items: center; justify-content: center;
+  align-self: stretch;
+  font-size: 0.85rem;
+}
+
+/* Hero info cards (right column) */
+.c-hero__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hc {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 18px 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
   cursor: pointer;
 }
+.hc:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(206,140,91,0.3);
+  transform: translateX(6px);
+}
+html.ar .hc:hover { transform: translateX(-6px); }
+.hc__icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.hc:hover .hc__icon { background: rgba(255,255,255,0.25); }
+.hc--wa .hc__icon { background: rgba(255,255,255,0.15); }
+.hc__lbl { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 600; letter-spacing: 1px; }
+.hc__val { font-size: 0.97rem; color: #fff; font-weight: 700; margin-top: 2px; display: block; }
 
-/* الفورم */
-.form-grid {
+/* Wave separator */
+.c-hero__wave {
+  position: absolute;
+  bottom: -1px; left: 0; right: 0; z-index: 3;
+}
+.c-hero__wave svg { width: 100%; height: 60px; display: block; }
+
+/* ─── BODY ────────────────────────────────────────────────── */
+.c-body {
+  background: #f5f4f0;
+  padding: 80px 0 100px;
+}
+
+.c-body__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ─── FORM CARD ───────────────────────────────────────────── */
+.c-form-wrap {
+  background: #fff;
+  border-radius: 24px;
+  padding: 44px 40px;
+  box-shadow: 0 4px 24px rgba(0,55,72,0.07);
+}
+
+.c-form-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.c-form-head__line {
+  width: 4px; height: 32px;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, var(--lighit2), var(--lighit1));
+}
+.c-form-head h2 {
+  font-size: 1.25rem; font-weight: 900;
+  color: var(--blue2); margin: 0;
+}
+
+/* Floating-label fields */
+.c-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 0;
+}
+
+.c-field {
+  position: relative;
+  margin-bottom: 22px;
+}
+.c-field input,
+.c-field textarea {
+  width: 100%;
+  padding: 20px 16px 8px;
+  border: 1.5px solid #e4e6e8;
+  border-radius: 12px;
+  outline: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fafafa;
+  color: var(--blue2);
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  resize: none;
+}
+.c-field label {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 16px;
+  font-size: 0.9rem;
+  color: #8f9aa3;
+  font-weight: 600;
+  pointer-events: none;
+  transition: top 0.25s, font-size 0.25s, color 0.25s;
+}
+.c-field label span { color: var(--lighit2); }
+
+/* Float up when has value or focused */
+.c-field input:focus ~ label,
+.c-field input:not(:placeholder-shown) ~ label,
+.c-field textarea:focus ~ label,
+.c-field textarea:not(:placeholder-shown) ~ label {
+  top: 5px;
+  font-size: 0.72rem;
+  color: var(--lighit2);
+}
+
+.c-field input:focus,
+.c-field textarea:focus {
+  border-color: var(--lighit2);
+  box-shadow: 0 0 0 4px rgba(206,140,91,0.1);
+  background: #fff;
+}
+.c-field input.invalid, .c-field textarea.invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 4px rgba(231,76,60,0.07);
+}
+.c-field input.valid, .c-field textarea.valid {
+  border-color: #27ae60;
+}
+.c-field__err {
+  display: block;
+  font-size: 0.75rem; color: #e74c3c;
+  margin-top: 4px; padding-right: 4px;
+}
+
+.c-submit {
+  display: flex; align-items: center;
+  justify-content: center; gap: 10px;
+  width: 100%; padding: 16px;
+  background: var(--blue2);
+  color: #fff; border: none;
+  border-radius: 12px;
+  font-size: 1rem; font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 16px rgba(0,55,72,0.2);
+  margin-top: 6px;
+}
+.c-submit:hover {
+  background: var(--blue1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,55,72,0.3);
+}
+
+/* ─── MAP CARD ────────────────────────────────────────────── */
+.c-map-wrap {
+  position: sticky;
+  top: 24px;
+}
+.c-map-inner {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,55,72,0.1);
+  position: relative;
+}
+.c-map-inner iframe {
+  width: 100%; height: 480px;
+  display: block;
+}
+.c-map-badge {
+  position: absolute;
+  bottom: 16px;
+  inset-inline-end: 16px;
+  display: flex; align-items: center; gap: 8px;
+  background: #fff;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--blue2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.c-map-badge i { color: #e74c3c; }
+
+/* ══ MEETING MODAL ═══════════════════════════════════════════ */
+.m-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+}
+.m-modal__overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,15,25,0.65);
+  backdrop-filter: blur(6px);
+}
+.m-modal__panel {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 800px;
+  background: #fff;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+  animation: panelDrop 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  direction: rtl;
+  overflow: hidden;
+}
+@keyframes panelDrop {
+  from { transform: translateY(-100%); opacity: 0.6; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.m-modal__hd {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 28px 36px 24px;
+  background: linear-gradient(135deg, var(--blue2) 0%, #00455e 100%);
+  color: #fff;
+}
+.m-modal__hd-left { display: flex; align-items: center; gap: 16px; }
+.m-modal__icon {
+  width: 50px; height: 50px; border-radius: 14px;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: var(--lighit1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.m-modal__hd h2 { font-size: 1.25rem; font-weight: 900; margin: 0 0 4px; }
+.m-modal__hd p  { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin: 0; }
+.m-modal__close {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.m-modal__close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* Meeting form */
+.m-form { padding: 32px 36px 28px; }
+
+.m-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-}
-
-.full-width {
-  grid-column: span 2;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #333;
-}
-
-.form-group input {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  transition: 0.3s;
-}
-
-.form-group input:focus {
-  border-color: #c78b5a;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(199, 139, 90, 0.15);
-}
-
-.radio-group {
-  display: flex;
-  gap: 20px;
-}
-
-/* زرار الإرسال */
-.submit-btn {
-  margin-top: 30px;
-  background: #c78b5a;
-  color: #fff;
-  padding: 14px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  width: 200px;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  transition: 0.3s;
-}
-
-.submit-btn:hover {
-  background: #a96e40;
-}
-
-/* conections */
-.conections {
-  margin-bottom: 70px;
-}
-
-.item {
-  align-items: center;
-  gap: 20px;
-  padding: 20px 10px;
-  border-radius: 10px;
-  background: #f1f1f144;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  transition: 0.3s;
-}
-
-.item:hover {
-  transform: translateY(-5px);
-}
-
-.item i {
-  font-size: 1.6rem;
-  background: #a96e401a;
-  color: #a96e40;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.4s ease;
-}
-
-.item:hover i {
-  background: #a96e40;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-}
-
-.item .c_title {
-  margin-bottom: 7px;
-  font-weight: bold;
-  font-size: 18px;
-  color: #0f2b3ad2;
-}
-
-
-/* From Uiverse.io by nathann09 */
-.form {
-  background-color: #fff;
-  display: block;
-  padding: 0 1rem;
-  border-radius: 0.5rem;
-}
-
-.form-title {
-  margin: 20px 0;
-  color: #003748ea;
-  font-weight: bold;
-  font-size: 25px;
-}
-
-.input-container {
-  margin-bottom: 15px;
-}
-
-.input-container input,
-textarea {
-  border: none;
-  border-bottom: 1px solid #f1f1f1;
-  width: 100%;
   margin-bottom: 20px;
-  outline: none;
 }
 
-.input-container label {
-  font-size: 17px;
-  font-weight: bold;
-  display: flex;
-  gap: 5px;
-  margin-bottom: 10px;
-
+/* row that contains only full-width chip groups */
+.m-row--chips {
+  grid-template-columns: 1fr;
 }
 
-.input-container label span {
-  font-size: 14px;
-  color: #a96e40;
+.m-field {
+  position: relative;
+}
+.m-field--full { grid-column: span 2; }
+
+/* Chips container */
+.m-chips-block {
+  margin-bottom: 20px;
 }
 
-.form .submit {
-  border: none;
-  background: #0f2b3a;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px;
+.m-field input {
   width: 100%;
-  transition: 0.3s;
-  border: 1px solid #0f2b3a;
+  padding: 20px 16px 8px;
+  border: 1.5px solid #e4e6e8;
+  border-radius: 12px;
+  outline: none;
+  font-size: 0.93rem;
+  font-family: inherit;
+  background: #fafafa;
+  color: var(--blue2);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
-
-.form .submit:hover {
+.m-field input:focus {
+  border-color: var(--lighit2);
+  box-shadow: 0 0 0 4px rgba(206,140,91,0.1);
   background: #fff;
-  color: #0f2b3a;
-  cursor: pointer;
+}
+.m-field input.m-inv { border-color: #e74c3c; }
+
+/* Floating label — only for input fields, NOT chips */
+.m-field > label:not(.m-static-lbl) {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 16px;
+  font-size: 0.88rem; color: #8f9aa3; font-weight: 600;
+  pointer-events: none;
+  transition: top 0.25s, font-size 0.25s, color 0.25s;
+}
+.m-field > label:not(.m-static-lbl) span { color: var(--lighit2); }
+.m-field input:focus ~ label:not(.m-static-lbl),
+.m-field input:not(:placeholder-shown) ~ label:not(.m-static-lbl) {
+  top: 5px; font-size: 0.7rem; color: var(--lighit2);
 }
 
-/* form  */
-.row {
-  align-items: stretch;
+/* Static label for chips */
+.m-static-lbl {
+  display: block;
+  position: static;
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--blue2);
+  margin-bottom: 12px;
+  pointer-events: auto;
 }
-.box{
-  height: 100%;
-}
+.m-static-lbl span { color: var(--lighit2); }
 
-p {
-  margin: 0;
+/* Chips */
+.m-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.m-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px;
+  border: 1.5px solid #e4e6e8;
+  border-radius: 50px;
+  font-size: 0.9rem; font-weight: 600;
+  color: #6c7a86; cursor: pointer;
+  transition: all 0.25s;
+  user-select: none;
 }
+.m-chip:hover { border-color: var(--lighit2); color: var(--lighit2); }
+.m-chip--on {
+  background: linear-gradient(135deg, var(--lighit2), var(--lighit1));
+  border-color: transparent; color: #fff;
+  box-shadow: 0 4px 14px rgba(206,140,91,0.35);
+}
+.m-chip--lg { padding: 12px 26px; font-size: 0.95rem; }
 
-.custom-toast {
+/* Modal actions */
+.m-form__actions {
+  display: flex; align-items: center;
+  justify-content: flex-end; gap: 12px;
+  padding-top: 24px;
+  border-top: 1.5px solid #f0f2f4;
+  margin-top: 8px;
+}
+.m-btn-cancel {
+  padding: 13px 28px; border-radius: 12px;
+  border: 1.5px solid #e4e6e8; background: #fff;
+  color: #6c7a86; font-size: 0.95rem; font-weight: 600;
+  font-family: inherit; cursor: pointer;
+  transition: background 0.2s;
+}
+.m-btn-cancel:hover { background: #f5f4f0; }
+.m-btn-submit {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 32px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue2), var(--blue1));
+  color: #fff; border: none;
+  font-size: 0.95rem; font-weight: 700;
+  font-family: inherit; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,55,72,0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.m-btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,55,72,0.35); }
+
+/* ══ TOAST ════════════════════════════════════════════════════ */
+.toast {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #3faa0e;
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
-  animation: fadeInOut 3s ease-in-out forwards;
-  width: fit-content;
-  text-align: center;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  background: #1a7f4b; color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 0.95rem; font-weight: 600;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  z-index: 99999;
+  animation: tIn 0.4s cubic-bezier(0.16,1,0.3,1) both,
+             tOut 0.4s ease 3.1s forwards;
+  min-width: 240px; justify-content: center;
 }
+.toast--err { background: #c0392b; }
+.toast__icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; flex-shrink: 0;
+}
+@keyframes tIn  { from { opacity:0; transform: translateX(-50%) translateY(24px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+@keyframes tOut { to   { opacity:0; transform: translateX(-50%) translateY(20px); } }
 
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
+/* ══ RESPONSIVE ═══════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .c-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 80px;
   }
-
-  10% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+  .c-hero__cards { flex-direction: row; flex-wrap: wrap; }
+  .hc { flex: 1 1 calc(50% - 7px); min-width: 0; }
+  .c-body__grid { grid-template-columns: 1fr; }
+  .c-map-wrap { position: static; }
+  .c-map-inner iframe { height: 320px; }
 }
 
-.error {
-  color: #e74c3c;
-  font-size: 13px;
-  margin-top: 5px;
+@media (max-width: 768px) {
+  .c-hero { min-height: auto; }
+  .c-hero__inner { padding-top: 40px; padding-bottom: 70px; }
+  .hc { flex: 1 1 100%; }
+  .c-row { grid-template-columns: 1fr; }
+  .m-row { grid-template-columns: 1fr; }
+  .m-field--full { grid-column: span 1; }
+  .m-form { padding: 24px 20px 22px; }
+  .m-modal__hd { padding: 22px 20px 18px; }
+  .m-form__actions { flex-direction: column-reverse; }
+  .m-btn-cancel, .m-btn-submit { width: 100%; justify-content: center; }
+  .c-form-wrap { padding: 32px 24px; }
+  .c-hero__sub { font-size: 0.95rem; }
 }
 
-
-.input-container input.invalid , .input-container textarea.invalid{
-  border-bottom: 1px solid #e74c3c;
-
-}
-.input-container input.valid , .input-container textarea.valid{
-  border-bottom: 1px solid #3faa0e;
-
+@media (max-width: 480px) {
+  .c-hero__h1 { font-size: 2rem; }
+  .toast { font-size: 0.88rem; padding: 12px 16px; min-width: 0; max-width: 90vw; }
 }
 
-@media(max-width:991px){
-  .box{
-    height: 300px;
-  }
-}
+/* ══ LTR (English) overrides ══════════════════════════════════ */
+
+/* Hero inner grid: LTR flow */
+html.en .c-hero__inner  { direction: ltr; }
+html.en .c-hero__text   { direction: ltr; }
+html.en .c-hero__cards  { direction: ltr; }
+
+/* Arrow button icon: flip in LTR */
+html.en .btn-arrow i    { transform: rotate(180deg); }
+html.en .c-submit i,
+html.en .m-btn-submit i { transform: rotate(180deg); }
+
+/* Form head: LTR flow */
+html.en .c-form-head    { flex-direction: row; }

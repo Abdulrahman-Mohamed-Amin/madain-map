@@ -1,13 +1,5 @@
 import { Routes } from '@angular/router';
 
-// استيراد المكونات مباشرة
-import { HomeComponent } from './featured/home/home/home.component';
-import { AboutComponent } from './featured/about/about.component';
-import { ServicesComponent } from './featured/services/services.component';
-import { ProjectsComponent } from './featured/projects/projects.component';
-import { ContactComponent } from './featured/contact/contact.component';
-import { ProjectDetilsComponent } from './featured/project-detils/project-detils.component';
-
 
 // export const routes: Routes = [
 //   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -42,12 +34,17 @@ export const routes: Routes = [
   {
     path: "projects",
     loadComponent: () =>
-      import("./featured/projects-map/projects-map.component").then(m => m.ProjectsMapComponent),
+      import("./featured/projects/projects.component").then(m => m.ProjectsComponent),
   },
   {
     path: "projects/:city",
     loadComponent: () =>
       import("./featured/projects/projects.component").then(m => m.ProjectsComponent),
+  },
+  {
+    path: "projects-map",
+    loadComponent: () =>
+      import("./featured/projects-map/projects-map.component").then(m => m.ProjectsMapComponent),
   },
   {
     path: "contact",

@@ -1,29 +1,66 @@
-<div style="background: var(--blue2)">
+<div class="header">
   <app-header></app-header>
 </div>
 
-<div class="header">
-  <h1 class="">{{"services_sec.title" |translate}}</h1>
-</div>
-<div class="container p-60">
+<!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+<div class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
 
-  @for(s of services ; track $index){
-
-    <div class="service">
-      <div class="img_cont" >
-        <img [src]="url + s.imagePaths[0]" alt="service-img" loading="lazy">
-        <div class="lay"></div>
-      </div>
-  
-      <div class="text">
-        <h2>{{lang == "ar" ? s.arTitle : s.enTitle}}</h2>
-        <p>{{lang == "ar" ? s.arDescription : s.enDescription}}</p>
-      </div>
     </div>
-  }
-
+    <h1>{{"services_sec.title" | translate}}</h1>
+    <div class="hero-bar"></div>
+  </div>
 
 </div>
 
+<!-- ═══ SERVICES ════════════════════════════════════════════════ -->
+<section class="services-wrap">
+  <div class="container">
+
+    @for(s of services; track $index) {
+      <article class="srv" [class.srv--alt]="$index % 2 !== 0"
+               [style.--delay]="($index * 0.15) + 's'">
+
+        <!-- ── Image ── -->
+        <div class="srv__visual">
+          <div class="srv__img-frame">
+            <img [src]="url + s.imagePaths[0]"
+                 [alt]="lang === 'ar' ? s.arTitle : s.enTitle"
+                 loading="lazy">
+            <div class="srv__img-shade"></div>
+          </div>
+          <div class="srv__number" aria-hidden="true">
+            {{$index + 1 < 10 ? '0' + ($index + 1) : $index + 1}}
+          </div>
+          <div class="srv__corner srv__corner--tl"></div>
+          <div class="srv__corner srv__corner--br"></div>
+        </div>
+
+        <!-- ── Text ── -->
+        <div class="srv__body">
+          <div class="srv__body-inner">
+            <div class="srv__index-line">
+              <span class="srv__index-dot"></span>
+              <span class="srv__index-num">{{$index + 1 < 10 ? '0' + ($index + 1) : $index + 1}}</span>
+            </div>
+            <h2 class="srv__title">
+              {{lang === "ar" ? s.arTitle : s.enTitle}}
+            </h2>
+            <div class="srv__divider">
+              <span></span><i>◆</i><span></span>
+            </div>
+            <p class="srv__desc">
+              {{lang === "ar" ? s.arDescription : s.enDescription}}
+            </p>
+          </div>
+        </div>
+
+      </article>
+    }
+
+  </div>
+</section>
 
 <app-footer></app-footer>

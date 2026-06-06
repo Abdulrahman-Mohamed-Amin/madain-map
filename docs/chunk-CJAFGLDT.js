@@ -1,0 +1,1 @@
+import{a as o}from"./chunk-OIAXFPLI.js";import{j as r,m as e,za as i}from"./chunk-VUGVRVD5.js";var n=class t{constructor(c){this.http=c}url=o.apiUrl+"Service";getService(){return this.http.get(this.url)}static \u0275fac=function(p){return new(p||t)(e(i))};static \u0275prov=r({token:t,factory:t.\u0275fac,providedIn:"root"})};export{n as a};

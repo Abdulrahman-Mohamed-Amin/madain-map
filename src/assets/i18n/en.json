@@ -201,24 +201,46 @@
     }
   },
   "contact_sec": {
-    "title": "Contact",
-    "toastMessage": "Your message has been sent successfully.",
-    "error": "This email is uncorrect",
+    "title": "Our Team Awaits You",
+    "sub": "We are here to answer your inquiries and help you make the best real estate decisions",
+    "toastMessage": "Your message has been sent successfully ✓",
+    "toast_error": "An error occurred, please try again",
+    "toast_meeting": "Meeting request sent successfully ✓",
+    "error": "This email is incorrect",
     "form": {
       "title": "Contact Us",
       "name": "Full Name",
       "email": "Email",
       "subject": "Subject",
       "message": "Message",
-      "send": "send"
+      "send": "Send"
     },
     "info": {
       "title": "Contact Information",
       "email": "Email",
-      "phone": "Phone Number ",
-      "whats": "Phone Number",
+      "phone": "Phone Number",
+      "whats": "WhatsApp",
       "loc": "Location",
       "address": "Jeddah - Al-Salama District - Al-Yamamah Street"
+    },
+    "meeting": {
+      "btn": "Book a Meeting",
+      "title": "Request a Meeting",
+      "subtitle": "Send your request and we will contact you to confirm",
+      "name": "Full Name",
+      "phone": "Phone Number",
+      "email": "Email",
+      "purpose": "Meeting Purpose",
+      "client_type": "Client Type",
+      "individual": "Individual",
+      "contractor": "Contractor",
+      "developer": "Developer",
+      "meet_type": "Meeting Type",
+      "visit": "Office Visit",
+      "online": "Online",
+      "date": "Preferred Date",
+      "cancel": "Cancel",
+      "submit": "Send Request"
     }
   },
   "projects_info": {

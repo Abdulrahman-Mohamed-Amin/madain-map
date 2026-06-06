@@ -1,22 +1,25 @@
-<div style="background: var(--blue2);">
+<div class="header">
     <app-header></app-header>
 </div>
-<div class="header">
 
-    @if (!city) {
-    <h1>{{"projects_sec.title" |translate}}</h1>
-    } @else if (city == 'makkah') {
+<div class="page-hero">
 
-    <h1>{{lang == "ar" ? 'مشاريعنا في مكة ' : "Makkah Projects"}}</h1>
-    } 
-     @else if (city == 'madena') {
+  <div class="hero-content">
 
-     <h1>{{lang == "ar" ? 'مشاريعنا في المدينة المنورة ' : "Al Madinah Projects"}}</h1>
-    } 
-    @else {
+    <h1>
+      @if (!city) {
+        {{"projects_sec.title" | translate}}
+      } @else if (city == 'makkah') {
+        {{lang == "ar" ? 'مشاريعنا في مكة' : "Makkah Projects"}}
+      } @else if (city == 'madena') {
+        {{lang == "ar" ? 'مشاريعنا في المدينة المنورة' : "Al Madinah Projects"}}
+      } @else {
+        {{lang == "ar" ? 'مشاريعنا في جدة' : "Jeddah Projects"}}
+      }
+    </h1>
+    <div class="hero-bar"></div>
+  </div>
 
-    <h1>{{lang == "ar" ? 'مشاريعنا في جدة ' : "Jeddah Projects"}}</h1>
-    }
 </div>
 
 <div class="container p-60">

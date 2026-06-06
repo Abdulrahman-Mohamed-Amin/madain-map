@@ -1,188 +1,252 @@
-<section>
+<div style="background: var(--blue2)">
+  <app-header></app-header>
+</div>
 
-  <div style="background: var(--blue2)">
-    <app-header></app-header>
-  </div>
-  <div class="header d-flex flex-column gap-4">
-    <h1>{{ "contact_sec.title" | translate }}</h1>
+<!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+<div class="c-hero">
+  <div class="c-hero__bg"></div>
+  <div class="c-hero__noise"></div>
 
-    <div class="contact-section">
-      <button class="meeting-btn" (click)="openMeetingModal()">
-        طلب اجتماع
+  <div class="c-hero__inner container">
+
+    <!-- Headline + CTA -->
+    <div class="c-hero__text">
+      <div class="c-hero__eyebrow">
+        <span class="dot"></span>
+        <span>{{"contact" | translate}}</span>
+        <span class="dot"></span>
+      </div>
+      <h1 class="c-hero__h1">{{ "contact_sec.title" | translate }}</h1>
+      <p class="c-hero__sub">{{ "contact_sec.sub" | translate }}</p>
+      <button class="c-hero__meeting-btn" (click)="openMeetingModal()">
+        <span class="btn-icon"><i class="fas fa-calendar-check"></i></span>
+        <span>{{ "contact_sec.meeting.btn" | translate }}</span>
+        <span class="btn-arrow"><i class="fas fa-arrow-left"></i></span>
       </button>
     </div>
 
-    @if(isMeetingOpen){
-
-    <div class="meeting-modal">
-      <div class="modal-overlay" (click)="closeMeetingModal()"></div>
-
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h2>طلب اجتماع</h2>
-          <button class="close-btn" (click)="closeMeetingModal()">✕</button>
+    <!-- Info cards -->
+    <div class="c-hero__cards">
+      <a href="tel:920016343" class="hc">
+        <span class="hc__icon"><i class="fas fa-phone"></i></span>
+        <div>
+          <span class="hc__lbl">{{ "contact_sec.info.phone" | translate }}</span>
+          <span class="hc__val">920016343</span>
         </div>
-
-        <form class="meeting-form" [formGroup]="meeting" (ngSubmit)="sendMeeting()">
-
-          <div class="form-grid">
-
-            <div class="form-group">
-              <label>الاسم الكامل *</label>
-              <input type="text" formControlName="name">
-            </div>
-
-            <div class="form-group">
-              <label>رقم الجوال *</label>
-              <input type="tel" placeholder="05xxxxxxxx" formControlName="phone">
-            </div>
-
-            <div class="form-group">
-              <label>البريد الإلكتروني *</label>
-              <input type="email" formControlName="email">
-            </div>
-
-            <div class="form-group">
-              <label>الغرض من الاجتماع *</label>
-              <input type="text" formControlName="purpose">
-            </div>
-
-            <div class="form-group full-width">
-              <label>نوع العميل *</label>
-              <div class="radio-group">
-                <label><input type="radio" name="client" formControlName="client" value="فرد"> فرد</label>
-                <label><input type="radio" name="client" formControlName="client" value="مقاول"> مقاول</label>
-                <label><input type="radio" name="client" formControlName="client" value="مطور"> مطور</label>
-              </div>
-            </div>
-
-            <div class="form-group full-width">
-              <label>نوع الاجتماع *</label>
-              <div class="radio-group">
-                <label><input type="radio" name="meet" formControlName="meet" value="زيارة"> زيارة</label>
-                <label><input type="radio" name="meet" formControlName="meet" value="اونلاين"> أون لاين</label>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>التاريخ *</label>
-              <input type="date" formControlName="date">
-            </div>
-
-
-
-          </div>
-
-          <button type="submit" class="submit-btn">
-            إرسال
-          </button>
-
-        </form>
-
+      </a>
+      <a href="mailto:info@madain.sa" class="hc">
+        <span class="hc__icon"><i class="fas fa-envelope"></i></span>
+        <div>
+          <span class="hc__lbl">{{ "contact_sec.info.email" | translate }}</span>
+          <span class="hc__val">info&#64;madain.sa</span>
+        </div>
+      </a>
+      <a href="https://wa.me/966539885580" target="_blank" class="hc hc--wa">
+        <span class="hc__icon"><i class="fab fa-whatsapp"></i></span>
+        <div>
+          <span class="hc__lbl">{{ "contact_sec.info.whats" | translate }}</span>
+          <span class="hc__val" dir="ltr">+966 53 988 5580</span>
+        </div>
+      </a>
+      <div class="hc">
+        <span class="hc__icon"><i class="fas fa-location-dot"></i></span>
+        <div>
+          <span class="hc__lbl">{{ "contact_sec.info.loc" | translate }}</span>
+          <span class="hc__val">{{ "contact_sec.info.address" | translate }}</span>
+        </div>
       </div>
     </div>
-    }
+
   </div>
 
+  <div class="c-hero__wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f5f4f0"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ═══ FORM + MAP ══════════════════════════════════════════════ -->
+<section class="c-body">
   <div class="container">
+    <div class="c-body__grid">
 
-    <div class="row gy-4 conections">
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="item d-flex">
-          <i class="fas fa-envelope"></i>
-          <div class="info">
-            <p class="c_title">{{ "contact_sec.info.email" | translate }}</p>
-            <p>info&#64;madain.sa</p>
-          </div>
+      <!-- Form -->
+      <div class="c-form-wrap">
+        <div class="c-form-head">
+          <div class="c-form-head__line"></div>
+          <h2>{{ "contact_sec.form.title" | translate }}</h2>
         </div>
-      </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="item d-flex">
-          <i class="fas fa-phone"></i>
-          <div class="info">
-            <p class="c_title">{{ "contact_sec.info.phone" | translate }}</p>
-            <p>920016343</p>
-          </div>
-        </div>
-      </div>
+        <form [formGroup]="contactForm" (ngSubmit)="sendEmail()" class="c-form">
 
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="item d-flex">
-          <i class="fab fa-whatsapp"></i>
-          <div class="info">
-            <p class="c_title">{{ "contact_sec.info.whats" | translate }}</p>
-            <p>996539885580+</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="item d-flex">
-          <i class="fas fa-location-dot"></i>
-          <div class="info">
-            <p class="c_title">{{ "contact_sec.info.loc" | translate }}</p>
-            <p>{{ "contact_sec.info.address" | translate }}</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- form  -->
-
-    <div class="row gy-4">
-      <p class="form-title">{{ "contact_sec.form.title" | translate }}</p>
-      <div class="col-lg-6 col-12">
-        <form class="form" [formGroup]="contactForm" (ngSubmit)="sendEmail()">
-
-          <div class="input-container">
-            <label for="">{{'contact_sec.form.name' | translate}}<span>*</span></label>
-            <input type="text" formControlName="name"
-              [ngClass]="{'invalid': submited || (name?.invalid && name?.touched),'valid': name?.valid && name?.dirty}" />
+          <div class="c-row">
+            <div class="c-field">
+              <input type="text" formControlName="name" placeholder=" " id="cf-name"
+                [class.invalid]="submited||(name?.invalid&&name?.touched)"
+                [class.valid]="name?.valid&&name?.dirty"/>
+              <label for="cf-name">{{'contact_sec.form.name'|translate}} <span>*</span></label>
+            </div>
+            <div class="c-field">
+              <input type="text" formControlName="email" placeholder=" " id="cf-email"
+                [class.invalid]="submited||(email?.invalid&&email?.touched)"
+                [class.valid]="email?.valid&&email?.dirty"/>
+              <label for="cf-email">{{'contact_sec.form.email'|translate}} <span>*</span></label>
+              @if(contactForm.get('email')?.errors?.['pattern']){
+                <span class="c-field__err">{{"contact_sec.error"|translate}}</span>
+              }
+            </div>
           </div>
 
-          <div class="input-container">
-            <label for="">{{'contact_sec.form.email' | translate}}<span>*</span></label>
-            <input type="text" formControlName="email" [ngClass]="{'invalid': submited || (email?.invalid && email?.touched),'valid': email?.valid && email?.dirty}"/>
-            @if(contactForm.get('email')?.errors?.['pattern']){
-            <span class="error">{{"contact_sec.error" | translate}}</span>
-            }
+          <div class="c-field">
+            <input type="text" formControlName="subject" placeholder=" " id="cf-sub"
+              [class.invalid]="submited||(subject?.invalid&&subject?.touched)"
+              [class.valid]="subject?.valid&&subject?.dirty"/>
+            <label for="cf-sub">{{'contact_sec.form.subject'|translate}} <span>*</span></label>
           </div>
 
-          <div class="input-container">
-            <label for="">{{'contact_sec.form.subject' | translate}}<span>*</span></label>
-            <input type="text" [placeholder]="" formControlName="subject" [ngClass]="{'invalid': submited || (subject?.invalid && subject?.touched),'valid': subject?.valid && subject?.dirty}"/>
+          <div class="c-field">
+            <textarea formControlName="message" placeholder=" " rows="5" id="cf-msg"
+              [class.invalid]="submited||(message?.invalid&&message?.touched)"
+              [class.valid]="message?.valid&&message?.dirty"></textarea>
+            <label for="cf-msg">{{'contact_sec.form.message'|translate}} <span>*</span></label>
           </div>
 
-          <div class="input-container">
-            <label for="">{{'contact_sec.form.message' | translate}}<span>*</span></label>
-            <textarea formControlName="message" [ngClass]="{'invalid':submited || (message?.invalid && message?.touched),'valid': message?.valid && message?.dirty}"></textarea>
-          </div>
-
-          <button type="submit" class="submit" >
+          <button type="submit" class="c-submit">
             {{ "contact_sec.form.send" | translate }}
+            <i class="fas fa-paper-plane"></i>
           </button>
+
         </form>
       </div>
 
-      <div class="col-lg-6 col-12 px-3">
-        <div class="box text-white  mt-4">
+      <!-- Map -->
+      <div class="c-map-wrap">
+        <div class="c-map-inner">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18262.330516526992!2d39.17402613649857!3d21.5686729887646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d3fbf61e3c89%3A0x72e252331782d569!2z2LTYsdmD2Kkg2YXYr9in2KbZhiDYp9mE2LnZgtin2LHZitip!5e1!3m2!1sar!2ssa!4v1776844936488!5m2!1sar!2ssa"
-            class="w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy"
+            style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="c-map-badge">
+            <i class="fas fa-location-dot"></i>
+            {{ "contact_sec.info.address" | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </section>
-<!-- Toast Message -->
+
+<!-- ═══ MEETING MODAL ════════════════════════════════════════ -->
+@if(isMeetingOpen){
+<div class="m-modal">
+  <div class="m-modal__overlay" (click)="closeMeetingModal()"></div>
+  <div class="m-modal__panel" [dir]="lang === 'en' ? 'ltr' : 'rtl'">
+
+    <div class="m-modal__hd">
+      <div class="m-modal__hd-left">
+        <div class="m-modal__icon"><i class="fas fa-calendar-check"></i></div>
+        <div>
+          <h2>{{ "contact_sec.meeting.title" | translate }}</h2>
+          <p>{{ "contact_sec.meeting.subtitle" | translate }}</p>
+        </div>
+      </div>
+      <button class="m-modal__close" (click)="closeMeetingModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="meeting" (ngSubmit)="sendMeeting()" class="m-form">
+
+      <div class="m-row">
+        <div class="m-field">
+          <input type="text" formControlName="name" placeholder=" " id="m-name"
+            [class.m-inv]="meeting.get('name')?.invalid&&meeting.get('name')?.touched"/>
+          <label for="m-name">{{ "contact_sec.meeting.name" | translate }} <span>*</span></label>
+        </div>
+        <div class="m-field">
+          <input type="tel" formControlName="phone" placeholder=" " id="m-phone"
+            [class.m-inv]="meeting.get('phone')?.invalid&&meeting.get('phone')?.touched"/>
+          <label for="m-phone">{{ "contact_sec.meeting.phone" | translate }} <span>*</span></label>
+        </div>
+      </div>
+
+      <div class="m-row">
+        <div class="m-field">
+          <input type="email" formControlName="email" placeholder=" " id="m-email"
+            [class.m-inv]="meeting.get('email')?.invalid&&meeting.get('email')?.touched"/>
+          <label for="m-email">{{ "contact_sec.meeting.email" | translate }} <span>*</span></label>
+        </div>
+        <div class="m-field">
+          <input type="text" formControlName="purpose" placeholder=" " id="m-purpose"
+            [class.m-inv]="meeting.get('purpose')?.invalid&&meeting.get('purpose')?.touched"/>
+          <label for="m-purpose">{{ "contact_sec.meeting.purpose" | translate }} <span>*</span></label>
+        </div>
+      </div>
+
+      <div class="m-chips-block">
+        <label class="m-static-lbl">{{ "contact_sec.meeting.client_type" | translate }} <span>*</span></label>
+        <div class="m-chips">
+          <label class="m-chip" [class.m-chip--on]="meeting.get('client')?.value==='فرد'">
+            <input type="radio" formControlName="client" value="فرد" hidden>
+            <i class="fas fa-user"></i> {{ "contact_sec.meeting.individual" | translate }}
+          </label>
+          <label class="m-chip" [class.m-chip--on]="meeting.get('client')?.value==='مقاول'">
+            <input type="radio" formControlName="client" value="مقاول" hidden>
+            <i class="fas fa-hard-hat"></i> {{ "contact_sec.meeting.contractor" | translate }}
+          </label>
+          <label class="m-chip" [class.m-chip--on]="meeting.get('client')?.value==='مطور'">
+            <input type="radio" formControlName="client" value="مطور" hidden>
+            <i class="fas fa-building"></i> {{ "contact_sec.meeting.developer" | translate }}
+          </label>
+        </div>
+      </div>
+
+      <div class="m-chips-block">
+        <label class="m-static-lbl">{{ "contact_sec.meeting.meet_type" | translate }} <span>*</span></label>
+        <div class="m-chips">
+          <label class="m-chip m-chip--lg" [class.m-chip--on]="meeting.get('meet')?.value==='زيارة'">
+            <input type="radio" formControlName="meet" value="زيارة" hidden>
+            <i class="fas fa-map-marker-alt"></i> {{ "contact_sec.meeting.visit" | translate }}
+          </label>
+          <label class="m-chip m-chip--lg" [class.m-chip--on]="meeting.get('meet')?.value==='اونلاين'">
+            <input type="radio" formControlName="meet" value="اونلاين" hidden>
+            <i class="fas fa-video"></i> {{ "contact_sec.meeting.online" | translate }}
+          </label>
+        </div>
+      </div>
+
+      <div class="m-row">
+        <div class="m-field">
+          <input type="date" formControlName="date" id="m-date"
+            [class.m-inv]="meeting.get('date')?.invalid&&meeting.get('date')?.touched"/>
+          <label for="m-date">{{ "contact_sec.meeting.date" | translate }} <span>*</span></label>
+        </div>
+      </div>
+
+      <div class="m-form__actions">
+        <button type="button" class="m-btn-cancel" (click)="closeMeetingModal()">
+          {{ "contact_sec.meeting.cancel" | translate }}
+        </button>
+        <button type="submit" class="m-btn-submit">
+          <i class="fas fa-paper-plane"></i>
+          {{ "contact_sec.meeting.submit" | translate }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+}
+
+<!-- ═══ TOAST ════════════════════════════════════════════════ -->
 @if(toastMessage){
-<div class="custom-toast">
-  {{ "contact_sec.toastMessage" | translate }}
+<div class="toast" [class.toast--err]="toastType==='error'">
+  <div class="toast__icon">
+    <i class="fas" [class.fa-check]="toastType==='success'" [class.fa-times]="toastType==='error'"></i>
+  </div>
+  <span>{{ toastMessage }}</span>
 </div>
 }
 

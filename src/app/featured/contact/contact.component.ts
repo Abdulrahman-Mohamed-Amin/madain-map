@@ -3,8 +3,9 @@ import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import emailjs from 'emailjs-com';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MetaService } from '../../core/meta.service';
+import { LanguageService } from '../../core/language.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,111 +17,81 @@ import { CommonModule } from '@angular/common';
 })
 export class ContactComponent implements OnInit {
 
-  submited: boolean = false
+  submited = false;
+  isMeetingOpen = false;
+  toastMessage: string | null = null;
+  toastType: 'success' | 'error' = 'success';
+  lang = 'ar';
 
-  fb = inject(FormBuilder)
+  fb = inject(FormBuilder);
+
   contactForm = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
+    name:    ['', Validators.required],
+    email:   ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
     subject: ['', Validators.required],
     message: ['', Validators.required],
-  })
-  get name() {
-    return this.contactForm.get('name');
-  }
-  get email() {
-    return this.contactForm.get('email');
-  }
-  get subject() {
-    return this.contactForm.get('subject');
-  }
-  get message() {
-    return this.contactForm.get('message');
-  }
-  meeting = new FormGroup({
-    name: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    purpose: new FormControl('', Validators.required),
-    client: new FormControl('', Validators.required),
-    meet: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required)
-  })
+  });
 
-  isMeetingOpen = false;
-  constructor(private meta: MetaService) {
+  get name()    { return this.contactForm.get('name');    }
+  get email()   { return this.contactForm.get('email');   }
+  get subject() { return this.contactForm.get('subject'); }
+  get message() { return this.contactForm.get('message'); }
+
+  meeting = new FormGroup({
+    name:    new FormControl('', Validators.required),
+    phone:   new FormControl('', Validators.required),
+    email:   new FormControl('', [Validators.required, Validators.email]),
+    purpose: new FormControl('', Validators.required),
+    client:  new FormControl('', Validators.required),
+    meet:    new FormControl('', Validators.required),
+    date:    new FormControl('', Validators.required),
+  });
+
+  constructor(private meta: MetaService, private translate: TranslateService, private _lang: LanguageService) {
     this.meta.updateTags({
       title: 'مدائن العقارية | تواصل معنا',
-      description:
-        'مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية .',
-      url: 'https://madain.sa/retal',
-      keywords:
-        'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة',
+      description: 'مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية .',
+      url: 'https://madain.sa/contact',
+      keywords: 'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة',
     });
   }
 
-
   ngOnInit() {
+    this._lang.currentLang$.subscribe(l => this.lang = l);
   }
 
-  openMeetingModal() {
-    this.isMeetingOpen = true;
-  }
+  openMeetingModal()  { this.isMeetingOpen = true;  }
+  closeMeetingModal() { this.isMeetingOpen = false; }
 
-  closeMeetingModal() {
-    this.isMeetingOpen = false;
-  }
-
-
-  toastMessage: string | null = null;
-
-  showToast(message: string) {
+  showToast(message: string, type: 'success' | 'error' = 'success') {
     this.toastMessage = message;
-    setTimeout(() => {
-      this.toastMessage = null;
-    }, 3000); // 3 ثواني
+    this.toastType    = type;
+    setTimeout(() => { this.toastMessage = null; }, 3500);
   }
 
   sendEmail() {
-    if (this.contactForm.invalid) {
-      this.submited = true
-      console.log("invalid");
-      return
-    }
-    const formData = this.contactForm.value;
-
-    emailjs.send(
-      'service_i31g11c',
-      'template_bdjhwfn',
-      formData,
-      'XaVuXfuWTEMN_kLI8'
-    ).then(() => {
-      this.showToast('تم ارسال رسالتك بنجاح ')
-      this.submited = false
-      this.contactForm.reset();
-    }).catch(() => {
-    });
+    if (this.contactForm.invalid) { this.submited = true; return; }
+    emailjs.send('service_i31g11c', 'template_bdjhwfn', this.contactForm.value, 'XaVuXfuWTEMN_kLI8')
+      .then(() => {
+        this.showToast(this.translate.instant('contact_sec.toastMessage'), 'success');
+        this.submited = false;
+        this.contactForm.reset();
+      })
+      .catch(() => {
+        this.showToast(this.translate.instant('contact_sec.toast_error'), 'error');
+      });
   }
 
   sendMeeting() {
-    console.log(this.meeting.value)
-    if (this.meeting.valid) {
-      const formData = this.meeting.value;
-      emailjs.send(
-        'service_i31g11c',
-        'template_ztnjwmo',
-        formData,
-        'XaVuXfuWTEMN_kLI8'
-      ).then((res) => {
-        this.showToast('تم ارسال رسالتك بنجاح ')
+    if (this.meeting.invalid) { this.meeting.markAllAsTouched(); return; }
+    emailjs.send('service_i31g11c', 'template_ztnjwmo', this.meeting.value, 'XaVuXfuWTEMN_kLI8')
+      .then(() => {
+        this.showToast(this.translate.instant('contact_sec.toast_meeting'), 'success');
         this.meeting.reset();
-
-      }).catch((ERR) => {
-
+        this.closeMeetingModal();
+      })
+      .catch(() => {
+        this.showToast(this.translate.instant('contact_sec.toast_error'), 'error');
       });
-    } else {
-
-    }
   }
-
 }
