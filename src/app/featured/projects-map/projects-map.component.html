@@ -41,12 +41,24 @@
       </select>
     </div>
 
-    <div class="header-spacer"></div>
+    <div class="header-divider"></div>
 
-    <div class="stat-badge">
-      <span class="stat-num">{{ stats.total }}</span>
-      <span class="stat-lbl">{{ lang === 'ar' ? 'مشروع' : 'Projects' }}</span>
+    <!-- سيليكت المشاريع -->
+    <div class="select-wrap">
+      <svg class="select-icon" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+      </svg>
+      <select class="region-select" (change)="onProjectSelect($event)">
+        <option value="">{{ lang === 'ar' ? 'اختر مشروعاً' : 'Select a project' }}</option>
+        @for (d of markerData; track d.project.id) {
+          <option [value]="d.project.id">
+            {{ lang === 'ar' ? d.project.arTitle : d.project.enTitle }}
+          </option>
+        }
+      </select>
     </div>
+
+    <div class="header-spacer"></div>
 
   </div>
 

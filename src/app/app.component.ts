@@ -40,6 +40,8 @@ export class AppComponent implements OnInit {
     // اللودر يبدأ ظاهر تلقائياً في loader.component
     // نطلب إخفاءه بعد انتهاء مدة minDuration
     this.loaderSvc.hide();
+    // شاشة البداية الثابتة من index.html بتتشال بعد ما لودر Angular يكون ظهر (مدة fade-in بتاعه 0.3s)
+    setTimeout(() => document.getElementById('boot-loader')?.remove(), 350);
 
     // ── التنقل بين الصفحات ─────────────────────────────────────
     this.router.events.subscribe(e => {

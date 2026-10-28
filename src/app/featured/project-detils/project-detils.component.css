@@ -97,11 +97,61 @@
 .link.profile {
   background: var(--lighit2);
   color: #fff;
+  position: relative;
+  overflow: hidden;
+  animation: mapGlow 2.2s ease-in-out infinite;
+}
+
+.link.profile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 80%
+  );
+  transform: translateX(-200%);
+  animation: mapShimmer 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.link.profile i {
+  animation: mapBounce 2.2s ease-in-out infinite;
+  display: inline-block;
 }
 
 .link.profile:hover {
   background: #fff;
   color: var(--lighit2);
+  animation: none;
+}
+
+.link.profile:hover::before { display: none; }
+
+.link.profile:hover i { animation: none; }
+
+@keyframes mapGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(246, 178, 129, 0); }
+  50%       { box-shadow: 0 0 18px 6px rgba(246, 178, 129, 0.6); }
+}
+
+@keyframes mapShimmer {
+  0%   { transform: translateX(-200%); }
+  55%  { transform: translateX(300%); }
+  100% { transform: translateX(300%); }
+}
+
+@keyframes mapBounce {
+  0%, 100% { transform: translateY(0);    }
+  30%       { transform: translateY(-4px); }
+  50%       { transform: translateY(0);    }
+  65%       { transform: translateY(-2px); }
+  80%       { transform: translateY(0);    }
 }
 
 /* Stats */
@@ -211,21 +261,110 @@
   }
 }
 
+/* ══════════════════════════════════
+   گالري الصور: سلايدر + تمبز
+══════════════════════════════════ */
+.pd-gallery {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
+/* السلايدر الرئيسي */
 .swiper {
   width: 100%;
-  height: 100%;
-  padding: 10px 10px 50px;
-  /* margin-top: 50px; */
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 55, 72, 0.15);
 }
 
 .swiper .swiper-slide {
-  height: 400px;
+  height: 750px;
 }
 
 .swiper .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+/* أزرار التنقل */
+.swiper .swiper-button-next,
+.swiper .swiper-button-prev {
+  color: #fff;
+  background: rgba(0, 55, 72, 0.55);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+}
+
+.swiper .swiper-button-next::after,
+.swiper .swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+/* عداد الصور */
+.pd-counter {
+  position: absolute;
+  bottom: 14px;
+  inset-inline-end: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* شريط التمبز */
+.pd-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;        /* Firefox */
+}
+
+.pd-thumbs::-webkit-scrollbar {
+  display: none;                /* Chrome/Safari */
+}
+
+.pd-thumb {
+  flex-shrink: 0;
+  width: 100px;
+  height: 68px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.pd-thumb:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.pd-thumb--active {
+  border-color: var(--lighit2);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
 }
 
 
@@ -275,107 +414,149 @@
 
 
 
+/* ══════════════════════════════════
+   بطاقة الوحدة — ميني كارد أنيق
+══════════════════════════════════ */
 .unit-card {
   position: relative;
-  background: #ffffff;
+  background: #fff;
   border-radius: 14px;
-  padding: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(0, 55, 72, 0.09);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 55, 72, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.unit-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lighit2), #ce8c5b);
+}
 
-/* Badge تم البيع */
+.unit-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0, 55, 72, 0.13);
+}
 
-.sold-chip {
+/* حالة المباع */
+.unit-card--sold {
+  opacity: 0.6;
+  filter: grayscale(30%);
+}
+
+.unit-card--sold::before {
+  background: #d1d5db;
+}
+
+.uc-sold-ov {
   position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 10px;
+  inset-inline-end: 10px;
+  z-index: 10;
+}
+
+.uc-sold-badge {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* رأس: نوع + كود */
+.uc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px 4px;
+}
+
+.uc-type {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(206, 140, 91, 0.13);
+  color: #ce8c5b;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 7px;
-  font-size: 10px;
-  font-weight: bold;
-  color: #15803d;
-  background: #dcfce7;
-  border: 1px solid #86efac;
-  border-radius: 999px;
-  display: none;
+  gap: 3px;
 }
 
-.show {
-  display: block;
-}
-
-.sold-chip .check {
-  font-size: 10px;
-}
-
-/* السعر */
-.price-box .label {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.price {
-
-}
-
-.price div .amount {
-  font-size: 15px;
-  font-weight: bold;
+.uc-type--roof {
+  background: rgba(0, 55, 72, 0.08);
   color: var(--blue2);
 }
 
-.price .currency {
-  font-size: 11px;
-  color: #6b7280;
-  margin-right: 4px;
-}
-
-.code {
-  color: var(--lighit2);
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.divider {
-  margin: 0 0 12px 0;
-  height: 1px;
-  background: #e5e7eb;
-}
-
-/* التفاصيل */
-
-.item {
+.uc-code {
   font-size: 13px;
-  color: #374151;
+  font-weight: 800;
+  color: var(--lighit2);
 }
 
-.type {
-  background: #ce8d5b33;
-  color: #CE8C5B;
-  width: fit-content;
-  padding: 3px 5px;
-  border-radius: 10px;
+/* السعر — العنصر الرئيسي */
+.uc-price {
+  padding: 6px 12px 10px;
 }
 
-.type.roof {
-  background: #0037482a;
-  color: #003748;
-  width: fit-content;
-  padding: 3px 5px;
-  border-radius: 10px;
-}
-
-.item .ico {
-  margin-left: 6px;
-}
-
-.item .label {
-  font-size: 12px;
+.uc-amount {
   display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--blue2);
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.uc-currency {
+  font-size: 10px;
+  color: #b0b8bf;
+  margin-top: 1px;
+  display: block;
+}
+
+/* فاصل */
+.uc-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 0 10px;
+}
+
+/* صف التفاصيل الأفقي */
+.uc-stats {
+  padding: 8px 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.uc-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.uc-stat i {
+  color: var(--lighit2);
+  font-size: 10px;
+}
+
+.uc-sep {
+  width: 1px;
+  height: 12px;
+  background: #e5e7eb;
+  flex-shrink: 0;
 }
 
 

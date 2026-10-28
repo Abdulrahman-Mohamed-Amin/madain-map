@@ -122,7 +122,7 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
 
   private map: any = null;
   private markers = new Map<number, any>();
-  private markerData: Array<{
+  markerData: Array<{
     project: Project;
     dx: number;
     dy: number;
@@ -146,18 +146,28 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private meta: MetaService
   ) {
+    this.langService.currentLang$.subscribe((l) => {
+      this.lang = l;
+      this.updateMeta(l);
+    });
+  }
+
+  private updateMeta(lang: string): void {
+    const isAr = lang === 'ar';
     this.meta.updateTags({
-      title: 'مدائن العقارية | خارطة المشاريع',
-      description: 'استعرض مشاريع مدائن العقارية على خارطة تفاعلية',
-      url: 'https://madain.sa/projects',
-      keywords: 'عقارات, مشاريع, خارطة, مدائن العقارية',
+      title: isAr ? 'خارطة المشاريع' : 'Projects Map',
+      description: isAr
+        ? 'استعرض مشاريع مدائن العقارية السكنية وشقق التمليك في جدة ومكة والمدينة المنورة على خارطة تفاعلية.'
+        : "Explore Madain Real Estate's residential projects and freehold apartments in Jeddah, Makkah and Madinah on an interactive map.",
+      url: 'https://madain.sa/projects-map',
+      keywords: isAr
+        ? 'عقارات, مشاريع, خارطة, مدائن العقارية, شقق تمليك جدة'
+        : 'real estate, projects map, Madain Real Estate, freehold apartments Jeddah',
     });
   }
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.langService.currentLang$.subscribe((l) => (this.lang = l));
 
     // Pre-select region from URL param if any
     this.route.paramMap.subscribe((params) => {
@@ -202,6 +212,36 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
       this.map.remove();
       this.map = null;
     }
+  }
+
+  // ─── تحميل Leaflet عند الحاجة فقط (مش على كل صفحات الموقع) ──────────────────
+  private leafletPromise?: Promise<void>;
+  private loadLeaflet(): Promise<void> {
+    if (typeof L !== 'undefined') return Promise.resolve();
+    if (this.leafletPromise) return this.leafletPromise;
+
+    this.leafletPromise = new Promise<void>((resolve, reject) => {
+      const VER = '1.9.4';
+
+      if (!document.querySelector('link[data-leaflet]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `https://unpkg.com/leaflet@${VER}/dist/leaflet.css`;
+        link.crossOrigin = '';
+        link.setAttribute('data-leaflet', '');
+        document.head.appendChild(link);
+      }
+
+      const script = document.createElement('script');
+      script.src = `https://unpkg.com/leaflet@${VER}/dist/leaflet.js`;
+      script.crossOrigin = '';
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('Leaflet failed to load'));
+      document.body.appendChild(script);
+    });
+
+    return this.leafletPromise;
   }
 
   // ─── helpers ───────────────────────────────────────────────────────────────
@@ -250,8 +290,14 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
 
   // ─── map init ──────────────────────────────────────────────────────────────
 
-  initMap() {
-    if (!isPlatformBrowser(this.platformId) || typeof L === 'undefined') return;
+  async initMap() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    try {
+      await this.loadLeaflet();
+    } catch {
+      return;
+    }
+    if (typeof L === 'undefined') return;
     const r = this.selectedRegion;
 
     this.map = L.map(this.mapContainer.nativeElement, {
@@ -377,6 +423,32 @@ export class ProjectsMapComponent implements AfterViewInit, OnDestroy {
     this.map.setMaxBounds(r.maxBounds);
     this.map.flyToBounds(r.maxBounds, { duration: 1.2, padding: [40, 40] });
     this.syncMarkerVisibility();
+  }
+
+  onProjectSelect(event: Event) {
+    const id = Number((event.target as HTMLSelectElement).value);
+    if (!id || !this.map) return;
+
+    const item = this.markerData.find(d => d.project.id === id);
+    if (!item) return;
+
+    const { project, isCompleted } = item;
+
+    // لو المشروع مش في المنطقة الحالية، انتقل للمنطقة الصح
+    const locName = project.arLocationName ?? '';
+    const matchingRegion = REGIONS.find(r => r.filter && locName.includes(r.filter));
+    if (matchingRegion && matchingRegion.id !== this.selectedRegion.id) {
+      this.selectedRegion = matchingRegion;
+      this.map.setMinZoom(matchingRegion.minZoom);
+      this.map.setMaxZoom(matchingRegion.maxZoom);
+      this.map.setMaxBounds(matchingRegion.maxBounds);
+      this.syncMarkerVisibility();
+    }
+
+    this.map.flyTo([project.latitude, project.longitude], 15, { duration: 1.4 });
+    setTimeout(() => {
+      this.openPopup(project, isCompleted);
+    }, 1500);
   }
 
   setFilter(f: 'all' | 'completed' | 'under') {

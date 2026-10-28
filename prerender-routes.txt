@@ -1,0 +1,17 @@
+/projects/jeddah
+/projects/makkah
+/projects/madena
+/afrah-makkah/56
+/madain-square/42
+/abeer-al-madinah-116-/38
+/kayn-makkah-115/37
+/najad-al-rawda-114/36
+/aljawhara-113/35
+/mesk-alharm-111-112/34
+/ozop-alharm/33
+/retal-106/32
+/helm-105/31
+/helm-104/23
+/helm-103/40
+/helm-102/21
+/helm-101/5

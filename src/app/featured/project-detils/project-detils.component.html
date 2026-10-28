@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="img_cont">
-                    <img [src]="url + project?.interfaceImagePath" alt="interface img" loading="lazy">
+                    <img [src]="url + project?.interfaceImagePath" [alt]="lang == 'ar' ? project?.arTitle : project?.enTitle" loading="lazy">
                 </div>
 
                 <div class="project-stats">
@@ -78,17 +78,37 @@
 
     <!-- =================== السلايدر ==================== -->
 
-    <div class="swiper mySwiper mt-5">
-        <div class="swiper-wrapper">
-            @for(img of project?.projectImages; track $index){
-            <div class="swiper-slide">
-                <img [src]="url + img" alt="project-img" class="w-100" loading="lazy">
-            </div>
-            }
-        </div>
+    <div class="pd-gallery container">
 
+      <!-- الصورة الرئيسية -->
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          @for(img of project?.projectImages; track $index){
+            <div class="swiper-slide">
+              <img [src]="url + img" [alt]="(lang == 'ar' ? project?.arTitle : project?.enTitle) + ' - ' + ($index + 1)" loading="lazy">
+            </div>
+          }
+        </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
+
+        <!-- عداد الصور -->
+        <div class="pd-counter">
+          {{activeThumbIndex + 1}} / {{project?.projectImages?.length}}
+        </div>
+      </div>
+
+      <!-- شريط التمبز -->
+      <div class="pd-thumbs">
+        @for(img of project?.projectImages; track $index){
+          <div class="pd-thumb"
+               [class.pd-thumb--active]="$index === activeThumbIndex"
+               (click)="goToSlide($index)">
+            <img [src]="url + img" [alt]="(lang == 'ar' ? project?.arTitle : project?.enTitle) + ' - thumbnail ' + ($index + 1)" loading="lazy">
+          </div>
+        }
+      </div>
+
     </div>
 
 
@@ -122,65 +142,43 @@
             <div class="units row gy-4 mt-4">
                 @for(u of b.units; track $index){
                 <div class="col-6 col-lg-2 col-md-3 col-sm-4">
-                    <div class="unit-card " [class.sold]="u.isSealed">
+                    <div class="unit-card" [class.unit-card--sold]="u.isSealed">
 
-                        <div class="sold-chip" [ngClass]="{'show': u.isSealed}">
-                            <span class="check">✓</span>
-                            {{"projects_info.unit_des.sold" | translate}}
+                      <!-- أوفرلاي المباع -->
+                      @if(u.isSealed) {
+                        <div class="uc-sold-ov">
+                          <div class="uc-sold-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>{{"projects_info.unit_des.sold" | translate}}</span>
+                          </div>
                         </div>
+                      }
 
-                        <div class="price-box">
-                            <div class="price d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="amount">{{u.price | number}}</span>
-                                    <span class="currency">{{"projects_info.unit_des.price" | translate}}</span>
-                                </div>
-                                <h5 class="m-0 code">{{u.arTitle}}</h5>
-                            </div>
-                        </div>
+                      <!-- رأس: نوع + كود -->
+                      <div class="uc-head">
+                        <span class="uc-type" [class.uc-type--roof]="u.arDescription == 'ملحق'">
+                          <i class="far fa-home"></i>
+                          {{lang == 'ar' ? u.arDescription : u.arDescription == 'شقة' ? 'Apt' : 'Roof'}}
+                        </span>
+                        <span class="uc-code">{{u.arTitle}}</span>
+                      </div>
 
-                        <div class="divider"></div>
+                      <!-- السعر -->
+                      <div class="uc-price">
+                        <span class="uc-amount">{{u.price | number}}</span>
+                        <span class="uc-currency">{{"projects_info.unit_des.price" | translate}}</span>
+                      </div>
 
-                        <div class="details row gy-1">
+                      <div class="uc-divider"></div>
 
-                            <div class="col-12">
-                                <div class="item d-flex type" [ngClass]="{'roof': u.arDescription == 'ملحق'}">
-                                    <span class="ico">
-                                        <i class="far fa-home"></i>
-                                    </span>
-                                    <span class="label">{{lang == 'ar' ? u.arDescription : u.arDescription == 'شقة' ?
-                                        'Apartment' : 'Roof'}}</span>
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="item">
-                                    <div class="d-flex gap-1">
-                                        <i class="fas fa-bed"></i>
-                                        <span class="label">{{"projects_info.unit_des.rooms" | translate}}</span>
-                                    </div>
-                                    <strong class="mx-2">{{u.enTitle}}</strong>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="item">
-                                    <div class="d-flex gap-1">
-                                        <div class="fas fa-ruler"></div>
-                                        <span class="label">{{"projects_info.unit_des.area" | translate}}</span>
-                                    </div>
-                                    <strong class="mx-2">{{u.area}} {{"projects_info.unit_des.metar" |
-                                        translate}}</strong>
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <div class="item">
-                                    <span class="label">{{"projects_info.unit_des.floor" | translate}}</span>
-                                    <strong>{{u.floor}}</strong>
-                                </div>
-                            </div>
-
-                        </div>
+                      <!-- التفاصيل -->
+                      <div class="uc-stats">
+                        <span class="uc-stat"><i class="fas fa-bed"></i>{{u.enTitle}}</span>
+                        <span class="uc-sep"></span>
+                        <span class="uc-stat"><i class="fas fa-ruler-combined"></i>{{u.area}}م²</span>
+                        <span class="uc-sep"></span>
+                        <span class="uc-stat"><i class="fas fa-layer-group"></i>{{u.floor}}</span>
+                      </div>
 
                     </div>
 

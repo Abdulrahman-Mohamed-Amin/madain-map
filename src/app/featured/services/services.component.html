@@ -31,9 +31,7 @@
                  loading="lazy">
             <div class="srv__img-shade"></div>
           </div>
-          <div class="srv__number" aria-hidden="true">
-            {{$index + 1 < 10 ? '0' + ($index + 1) : $index + 1}}
-          </div>
+
           <div class="srv__corner srv__corner--tl"></div>
           <div class="srv__corner srv__corner--br"></div>
         </div>
@@ -48,9 +46,7 @@
             <h2 class="srv__title">
               {{lang === "ar" ? s.arTitle : s.enTitle}}
             </h2>
-            <div class="srv__divider">
-              <span></span><i>◆</i><span></span>
-            </div>
+
             <p class="srv__desc">
               {{lang === "ar" ? s.arDescription : s.enDescription}}
             </p>

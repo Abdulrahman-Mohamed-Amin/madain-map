@@ -52,6 +52,11 @@ export const routes: Routes = [
       import("./featured/contact/contact.component").then(m => m.ContactComponent),
   },
   {
+    path: "brokers",
+    loadComponent: () =>
+      import("./featured/brokers/brokers.component").then(m => m.BrokersComponent),
+  },
+  {
     path: ":slug/:id",
     loadComponent: () =>
       import("./featured/project-detils/project-detils.component").then(
@@ -59,8 +64,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "404",
+    loadComponent: () =>
+      import("./shared/not-found/not-found.component").then(m => m.NotFoundComponent),
+  },
+  {
     path: "**",
     loadComponent: () =>
-      import("./featured/home/home/home.component").then(m => m.HomeComponent),
+      import("./shared/not-found/not-found.component").then(m => m.NotFoundComponent),
   },
 ];

@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "node scripts/generate-seo-files.mjs",
     "build": "ng build",
+    "postbuild": "node scripts/postbuild.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:madain": "node dist/madain/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {

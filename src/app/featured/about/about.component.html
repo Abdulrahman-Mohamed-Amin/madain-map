@@ -1,213 +1,163 @@
-<section class="about">
-  <div class="sec_1">
-    <div class="lay"></div>
+<div class="ab-page">
+
+  <!-- ══════════════════════ HERO ══════════════════════ -->
+  <section class="ab-hero">
+    <div class="ab-hero__ov" aria-hidden="true"></div>
     <app-header></app-header>
-    <div class="container position-relative  h-100">
+    <div class="ab-hero__body container">
+      <h1>{{ "about_sec.title" | translate }}</h1>
+      <span class="ab-hero__rule" aria-hidden="true"></span>
+      <p>{{ "about_sec.des" | translate }}</p>
+    </div>
+  </section>
 
-      <div class="text_header">
-        <h1>{{ "about_sec.title" | translate }}</h1>
+  <!-- ══════════════════════ VISION + MISSION ══════════════════════ -->
+  <section class="ab-vm">
+    <div class="container">
+      <div class="ab-vm__grid">
 
-        <div class="row gy-4 align-items-center text-center">
-
-          <div class="box">
-            <p class="">
-              {{ "about_sec.des" | translate }}
-            </p>
-          </div>
-
+        <div class="ab-vm__card">
+          <span class="ab-vm__ghost" aria-hidden="true">01</span>
+          <div class="ab-vm__ic"><i class="fas fa-eye"></i></div>
+          <h3>{{ 'vesion.ves' | translate }}</h3>
+          <p>{{ 'vesion.ves_des' | translate }}</p>
         </div>
 
+        <div class="ab-vm__sep" aria-hidden="true"></div>
 
-        <section class="vision-section">
-          <div class="container">
+        <div class="ab-vm__card">
+          <span class="ab-vm__ghost" aria-hidden="true">02</span>
+          <div class="ab-vm__ic"><i class="fas fa-bullseye"></i></div>
+          <h3>{{ 'vesion.message' | translate }}</h3>
+          <p>{{ 'vesion.message_des' | translate }}</p>
+        </div>
 
-            <div class="vision-grid">
-
-              <!-- Vision -->
-              <div class="vision-card">
-                <div class="vision-icon">
-                  <i class="fas fa-eye"></i>
-                </div>
-
-                <div class="vision-content">
-                  <h2>{{ 'vesion.ves' | translate }}</h2>
-                  <p>
-                    {{ 'vesion.ves_des' | translate }}
-                  </p>
-                </div>
-              </div>
-
-              <!-- Message -->
-              <div class="vision-card">
-                <div class="vision-icon">
-                  <i class="fas fa-bullseye"></i>
-                </div>
-
-                <div class="vision-content">
-                  <h2>{{ 'vesion.message' | translate }}</h2>
-                  <p>
-                    {{ 'vesion.message_des' | translate }}
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
       </div>
-
-
     </div>
-  </div>
+  </section>
 
-  <!-- managers section  -->
-  <section class="team">
-    <div class="team__container">
-      <header class="team__header">
-        <span class="team__kicker"> {{ "about_sec.team.head1" | translate }}</span>
-        <h2 class="team__title"> {{ "about_sec.team.head2" | translate }} </h2>
+  <!-- ══════════════════════ TEAM ══════════════════════ -->
+  <section class="ab-team">
+    <div class="ab-team__wrap">
+
+      <header class="ab-team__hd">
+        <span class="ab-eyebrow">{{ "about_sec.team.head1" | translate }}</span>
+        <h2>{{ "about_sec.team.head2" | translate }}</h2>
       </header>
 
-      <div class="team__grid">
+      <div class="ab-team__grid">
 
-
-        <!-- Card 1 -->
-
-        <article class="team-card order-sm-0 order-1">
-          <div class="team-card__media">
+        <article class="tc order-sm-0 order-1">
+          <div class="tc__media">
             <span class="blob blob--c" aria-hidden="true"></span>
             <span class="ring" aria-hidden="true"></span>
-            <img class="avatar" src="../../../assets/d adel.png" alt="Omar Al Zahrani" />
+            <img class="avatar" src="assets/d adel.jpeg" alt="Dr. Adel Abokrais"
+              loading="lazy" decoding="async" />
           </div>
-          <img src="assets/flags/canada.png" alt="" width="25">
-
-          <h3 class="team-card__name"> Dr. Adel Abokrais </h3>
-          <p class="team-card__role">{{ "about_sec.team.title2" | translate }}</p>
-
-          <span class="team-card__dash" aria-hidden="true"></span>
+          <img src="assets/flags/canada.png" alt="" width="25" loading="lazy" decoding="async">
+          <h3 class="tc__name">Dr. Adel Abokrais</h3>
+          <p class="tc__role">{{ "about_sec.team.title2" | translate }}</p>
+          <span class="tc__dash" aria-hidden="true"></span>
         </article>
-        <!-- Card 2 -->
 
-        <article class="team-card">
-          <div class="team-card__media">
+        <article class="tc tc--ceo">
+          <div class="tc__media">
             <span class="blob blob--a" aria-hidden="true"></span>
             <span class="ring" aria-hidden="true"></span>
-            <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg" alt="manger"
-              class="avatar" loading="lazy" />
+            <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg"
+              alt="CEO" class="avatar" loading="lazy" />
           </div>
-          <img src="assets/flags/saudi.png" alt="" width="25">
-          <h3 class="team-card__name">{{ "about_sec.team.mem1" | translate }}</h3>
-          <p class="team-card__role">{{ "about_sec.team.title1" | translate }}</p>
-          <span class="team-card__dash" aria-hidden="true"></span>
+          <img src="assets/flags/saudi.png" alt="" width="25" loading="lazy" decoding="async">
+          <h3 class="tc__name">{{ "about_sec.team.mem1" | translate }}</h3>
+          <p class="tc__role">{{ "about_sec.team.title1" | translate }}</p>
+          <span class="tc__dash" aria-hidden="true"></span>
         </article>
 
-
-        <!-- Card 3 -->
-
-        <article class="team-card order-sm-0 order-2">
-          <div class="team-card__media">
+        <article class="tc order-sm-0 order-2">
+          <div class="tc__media">
             <span class="blob blob--b" aria-hidden="true"></span>
             <span class="ring" aria-hidden="true"></span>
-            <img class="avatar" src="assets/mostafa 2.png" alt=" MOSTAFA" />
+            <img class="avatar" src="../../../assets/mostafa.jpeg" alt="MOSTAFA"
+              loading="lazy" decoding="async" />
           </div>
-          <img src="assets/flags/eg.png" alt="" width="25">
-          <h3 class="team-card__name">{{ "about_sec.team.mem3" | translate }}</h3>
-          <p class="team-card__role">{{ "about_sec.team.title3" | translate }}</p>
-          <span class="team-card__dash" aria-hidden="true"></span>
+          <img src="assets/flags/eg.png" alt="" width="25" loading="lazy" decoding="async">
+          <h3 class="tc__name">{{ "about_sec.team.mem3" | translate }}</h3>
+          <p class="tc__role">{{ "about_sec.team.title3" | translate }}</p>
+          <span class="tc__dash" aria-hidden="true"></span>
         </article>
 
       </div>
     </div>
   </section>
 
-
-  <div class="sec_3">
+  <!-- ══════════════════════ STATES ══════════════════════ -->
+  <div class="ab-states">
     <app-states></app-states>
   </div>
 
-  <div class="sec_2 p-60 bg-white">
+  <!-- ══════════════════════ CHAIRMAN ══════════════════════ -->
+  <section class="ab-ceo">
     <div class="container">
-      <div class="row gy-4 align-items-center">
-        <div class="col-lg-8 col-12 order-lg-0 order-1" data-aos="fade-up" data-aos-delay="800">
-          <div class="quit">
-            <div class="content">
-              <div class="text">
-                <h2>{{ "about_sec.speech" | translate }}</h2>
-                <blockquote>
-                  <p>
-                    {{ "about_sec.word1" | translate }}
-                  </p>
-                  <p>
-                    {{ "about_sec.word2" | translate }}
-                  </p>
-                </blockquote>
-              </div>
-            </div>
+      <div class="ab-ceo__inner">
+
+        <div class="ab-ceo__photo">
+          <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg"
+            alt="CEO" loading="lazy" />
+          <div class="ab-ceo__badge">
+            <h4>{{ "about_sec.name" | translate }}</h4>
+            <p>{{ "about_sec.jop" | translate }}</p>
           </div>
         </div>
 
-        <div class="col-lg-4 col-12" data-aos="fade-up">
-          <div class="box">
-            <img src="https://res.cloudinary.com/drvtf0l8n/image/upload/v1760585413/taher_jt0zya.jpg" alt="manger"
-              class="" loading="lazy" />
-            <div>
-              <h3>{{ "about_sec.jop" | translate }}</h3>
-              <p>{{ "about_sec.name" | translate }}</p>
-            </div>
-          </div>
+        <div class="ab-ceo__text">
+          <span class="ab-ceo__qmark" aria-hidden="true">"</span>
+          <h2>{{ "about_sec.speech" | translate }}</h2>
+          <blockquote>
+            <p>{{ "about_sec.word1" | translate }}</p>
+            <p>{{ "about_sec.word2" | translate }}</p>
+          </blockquote>
         </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="values-section">
+</div><!-- /ab-page -->
+
+<!-- ══════════════════════ VALUES ══════════════════════ -->
+<section class="ab-values">
   <div class="container">
-
-    <div class="section-header">
-      <h2>{{"about_sec.values.title" | translate}}</h2>
+    <div class="ab-values__hd">
+      <h2>{{ "about_sec.values.title" | translate }}</h2>
     </div>
+    <div class="ab-values__grid">
 
-    <div class="values-grid">
-
-      <div class="value-box">
-        <div class="icon">
-          <i class="fas fa-award"></i>
-        </div>
-        <h3>{{"about_sec.values.box1.head" | translate}}</h3>
-        <p>
-          {{"about_sec.values.box1.des" | translate}}
-        </p>
+      <div class="ab-vb">
+        <span class="ab-vb__n">01</span>
+        <div class="ab-vb__ic"><i class="fas fa-award"></i></div>
+        <h3>{{ "about_sec.values.box1.head" | translate }}</h3>
+        <p>{{ "about_sec.values.box1.des" | translate }}</p>
       </div>
 
-      <div class="value-box">
-        <div class="icon">
-          <i class="fas fa-lightbulb"></i>
-        </div>
-        <h3>{{"about_sec.values.box2.head" | translate}}</h3>
-        <p>
-          {{"about_sec.values.box2.des" | translate}}
-        </p>
+      <div class="ab-vb">
+        <span class="ab-vb__n">02</span>
+        <div class="ab-vb__ic"><i class="fas fa-lightbulb"></i></div>
+        <h3>{{ "about_sec.values.box2.head" | translate }}</h3>
+        <p>{{ "about_sec.values.box2.des" | translate }}</p>
       </div>
 
-      <div class="value-box">
-        <div class="icon">
-          <i class="fas fa-handshake"></i>
-        </div>
-        <h3>{{"about_sec.values.box3.head" | translate}}</h3>
-        <p>
-          {{"about_sec.values.box3.des" | translate}} </p>
+      <div class="ab-vb">
+        <span class="ab-vb__n">03</span>
+        <div class="ab-vb__ic"><i class="fas fa-handshake"></i></div>
+        <h3>{{ "about_sec.values.box3.head" | translate }}</h3>
+        <p>{{ "about_sec.values.box3.des" | translate }}</p>
       </div>
 
-      <div class="value-box">
-        <div class="icon">
-          <i class="fas fa-chart-line"></i>
-        </div>
-        <h3>{{"about_sec.values.box4.head" | translate}}</h3>
-        <p>
-          {{"about_sec.values.box4.des" | translate}}
-        </p>
+      <div class="ab-vb">
+        <span class="ab-vb__n">04</span>
+        <div class="ab-vb__ic"><i class="fas fa-chart-line"></i></div>
+        <h3>{{ "about_sec.values.box4.head" | translate }}</h3>
+        <p>{{ "about_sec.values.box4.des" | translate }}</p>
       </div>
 
     </div>

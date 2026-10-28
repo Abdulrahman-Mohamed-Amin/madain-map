@@ -1,0 +1,30 @@
+{
+  "routes": [
+    "/",
+    "/404",
+    "/abeer-al-madinah-116-/38",
+    "/about",
+    "/afrah-makkah/56",
+    "/aljawhara-113/35",
+    "/brokers",
+    "/contact",
+    "/helm-101/5",
+    "/helm-102/21",
+    "/helm-103/40",
+    "/helm-104/23",
+    "/helm-105/31",
+    "/home",
+    "/kayn-makkah-115/37",
+    "/madain-square/42",
+    "/mesk-alharm-111-112/34",
+    "/najad-al-rawda-114/36",
+    "/ozop-alharm/33",
+    "/projects",
+    "/projects-map",
+    "/projects/jeddah",
+    "/projects/madena",
+    "/projects/makkah",
+    "/retal-106/32",
+    "/services"
+  ]
+}

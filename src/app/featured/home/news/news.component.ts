@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID, QueryList, ViewChildren } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { NewsService } from '../../../core/services/news.service';
 import { News } from '../../../core/interface/news';
 import { isPlatformBrowser } from '@angular/common';
 import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { LanguageService } from '../../../core/language.service';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -22,12 +23,15 @@ interface VideoState {
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, AfterViewInit, OnDestroy {
   url = environment.mediaUrl;
   news: News[] = [];
   lang: string = '';
   swiper?: Swiper;
   videoStates: { [key: number]: VideoState | undefined } = {};
+
+  @ViewChildren('videoEl') videoEls!: QueryList<ElementRef<HTMLVideoElement>>;
+  private videoObserver?: IntersectionObserver;
 
   constructor(
     private _news: NewsService,
@@ -38,6 +42,39 @@ export class NewsComponent implements OnInit {
   ngOnInit(): void {
     this.getNews();
     this._lang.currentLang$.subscribe(res => { this.lang = res; });
+  }
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.videoEls.changes.subscribe(() => this.observeVideos());
+    this.observeVideos();
+  }
+
+  ngOnDestroy(): void {
+    this.videoObserver?.disconnect();
+  }
+
+  /** يحمّل الفيديو (metadata) فقط لما يقرب من دخول الشاشة */
+  private observeVideos(): void {
+    this.videoObserver?.disconnect();
+    this.videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          this.loadVideoSrc(video);
+        }
+      });
+    }, { rootMargin: '300px' });
+    this.videoEls.forEach(ref => this.videoObserver!.observe(ref.nativeElement));
+  }
+
+  private loadVideoSrc(video: HTMLVideoElement): void {
+    if (video.src) return;
+    const src = video.dataset['src'];
+    if (src) {
+      video.preload = 'metadata';
+      video.src = src;
+    }
   }
 
   getNews() {
@@ -52,6 +89,7 @@ export class NewsComponent implements OnInit {
   initSwiper() {
     if (this.swiper) this.swiper.destroy(true, true);
     this.swiper = new Swiper('.mySwiper2', {
+      modules: [Navigation, Pagination, Autoplay],
       spaceBetween: 20,
       breakpoints: {
         1200: { slidesPerView: 3 },
@@ -62,6 +100,18 @@ export class NewsComponent implements OnInit {
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
       pagination: { el: '.swiper-pagination', clickable: true, dynamicBullets: true, dynamicMainBullets: 1 },
       speed: 500,
+      on: {
+        slideChange: () => this.pauseAllVideos(),
+      },
+    });
+  }
+
+  pauseAllVideos(): void {
+    document.querySelectorAll<HTMLVideoElement>('.mySwiper2 video').forEach((v, i) => {
+      if (!v.paused) {
+        v.pause();
+        if (this.videoStates[i]) this.videoStates[i]!.playing = false;
+      }
     });
   }
 
@@ -73,8 +123,13 @@ export class NewsComponent implements OnInit {
 
   togglePlay(video: HTMLVideoElement, index: number): void {
     this.initVideoState(index);
+    this.loadVideoSrc(video);
     const state = this.videoStates[index]!;
     if (video.paused) {
+      // لو لسه على الـ thumbnail frame ارجع للأول
+      if (!state.playing && video.currentTime > 0 && video.currentTime < 4) {
+        video.currentTime = 0;
+      }
       video.play();
       state.playing = true;
     } else {
@@ -94,6 +149,10 @@ export class NewsComponent implements OnInit {
   onMetadata(video: HTMLVideoElement, index: number): void {
     this.initVideoState(index);
     this.videoStates[index]!.duration = this.formatTime(video.duration);
+    // seek to 1s to show a video frame instead of black screen
+    if (!this.videoStates[index]!.playing) {
+      video.currentTime = Math.min(3, video.duration * 0.05);
+    }
   }
 
   onEnded(index: number): void {

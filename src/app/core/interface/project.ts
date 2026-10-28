@@ -24,6 +24,7 @@ export interface Project {
 
   buildingCount: number;
   unitsCount: number;
+  soldUnitsCount?: number;   // يجي من البكند في list response
 
   isSealed: boolean;
 

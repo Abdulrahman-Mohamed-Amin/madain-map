@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ProjectsService } from '../../../core/services/projects.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './states.component.html',
   styleUrl: './states.component.css'
 })
-export class StatesComponent {
+export class StatesComponent implements OnInit {
 
   @ViewChild('statsSection') statsSection!: ElementRef;
 
@@ -29,12 +29,14 @@ export class StatesComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  ngOnInit(): void {
+    this.getNumbers();
+  }
+
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.observeSection();
     }
-
-    this.getNumbers();
   }
 
   // =========================
@@ -95,7 +97,8 @@ export class StatesComponent {
   private tryStartCounters() {
     if (this.dataReady && this.viewReady && !this.hasAnimated) {
       this.hasAnimated = true;
-      this.startCounters();
+      // ننتظر تحديث الـ DOM (data-target) قبل قراءة القيم
+      setTimeout(() => this.startCounters());
     }
   }
 

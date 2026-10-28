@@ -11,8 +11,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { LanguageService } from '../../core/language.service';
 import Swiper from 'swiper';
-import { log } from 'node:console';
+import { Navigation, Autoplay } from 'swiper/modules';
 import { TranslateModule } from '@ngx-translate/core';
+import { toSlug } from '../../core/utils/slug.util';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class ProjectDetilsComponent {
   id: any
 
   countSoldUnit: any[] = []
+  activeThumbIndex = 0;
+  private mainSwiper?: Swiper;
 
   constructor(private meta: MetaService, private _project: ProjectsService, private _route: ActivatedRoute, private _lang: LanguageService, @Inject(PLATFORM_ID) private platformId: Object ) {
 
@@ -57,6 +60,7 @@ export class ProjectDetilsComponent {
 
     this._lang.currentLang$.subscribe(res => {
       this.lang = res
+      this.updateMeta()
     })
 
   }
@@ -70,31 +74,74 @@ export class ProjectDetilsComponent {
           units: [...building.units].sort((a, b) => {
             const [aChar, aNum] = a.arTitle.split('-');
             const [bChar, bNum] = b.arTitle.split('-');
-
-            // 1️⃣ ترتيب حسب الرقم
-            if (+aNum !== +bNum) {
-              return +aNum - +bNum;
-            }
-
-            // 2️⃣ ترتيب أبجدي
+            if (+aNum !== +bNum) return +aNum - +bNum;
             return aChar.localeCompare(bChar);
           })
         }))
       }))
     ).subscribe(res => {
-      this.project = res
-      this.surfaceArea = Number(res?.surfaceArea).toFixed()
-      this.groundArea = Number(res?.groundArea).toFixed()
-      this.getSoldUnit()
+      this.project = res;
+      this.surfaceArea = Number(res?.surfaceArea).toFixed();
+      this.groundArea = Number(res?.groundArea).toFixed();
+      this.getSoldUnit();
+      this.updateMeta();
 
-          this.meta.updateTags({
-      title: `${this.project.arTitle} | مدائن العقارية`,
-      description: this.project.arDescription || `مشروع ${this.project.arTitle} من مدائن العقارية.`,
-      url: `https://madain.sa/projects/${this.project.id}`, // أو أي رابط ديناميك
-        keywords:
-        'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة',
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => this.initSlider());
+      }
     });
-    })
+  }
+
+  private updateMeta(): void {
+    const p = this.project;
+    if (!p) return;
+
+    const isAr = this.lang !== 'en';
+    const slug = toSlug(p.enTitle) || 'project';
+    const url = `https://madain.sa/${slug}/${p.id}`;
+    const title = isAr ? p.arTitle : p.enTitle;
+    const description = isAr
+      ? (p.arDescription || `مشروع ${p.arTitle} من مدائن العقارية.`)
+      : (p.enDescription || `${p.enTitle} project by Madain Real Estate.`);
+    const image = p.interfaceImagePath ? this.url + p.interfaceImagePath : undefined;
+    const locationName = isAr ? p.arLocationName : p.enLocationName;
+
+    this.meta.updateTags({
+      title,
+      description,
+      url,
+      image,
+      keywords: isAr
+        ? `${p.arTitle}, عقارات ${locationName}, شقق تمليك ${locationName}, مدائن العقارية`
+        : `${p.enTitle}, real estate ${locationName}, freehold apartments ${locationName}, Madain Real Estate`,
+    });
+
+    this.meta.setJsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'RealEstateListing',
+      name: isAr ? p.arTitle : p.enTitle,
+      description,
+      url,
+      ...(image ? { image } : {}),
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: locationName,
+        addressCountry: 'SA',
+      },
+      ...(p.latitude && p.longitude ? {
+        geo: { '@type': 'GeoCoordinates', latitude: p.latitude, longitude: p.longitude },
+      } : {}),
+    }, 'project-jsonld');
+
+    this.meta.setJsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: isAr ? 'الرئيسية' : 'Home', item: 'https://madain.sa/' },
+        { '@type': 'ListItem', position: 2, name: isAr ? 'مشاريعنا' : 'Projects', item: 'https://madain.sa/projects' },
+        { '@type': 'ListItem', position: 3, name: isAr ? p.arTitle : p.enTitle, item: url },
+      ],
+    }, 'breadcrumb-jsonld');
   }
 
   getSoldUnit() {
@@ -103,37 +150,40 @@ export class ProjectDetilsComponent {
       this.countSoldUnit.push({ id: b.id, sold: s })
     })
   }
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const swiper = new Swiper('.mySwiper', {
-      spaceBetween: 20,
-      breakpoints: {
-        1200: {
-          slidesPerView: 3
-        },
-        768: {
-          slidesPerView: 2
-        },
-        578: {
-          slidesPerView: 1
-        }
-      },
+  initSlider(): void {
+    this.mainSwiper?.destroy(true, true);
+
+    this.mainSwiper = new Swiper('.mySwiper', {
+      modules: [Navigation, Autoplay],
+      slidesPerView: 1,
       loop: true,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true,
-        dynamicMainBullets: 1,
-      },
-      autoplay: {
-        delay: 2000
-      },
-      speed: 500,
+      speed: 600,
+      autoplay: { delay: 3500, disableOnInteraction: false },
+      on: {
+        slideChange: () => {
+          this.activeThumbIndex = this.mainSwiper?.realIndex ?? 0;
+          this.scrollThumbIntoView(this.activeThumbIndex);
+        }
+      }
     });
+  }
+
+  goToSlide(index: number): void {
+    this.mainSwiper?.slideToLoop(index);
+    this.activeThumbIndex = index;
+  }
+
+  private scrollThumbIntoView(index: number): void {
+    const strip = document.querySelector('.pd-thumbs');
+    const thumb = strip?.querySelectorAll('.pd-thumb')[index] as HTMLElement;
+    if (thumb && strip) {
+      const offset = thumb.offsetLeft - (strip as HTMLElement).clientWidth / 2 + thumb.clientWidth / 2;
+      (strip as HTMLElement).scrollTo({ left: offset, behavior: 'smooth' });
+    }
   }
 
 

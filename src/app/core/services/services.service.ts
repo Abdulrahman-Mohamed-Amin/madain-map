@@ -11,6 +11,7 @@ export class ServicesService {
   constructor(private http:HttpClient) { }
 
   getService(){
-    return this.http.get<Service[]>(this.url)
+    // transferCache: false — الزائر ياخد بيانات حيّة من الـ API بدل نسخة الـ prerender القديمة
+    return this.http.get<Service[]>(this.url, { transferCache: false })
   }
 }

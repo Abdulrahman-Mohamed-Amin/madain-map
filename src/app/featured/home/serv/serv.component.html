@@ -17,7 +17,7 @@
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
           <div class="service-card always-visible">
             <img [src]="url + service.imagePaths[0]"
-              alt="التطوير العقاري" loading="lazy"/>
+              [alt]="lang == 'ar' ? service.arTitle : service.enTitle" loading="lazy"/>
             <div class="overlay">
               <h3>{{lang == "ar" ? service.arTitle :service.enTitle}}</h3>
               <p>

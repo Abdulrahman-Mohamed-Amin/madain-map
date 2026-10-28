@@ -48,16 +48,27 @@ export class ContactComponent implements OnInit {
   });
 
   constructor(private meta: MetaService, private translate: TranslateService, private _lang: LanguageService) {
-    this.meta.updateTags({
-      title: 'مدائن العقارية | تواصل معنا',
-      description: 'مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية .',
-      url: 'https://madain.sa/contact',
-      keywords: 'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة',
-    });
   }
 
   ngOnInit() {
-    this._lang.currentLang$.subscribe(l => this.lang = l);
+    this._lang.currentLang$.subscribe(l => {
+      this.lang = l;
+      this.updateMeta(l);
+    });
+  }
+
+  private updateMeta(lang: string): void {
+    const isAr = lang === 'ar';
+    this.meta.updateTags({
+      title: isAr ? 'تواصل معنا' : 'Contact Us',
+      description: isAr
+        ? 'تواصل مع شركة مدائن العقارية — أرقام الهاتف والبريد الإلكتروني والعنوان، أو احجز موعدًا للاستفسار عن مشاريعنا وشقق التمليك في جدة ومكة والمدينة المنورة.'
+        : 'Contact Madain Real Estate — phone, email and address, or book a meeting to ask about our projects and freehold apartments in Jeddah, Makkah and Madinah.',
+      url: 'https://madain.sa/contact',
+      keywords: isAr
+        ? 'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة'
+        : 'real estate, Madain Real Estate, freehold apartments Jeddah, villas for sale, residential projects, buy apartments, Jeddah real estate',
+    });
   }
 
   openMeetingModal()  { this.isMeetingOpen = true;  }

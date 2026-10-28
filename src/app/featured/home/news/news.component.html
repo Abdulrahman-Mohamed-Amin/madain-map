@@ -9,16 +9,16 @@
                 <div class="swiper-slide news-card">
                     <div class="news-card__image">
                         @if(n.imagePaths.length > 0) {
-                            <img [src]="url + n.imagePaths[0]" alt="Project Delivery" loading="lazy">
+                            <img [src]="url + n.imagePaths[0]" [alt]="lang == 'ar' ? n.arTitle : n.enTitle" loading="lazy">
                         } @else {
                             <div class="video-player" #videoWrapper>
                                 <video
                                     #videoEl
-                                    [src]="url + n.videoPath"
+                                    [attr.data-src]="url + n.videoPath"
                                     (timeupdate)="onTimeUpdate(videoEl, $index)"
                                     (loadedmetadata)="onMetadata(videoEl, $index)"
                                     (ended)="onEnded($index)"
-                                    preload="metadata"
+                                    preload="none"
                                 ></video>
 
                                 <!-- Overlay play button -->

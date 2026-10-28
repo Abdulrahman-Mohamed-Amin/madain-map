@@ -9,7 +9,7 @@
       @for (part of partners; track $index) {
         <div class="swiper-slide">
           <div class="partner-card">
-            <img [src]="url + part.imagePath" alt="partner" loading="lazy" />
+            <img [src]="url + part.imagePath" [alt]="(lang === 'ar' ? 'شعار شريك مدائن العقارية' : 'Madain Real Estate partner logo') + ' ' + ($index + 1)" loading="lazy" />
           </div>
         </div>
       }
@@ -22,7 +22,7 @@
       @for (part of partners; track $index) {
         <div class="swiper-slide">
           <div class="partner-card">
-            <img [src]="url + part.imagePath" alt="partner" loading="lazy" />
+            <img [src]="url + part.imagePath" [alt]="(lang === 'ar' ? 'شعار شريك مدائن العقارية' : 'Madain Real Estate partner logo') + ' ' + ($index + 1)" loading="lazy" />
           </div>
         </div>
       }

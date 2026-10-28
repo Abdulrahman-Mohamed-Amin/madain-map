@@ -9,21 +9,30 @@
   flex-direction: column;
 }
 
-/* Background + Ken Burns */
-.landing::before {
-  content: '';
+/* ── Slideshow ── */
+.hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url(../../../../assets/hero.jpg);
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 0;
-  will-change: transform;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  will-change: transform, opacity;
   animation: hero-zoom 10s ease-in-out infinite alternate;
 }
 
+.hero-slide--active {
+  opacity: 1;
+}
+
 @keyframes hero-zoom {
-  from { transform: scale(1);    }
+  from { transform: scale(1);   }
   to   { transform: scale(1.2); }
 }
 

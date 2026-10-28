@@ -1,0 +1,264 @@
+<header class="hero">
+  <div class="logo"><img src="assets/logo-blue.png" alt="مدائن العقارية"/></div>
+  <div class="hero-text">
+    <p class="eyebrow">تسجيل الاهتمام</p>
+    <h1 class="title">شراكة الوسطاء</h1>
+
+  </div>
+</header>
+
+<main class="container">
+
+  @if (!submitted) {
+  <form class="form" novalidate (ngSubmit)="submit()">
+
+    <div class="steps" aria-live="polite">
+      <div class="steps-head"><span>الخطوة {{ step + 1 }} من {{ stepCount }}</span></div>
+      <div class="steps-bar"><div class="steps-fill" [style.width]="stepFill"></div></div>
+    </div>
+
+    @if (step === 0) {
+    <section class="bk-section">
+      <h2 class="bk-section-title"><span class="section-no">1</span>المعلومات الشخصية</h2>
+
+      <div class="field" data-field="full_name" [class.invalid]="errors['full_name']">
+        <input class="control" name="full_name" type="text" placeholder="الاسم الكامل *" aria-label="الاسم الكامل" autocomplete="name"
+               [(ngModel)]="form.full_name" (ngModelChange)="clearError('full_name')"/>
+        @if (errors['full_name']) { <span class="error">{{ errors['full_name'] }}</span> }
+      </div>
+
+      <div class="field" data-field="phone" [class.invalid]="errors['phone']">
+        <div class="control phone">
+          <span class="prefix" dir="ltr">+966</span>
+          <span class="sep" aria-hidden="true"></span>
+          <input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="رقم الجوال / الواتساب *" aria-label="رقم الجوال / الواتساب"
+                 [(ngModel)]="form.phone" (ngModelChange)="clearError('phone')"/>
+        </div>
+        @if (errors['phone']) { <span class="error">{{ errors['phone'] }}</span> }
+      </div>
+
+      <div class="field" data-field="email" [class.invalid]="errors['email']">
+        <input class="control" name="email" type="email" placeholder="البريد الإلكتروني *" aria-label="البريد الإلكتروني" autocomplete="email"
+               [(ngModel)]="form.email" (ngModelChange)="clearError('email')"/>
+        @if (errors['email']) { <span class="error">{{ errors['email'] }}</span> }
+      </div>
+
+      <div class="field" data-field="city" [class.invalid]="errors['city']">
+        <input class="control" name="city" type="text" placeholder="المدينة *" aria-label="المدينة" autocomplete="address-level2"
+               [(ngModel)]="form.city" (ngModelChange)="clearError('city')"/>
+        @if (errors['city']) { <span class="error">{{ errors['city'] }}</span> }
+      </div>
+
+      <div class="field" data-field="job_title">
+        <input class="control" name="job_title" type="text" placeholder="المسمى الوظيفي / طبيعة العمل" aria-label="المسمى الوظيفي / طبيعة العمل" autocomplete="organization-title"
+               [(ngModel)]="form.job_title"/>
+      </div>
+
+      <div class="field" data-field="preferred_language">
+        <label class="q" for="f-preferred_language">لغة التواصل المفضلة</label>
+        <select class="control select" id="f-preferred_language" name="preferred_language" [(ngModel)]="form.preferred_language" [class.empty]="!form.preferred_language">
+          <option value="" disabled>اختر…</option>
+          @for (o of preferredLanguages; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+    </section>
+    }
+
+    @if (step === 1) {
+    <section class="bk-section">
+      <h2 class="bk-section-title"><span class="section-no">2</span>الخبرة في المجال العقاري</h2>
+
+      <div class="field" data-field="profile">
+        <label class="q" for="f-profile">ما هو وصفك الأقرب؟</label>
+        <select class="control select" id="f-profile" name="profile" [(ngModel)]="form.profile" [class.empty]="!form.profile">
+          <option value="" disabled>اختر…</option>
+          @for (o of profiles; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+        @if (showOther('profile')) {
+          <input class="control other-input" name="profile_other" type="text" placeholder="يرجى التحديد" aria-label="ما هو وصفك الأقرب؟ — أخرى" [(ngModel)]="form.profile_other"/>
+        }
+      </div>
+
+      <div class="field" data-field="experience_years">
+        <label class="q" for="f-experience_years">عدد سنين الخبرة؟</label>
+        <select class="control select" id="f-experience_years" name="experience_years" [(ngModel)]="form.experience_years" [class.empty]="!form.experience_years">
+          <option value="" disabled>اختر…</option>
+          @for (o of experienceYears; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      <fieldset class="field" data-field="regions">
+        <legend class="q"> المدن أو المناطق التي تعمل فيها ؟</legend>
+        <span class="hint">يمكن اختيار أكثر من خيار.</span>
+        <details class="multi">
+          <summary class="control select"><span class="multi-value" [class.empty]="!form.regions.length">{{ multiLabel('regions') }}</span></summary>
+          <div class="multi-menu">
+            @for (o of regionOptions; track o) {
+              <label class="multi-opt"><input type="checkbox" [checked]="form.regions.includes(o)" (change)="toggleMulti('regions', o, $any($event.target).checked)"/><span>{{ o }}</span></label>
+            }
+          </div>
+        </details>
+        @if (showOther('regions')) {
+          <input class="control other-input" name="regions_other" type="text" placeholder="يرجى التحديد" aria-label="ما هي المدن أو المناطق التي تعمل فيها بشكل أساسي؟ — أخرى" [(ngModel)]="form.regions_other"/>
+        }
+      </fieldset>
+
+      <fieldset class="field" data-field="property_types">
+        <legend class="q">نوع العقارات التي تتعامل معها ؟</legend>
+        <span class="hint">يمكن اختيار أكثر من خيار.</span>
+        <details class="multi">
+          <summary class="control select"><span class="multi-value" [class.empty]="!form.property_types.length">{{ multiLabel('property_types') }}</span></summary>
+          <div class="multi-menu">
+            @for (o of propertyTypeOptions; track o) {
+              <label class="multi-opt"><input type="checkbox" [checked]="form.property_types.includes(o)" (change)="toggleMulti('property_types', o, $any($event.target).checked)"/><span>{{ o }}</span></label>
+            }
+          </div>
+        </details>
+        @if (showOther('property_types')) {
+          <input class="control other-input" name="property_types_other" type="text" placeholder="يرجى التحديد" aria-label="ما نوع العقارات التي تتعامل معها بشكل أساسي؟ — أخرى" [(ngModel)]="form.property_types_other"/>
+        }
+      </fieldset>
+
+      <div class="field" data-field="works_at_company">
+        <label class="q" for="f-works_at_company">هل تعمل حاليًا لدى شركة وساطة أو شركة عقارية؟</label>
+        <select class="control select" id="f-works_at_company" name="works_at_company" [(ngModel)]="form.works_at_company" [class.empty]="!form.works_at_company"
+                (ngModelChange)="onCompanyChange()">
+          <option value="" disabled>اختر…</option>
+          @for (o of yesNo; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      @if (companyYes) {
+      <div class="subgroup">
+        <p class="note">إذا كانت الإجابة نعم:</p>
+        <div class="field" data-field="company_name">
+          <input class="control" name="company_name" type="text" placeholder="اسم الشركة" aria-label="اسم الشركة" autocomplete="organization" [(ngModel)]="form.company_name"/>
+        </div>
+        <div class="field" data-field="cr_number">
+          <input class="control" name="cr_number" type="text" placeholder="رقم السجل التجاري — إن وجد" aria-label="رقم السجل التجاري — إن وجد" inputmode="numeric" [(ngModel)]="form.cr_number"/>
+        </div>
+        <div class="field" data-field="fal_license">
+          <input class="control" name="fal_license" type="text" placeholder="رقم ترخيص فال — إن وجد" aria-label="رقم ترخيص فال — إن وجد" inputmode="numeric" [(ngModel)]="form.fal_license"/>
+        </div>
+        <div class="field" data-field="company_links">
+          <input class="control" name="company_links" type="text" placeholder="الموقع الإلكتروني / حسابات التواصل الاجتماعي للشركة" aria-label="الموقع الإلكتروني / حسابات التواصل الاجتماعي للشركة" [(ngModel)]="form.company_links"/>
+        </div>
+      </div>
+      }
+
+      <p class="note">إذا كنت تعمل بشكل مستقل ولا تملك شركة أو ترخيصًا حاليًا، يمكنك الاستمرار في تعبئة النموذج دون الحاجة لإدخال هذه البيانات.</p>
+    </section>
+    }
+
+    @if (step === 2) {
+    <section class="bk-section">
+      <h2 class="bk-section-title"><span class="section-no">3</span>شبكة العملاء والمبيعات</h2>
+
+      <div class="field" data-field="clients_count">
+        <label class="q" for="f-clients_count">عدد العملاء الذين تتعامل معهم شهريا ؟</label>
+        <select class="control select" id="f-clients_count" name="clients_count" [(ngModel)]="form.clients_count" [class.empty]="!form.clients_count">
+          <option value="" disabled>اختر…</option>
+          @for (o of clientsCounts; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      <div class="field" data-field="monthly_sales">
+        <label class="q" for="f-monthly_sales"> عدد العقارات التي تبيعها عادةً شهريًا؟</label>
+        <select class="control select" id="f-monthly_sales" name="monthly_sales" [(ngModel)]="form.monthly_sales" [class.empty]="!form.monthly_sales">
+          <option value="" disabled>اختر…</option>
+          @for (o of monthlySales; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      <fieldset class="field" data-field="client_segments">
+        <legend class="q"> الفئات الرئيسية لعملائك؟</legend>
+        <span class="hint">يمكن اختيار أكثر من خيار.</span>
+        <details class="multi">
+          <summary class="control select"><span class="multi-value" [class.empty]="!form.client_segments.length">{{ multiLabel('client_segments') }}</span></summary>
+          <div class="multi-menu">
+            @for (o of clientSegmentOptions; track o) {
+              <label class="multi-opt"><input type="checkbox" [checked]="form.client_segments.includes(o)" (change)="toggleMulti('client_segments', o, $any($event.target).checked)"/><span>{{ o }}</span></label>
+            }
+          </div>
+        </details>
+        @if (showOther('client_segments')) {
+          <input class="control other-input" name="client_segments_other" type="text" placeholder="يرجى التحديد" aria-label="ما هي الفئات الرئيسية لعملائك؟ — أخرى" [(ngModel)]="form.client_segments_other"/>
+        }
+      </fieldset>
+
+      <div class="field" data-field="current_developers">
+        <label class="q" for="f-current_developers">ما هي شركات التطوير العقاري التي تتعامل معها حاليًا؟</label>
+        <textarea class="control textarea" id="f-current_developers" name="current_developers" rows="3" placeholder="اكتب إجابتك هنا…" [(ngModel)]="form.current_developers"></textarea>
+      </div>
+    </section>
+    }
+
+    @if (step === 3) {
+    <section class="bk-section">
+      <h2 class="bk-section-title"><span class="section-no">4</span>التسويق والقدرة على البيع</h2>
+
+      <fieldset class="field" data-field="channels">
+        <legend class="q">ما هي القنوات التي تستخدمها عادةً لتسويق العقارات؟</legend>
+        <span class="hint">يمكن اختيار أكثر من خيار.</span>
+        <details class="multi">
+          <summary class="control select"><span class="multi-value" [class.empty]="!form.channels.length">{{ multiLabel('channels') }}</span></summary>
+          <div class="multi-menu">
+            @for (o of channelOptions; track o) {
+              <label class="multi-opt"><input type="checkbox" [checked]="form.channels.includes(o)" (change)="toggleMulti('channels', o, $any($event.target).checked)"/><span>{{ o }}</span></label>
+            }
+          </div>
+        </details>
+        @if (showOther('channels')) {
+          <input class="control other-input" name="channels_other" type="text" placeholder="يرجى التحديد" aria-label="ما هي القنوات التي تستخدمها عادةً لتسويق العقارات؟ — أخرى" [(ngModel)]="form.channels_other"/>
+        }
+      </fieldset>
+
+      <div class="field" data-field="has_client_database">
+        <label class="q" for="f-has_client_database">هل لديك قاعدة بيانات من العملاء تقوم بتسويق العقارات لهم بشكل مستمر؟</label>
+        <select class="control select" id="f-has_client_database" name="has_client_database" [(ngModel)]="form.has_client_database" [class.empty]="!form.has_client_database">
+          <option value="" disabled>اختر…</option>
+          @for (o of yesNo; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      <div class="field" data-field="sales_team">
+        <label class="q" for="f-sales_team">هل لديك فريق مبيعات؟</label>
+        <select class="control select" id="f-sales_team" name="sales_team" [(ngModel)]="form.sales_team" [class.empty]="!form.sales_team">
+          <option value="" disabled>اختر…</option>
+          @for (o of salesTeamOptions; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+
+      <div class="field" data-field="site_visits">
+        <label class="q" for="f-site_visits">هل يمكنك ترتيب زيارات ميدانية للعملاء للمشاريع؟</label>
+        <select class="control select" id="f-site_visits" name="site_visits" [(ngModel)]="form.site_visits" [class.empty]="!form.site_visits">
+          <option value="" disabled>اختر…</option>
+          @for (o of siteVisitOptions; track o) { <option [value]="o">{{ o }}</option> }
+        </select>
+      </div>
+    </section>
+    }
+
+    @if (isLastStep) {
+    <div class="actions">
+      <p class="note">بعد إرسال النموذج، سيقوم فريق مدائن بمراجعة البيانات والتواصل مع الأشخاص المناسبين لاستكمال خطوات التعاون والتسجيل كوسيط معتمد.</p>
+      <button class="btn-submit" type="submit" [disabled]="checking || submitting">
+        {{ checking ? 'جارٍ التحقق…' : submitting ? 'جارٍ الإرسال…' : 'إرسال الطلب' }}
+      </button>
+    </div>
+    }
+
+    <div class="step-nav">
+      @if (step > 0) { <button class="btn-prev" type="button" (click)="prev()">السابق</button> }
+      @if (!isLastStep) { <button class="btn-next" type="button" [disabled]="checking" (click)="next()">{{ checking ? 'جارٍ التحقق…' : 'التالي' }}</button> }
+    </div>
+
+  </form>
+  } @else {
+  <div class="success" role="status">
+    <div class="success-icon" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+    <h2>تم استلام طلبك</h2>
+    <button class="btn-again" type="button" (click)="restart()">إرسال طلب آخر</button>
+  </div>
+  }
+</main>

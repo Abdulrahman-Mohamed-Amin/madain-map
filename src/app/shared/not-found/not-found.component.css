@@ -1,0 +1,44 @@
+.nf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 20px;
+  min-height: 50vh;
+}
+
+.nf__code {
+  font-size: 96px;
+  font-weight: 800;
+  color: var(--blue2, #004aad);
+  line-height: 1;
+}
+
+.nf__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.nf__desc {
+  color: #6b7280;
+  margin-top: 8px;
+  max-width: 480px;
+}
+
+.nf__btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  background: var(--blue2, #004aad);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nf__btn:hover {
+  opacity: 0.9;
+}

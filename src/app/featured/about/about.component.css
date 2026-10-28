@@ -1,198 +1,238 @@
-.about {
-  background: url(../../../assets/hero\ 2.jpg);
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center right;
-}
-.text_header {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-}
-.sec_1 {
-  color: #fff;
+/* ═══════════════════════════════════════════════
+   HERO — صورة خاصة بالسكشن، أوفرلاي يغطي كامل المساحة
+═══════════════════════════════════════════════ */
+.ab-hero {
   position: relative;
-  height: 80vh;
-
-}
-.lay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #0f233096;
-  width: 100%;
-  height: 100%;
-}
-.sec_1 h1 {
-  text-align: center;
-  margin: 35px 0 30px;
-  font-size: 50px;
-}
-.sec_1 p {
-  line-height: 1.8;
-  font-size: 16px;
-}
-.vision-section {
-  padding: 20px 20px;
-}
-.vision-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
-.vision-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 20px;
+  min-height: 80vh;
+  /* NO background-attachment:fixed — مش شغال على iOS ويسبب مشاكل */
+  background: url(../../../assets/hero\ 2.jpg) center / cover no-repeat;
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
-  transition: all .35s ease;
+  flex-direction: column;
+  overflow: hidden;
 }
-.vision-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0, 55, 72, 0.18);
+
+/* يغطي كامل الهيرو من أعلاه لأسفله */
+.ab-hero__ov {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    155deg,
+    rgba(0, 55, 72, 0.93) 30%,
+    rgba(0, 18, 26, 0.82) 100%
+  );
+  z-index: 1;
 }
-.vision-icon {
-  min-width: 50px;
-  height: 50px;
+
+/* الهيدر فوق الأوفرلاي */
+.ab-hero app-header {
+  position: relative;
+  z-index: 10;
+}
+
+.ab-hero__body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 20px 20px 90px;
+}
+
+.ab-hero__body h1 {
+  font-size: clamp(28px, 6vw, 66px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0 0 22px;
+  letter-spacing: -0.5px;
+}
+
+.ab-hero__rule {
+  display: block;
+  width: 68px;
+  height: 4px;
+  border-radius: 99px;
   background: var(--lighit2);
+  margin: 0 auto 26px;
+}
+
+.ab-hero__body p {
+  max-width: 660px;
+  line-height: 2;
+  font-size: 16px;
+  opacity: 0.82;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .ab-hero { min-height: 80vh; }
+}
+
+@media (max-width: 768px) {
+  .ab-hero { min-height: 70svh; }
+  .ab-hero__body h1 { font-size: 28px; }
+  .ab-hero__body p { font-size: 13px; line-height: 1.8; }
+}
+
+/* ═══════════════════════════════════════════════
+   VISION + MISSION — شريط تيل داكن
+═══════════════════════════════════════════════ */
+.ab-vm {
+  background: var(--blue2);
+  padding: 80px 20px;
+}
+
+.ab-vm .container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ab-vm__grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 60px;
+  align-items: start;
+}
+
+/* الخط الفاصل الذهبي */
+.ab-vm__sep {
+  background: rgba(246, 178, 129, 0.25);
+  align-self: stretch;
+}
+
+.ab-vm__card {
+  position: relative;
+  padding: 10px 0;
+}
+
+/* رقم الشبح الخلفي */
+.ab-vm__ghost {
+  position: absolute;
+  top: -14px;
+  right: 0;
+  font-size: 100px;
+  font-weight: 900;
+  color: #fff;
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ab-vm__ic {
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--lighit2);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 22px;
+  background: rgba(246, 178, 129, 0.1);
 }
-.vision-icon i {
-  color: #fff;
+
+.ab-vm__ic i {
+  color: var(--lighit2);
   font-size: 26px;
 }
-.vision-content h2 {
-  font-size: 24px;
+
+.ab-vm__card h3 {
+  font-size: clamp(20px, 2.5vw, 28px);
   font-weight: 800;
-  color: #003748;
-  margin-bottom: 12px;
+  color: #fff;
+  margin: 0 0 14px;
 }
-.vision-content p {
-  color: #555;
-  line-height: 1.9;
-  font-size: 15.5px;
+
+.ab-vm__card p {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 15px;
+  line-height: 2;
+  margin: 0;
 }
-/* mobile */
-@media (max-width:992px) {
-  .vision-grid {
+
+@media (max-width: 768px) {
+  .ab-vm__grid {
     grid-template-columns: 1fr;
+    gap: 44px 0;
   }
+  .ab-vm__sep { display: none; }
+  .ab-vm { padding: 60px 20px; }
 }
-@media(max-width:991px) {
-  .box {
-    text-align: center;
-  }
-}
-@media(max-width:768px) {
-  .sec_1 h1 {
-    font-size: 30px;
-  }
-  .sec_1 p {
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .sec_1 img {
-    width: 300px;
-  }
-  .text_header p {
-    font-size: 13px;
-    width: 90%;
-    margin: auto;
-  }
-}
-@media(max-width:578px) {
-  .sec_1 {
 
-    height: 100vh;
-
-  }
-  .vision-card {
-    background: #fff;
-    border-radius: 18px;
-    padding: 10px;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
-    transition: all .35s ease;
-  }
-  .vision-card p {
-    font-size: 12px;
-  }
-  .sec_1 p {
-    line-height: 1.6;
-    font-size: 12px;
-  }
-}
-/* الادارة العليا  */
-.team {
-  padding: 80px 16px 90px;
-  background: radial-gradient(1200px 400px at 50% 0%,
-      rgba(0, 87, 115, 0.06),
-      transparent 65%);
+/* ═══════════════════════════════════════════════
+   TEAM
+═══════════════════════════════════════════════ */
+.ab-team {
+  padding: 90px 16px;
   background: #fff;
   text-transform: capitalize;
 }
-.team__container {
+
+.ab-team__wrap {
   max-width: 1180px;
   margin: 0 auto;
 }
-.team__header {
+
+.ab-team__hd {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 55px;
 }
-.team__kicker {
+
+.ab-eyebrow {
   display: inline-block;
-  font-size: 12px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.2em;
   font-weight: 700;
   color: var(--lighit2);
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-.team__title {
-  margin: 0;
-  font-size: clamp(34px, 4vw, 56px);
+
+.ab-team__hd h2 {
+  font-size: clamp(28px, 4vw, 50px);
   font-weight: 700;
   color: var(--blue2);
-  line-height: 1.05;
+  margin: 0;
 }
-.team__subtitle {
-  margin: 18px auto 0;
-  max-width: 720px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.9;
-}
-.team__grid {
+
+.ab-team__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 34px;
+  gap: 30px;
   align-items: stretch;
 }
-.team-card {
-  background: var(--card);
-  border: 1px solid var(--border);
+
+/* ── بطاقة الفريق ── */
+.tc {
+  background: #fff;
+  border: 1px solid rgba(0, 55, 72, 0.08);
   border-radius: 18px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
   padding: 34px 24px 26px;
   text-align: center;
   position: relative;
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.team-card:hover {
+
+.tc:hover {
   transform: translateY(-6px);
-  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.10), 0 6px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.12);
 }
-.team-card__media {
+
+/* بطاقة الرئيس — حافة ذهبية */
+.tc--ceo {
+  border-color: rgba(246, 178, 129, 0.4);
+  box-shadow: 0 8px 30px rgba(206, 140, 91, 0.12);
+}
+
+.tc--ceo:hover {
+  box-shadow: 0 26px 60px rgba(206, 140, 91, 0.22);
+}
+
+.tc__media {
   width: 220px;
   height: 170px;
   margin: 0 auto 28px;
@@ -200,44 +240,30 @@
   display: grid;
   place-items: center;
 }
-.blob {
-  position: absolute;
-  width: 230px;
-  height: 195px;
-  background: linear-gradient(145deg, rgba(246, 178, 129, .45), rgba(206, 140, 91, .18));
-  filter: saturate(0.95);
-  border-radius: 62% 38% 55% 45% / 52% 55% 45% 48%;
-  transform: rotate(-8deg);
-  box-shadow: 0 18px 30px rgba(206, 140, 91, 0.18) inset;
-}
 
 .blob {
   position: absolute;
   width: 230px;
   height: 195px;
-  background: linear-gradient(145deg, rgba(246, 178, 129, .45), rgba(206, 140, 91, .18));
+  background: linear-gradient(145deg, rgba(246, 178, 129, 0.45), rgba(206, 140, 91, 0.18));
   filter: saturate(0.95);
   border-radius: 62% 38% 55% 45% / 52% 55% 45% 48%;
-  transform: rotate(-8deg);
   box-shadow: 0 18px 30px rgba(206, 140, 91, 0.18) inset;
 }
-.blob--a {
-  transform: rotate(-10deg) translateX(-4px);
-}
-.blob--b {
-  transform: rotate(8deg) translateX(6px);
-}
-.blob--c {
-  transform: rotate(-6deg) translateX(4px);
-}
+
+.blob--a { transform: rotate(-10deg) translateX(-4px); }
+.blob--b { transform: rotate(8deg) translateX(6px); }
+.blob--c { transform: rotate(-6deg) translateX(4px); }
+
 .ring {
   position: absolute;
   width: 160px;
   height: 160px;
   border-radius: 999px;
-  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .95), rgba(255, 255, 255, .65));
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
   box-shadow: 0 16px 26px rgba(0, 0, 0, 0.12);
 }
+
 .ring::before {
   content: "";
   position: absolute;
@@ -246,229 +272,247 @@
   border: 3px solid rgba(255, 255, 255, 0.92);
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.06);
 }
+
 .avatar {
   position: relative;
   width: 130px;
   height: 130px;
   border-radius: 999px;
   object-fit: cover;
+  object-position: center top;
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.16);
   transform: translateY(2px);
-  object-fit: cover;
-  object-position: center top;
 }
-.team-card__name {
+
+.tc__name {
   margin: 5px 0 6px;
   font-size: 20px;
   color: var(--blue2);
 }
-.team-card__role {
+
+.tc__role {
   margin: 0;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lighit2);
 }
-.team-card__dash {
+
+.tc__dash {
   display: inline-block;
   width: 44px;
   height: 3px;
   border-radius: 99px;
   margin-top: 12px;
-  background: linear-gradient(90deg, rgba(246, 178, 129, .4), rgba(206, 140, 91, .9));
+  background: linear-gradient(90deg, rgba(246, 178, 129, 0.4), rgba(206, 140, 91, 0.9));
 }
+
 @media (max-width: 980px) {
-  .team__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .ab-team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 620px) {
-  .team {
-    padding: 60px 14px 70px;
-  }
-  .team__grid {
-    grid-template-columns: 1fr;
-  }
-  .team-card__media {
-    width: 210px;
-  }
+
+@media (max-width: 600px) {
+  .ab-team { padding: 60px 14px 70px; }
+  .ab-team__grid { grid-template-columns: 1fr; }
+  .tc__media { width: 210px; }
 }
-/* كلمة رئيس مجلس الادارة  */
-.chairman-section {
-  background: #fff;
+
+/* ═══════════════════════════════════════════════
+   CHAIRMAN — صورة + اقتباس
+═══════════════════════════════════════════════ */
+.ab-ceo {
+  padding: 90px 20px;
+  background: #f3f5f7;
 }
-.container {
-  max-width: 1200px;
-  margin: auto;
+
+.ab-ceo .container {
+  max-width: 1140px;
+  margin: 0 auto;
 }
-.content {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  flex-wrap: wrap;
+
+.ab-ceo__inner {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 70px;
+  align-items: center;
 }
-.text {
-  flex: 1 1 60%;
-  background-color: #fdfdfd;
-  padding: 25px;
-  border-right: 5px solid var(--lighit1);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+.ab-ceo__photo {
+  position: relative;
 }
-.text h2 {
+
+.ab-ceo__photo img {
+  width: 100%;
+  height: 370px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.15);
+  display: block;
+}
+
+.ab-ceo__badge {
+  background: #003748;
+  border-radius: 0 0 20px 20px;
+  padding: 16px 22px;
+}
+
+.ab-ceo__badge h4 {
   color: var(--lighit2);
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 3px;
 }
-.text blockquote {
-  font-size: 13px;
-  color: var(--blue2);
-  line-height: 1.5;
+
+.ab-ceo__badge p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   margin: 0;
 }
-.signature {
-  margin-top: 30px;
-  color: var(--blue1);
+
+/* نص الاقتباس */
+.ab-ceo__text {
+  position: relative;
 }
-.signature strong {
-  font-size: 16px;
+
+.ab-ceo__qmark {
+  display: block;
+  font-size: 150px;
+  line-height: 0.5;
   color: var(--lighit2);
+  opacity: 0.15;
+  font-family: Georgia, serif;
+  margin-bottom: 18px;
+  user-select: none;
 }
-.sec_2 img {
-  border: 10px solid #fff;
-  outline: 1px solid var(--lighit1);
-  margin-bottom: 25px;
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-  height: 400px;
-}
-.sec_2 .box h3 {
-  font-size: 22px;
-  color: var(--lighit1);
-}
-.sec_2 .box p {
-  color: var(--blue2);
-}
-.quit {
-  font-size: 13px;
-  line-height: 1.8;
-  color: #333;
-  padding: 20px;
-}
-.quit h2 {
+
+.ab-ceo__text h2 {
+  font-size: 26px;
+  font-weight: 700;
   color: var(--lighit2);
-  margin-bottom: 30px;
+  margin: 0 0 24px;
 }
-span i {
+
+.ab-ceo__text blockquote {
+  border-right: 4px solid var(--lighit2);
+  padding-right: 26px;
+  margin: 0;
+}
+
+.ab-ceo__text blockquote p {
+  font-size: 15px;
   color: var(--blue2);
-  font-size: 20px;
+  line-height: 2;
+  margin-bottom: 14px;
 }
-.up {
-  top: 0;
-  right: -30px;
-  margin-left: 10px;
+
+@media (max-width: 991px) {
+  .ab-ceo__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .ab-ceo__photo {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .ab-ceo__photo img { height: 300px; }
 }
-.down {
-  margin-right: 10px;
-}
-@media(max-width:991px) {
-  .sec_2 img {
-    height: 300px;
-    width: 50%;
-  }
-}
-@media(max-width:768px) {
-  .sec_2 img {
-    height: 300px;
-    width: 50%;
-  }
-  .quit {
-    padding: 0;
-  }
-}
-@media(max-width:578px) {
-  .sec_2 .box h3 {
-    font-size: 16px;
-  }
-  .sec_2 .box p {
-    font-size: 13px;
-  }
-  .quit h2 {
-    font-size: 17px;
-  }
-  .quit span {
-    font-size: 10px;
-  }
-  .sec_2 img {
-    height: 300px;
-    width: 80%;
-  }
-}
-/* قيمنا  */
-.values-section {
+
+/* ═══════════════════════════════════════════════
+   VALUES
+═══════════════════════════════════════════════ */
+.ab-values {
   padding: 100px 20px;
-  background: #f9fafb;
+  background: #fff;
 }
-.section-header {
+
+.ab-values .container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.ab-values__hd {
   text-align: center;
   margin-bottom: 60px;
 }
-.section-header h2 {
-  font-size: 36px;
+
+.ab-values__hd h2 {
+  font-size: clamp(26px, 4vw, 42px);
   font-weight: 800;
-  color: #003748;
-  margin-bottom: 15px;
+  color: var(--blue2);
+  margin: 0;
 }
-.section-header p {
-  color: #666;
-  font-size: 16px;
-}
-.values-grid {
+
+.ab-values__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 28px;
 }
-.value-box {
-  background: #ffffff;
-  padding: 40px 30px;
-  border-radius: 16px;
-  transition: all 0.35s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+
+.ab-vb {
+  background: #f9fafb;
+  padding: 38px 30px 32px;
+  border-radius: 18px;
+  border-right: 5px solid var(--lighit2);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.value-box:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 55, 72, 0.15);
+
+.ab-vb:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 55, 72, 0.1);
 }
-.value-box .icon {
-  width: 60px;
-  height: 60px;
-  background: var(--lighit2);
-  border-radius: 12px;
+
+/* رقم شبح في الخلفية */
+.ab-vb__n {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  font-size: 60px;
+  font-weight: 900;
+  color: var(--lighit2);
+  opacity: 0.1;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ab-vb__ic {
+  width: 54px;
+  height: 54px;
+  background: rgba(0, 55, 72, 0.07);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
-.value-box .icon i {
-  color: #fff;
+
+.ab-vb__ic i {
+  color: var(--blue2);
   font-size: 22px;
 }
-.value-box h3 {
+
+.ab-vb h3 {
   font-size: 20px;
   font-weight: 700;
-  color: #003748;
-  margin-bottom: 15px;
+  color: var(--blue2);
+  margin-bottom: 12px;
 }
-.value-box p {
-  color: #555;
+
+.ab-vb p {
+  color: #666;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.85;
+  margin: 0;
 }
-/* Responsive */
+
 @media (max-width: 992px) {
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
+  .ab-values__grid { grid-template-columns: 1fr; }
+  .ab-values__hd h2 { font-size: 26px; }
 }

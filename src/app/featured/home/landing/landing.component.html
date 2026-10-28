@@ -1,5 +1,15 @@
 <section class="landing">
 
+  <!-- صور الخلفية المتعاقبة -->
+  <div class="hero-bg">
+    @for(img of heroImages; track $index) {
+      <div class="hero-slide"
+           [class.hero-slide--active]="$index === activeIndex"
+           [style.background-image]="'url(' + img + ')'">
+      </div>
+    }
+  </div>
+
   <div class="l-header"><app-header></app-header></div>
 
   <div class="lay"></div>

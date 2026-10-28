@@ -20,14 +20,6 @@ export class ServicesComponent implements OnInit{
   lang:string = ''
   url = environment.mediaUrl
     constructor(private meta: MetaService , private _service:ServicesService , private _lang:LanguageService ) {
-      this.meta.updateTags({
-        title: 'مدائن العقارية | خدمتنا',
-        description:
-          'مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية .',
-        url: 'https://madain.sa/services',
-        keywords:
-          'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة',
-      });
     }
 
     ngOnInit(): void {
@@ -35,7 +27,22 @@ export class ServicesComponent implements OnInit{
 
       this._lang.currentLang$.subscribe(res =>{
         this.lang  =res
+        this.updateMeta(res)
       })
+    }
+
+    private updateMeta(lang: string): void {
+      const isAr = lang === 'ar';
+      this.meta.updateTags({
+        title: isAr ? 'خدماتنا' : 'Our Services',
+        description: isAr
+          ? 'مدائن العقارية شركة سعودية متخصصة في تطوير وتسويق العقارات السكنية تقدم شقق تمليك حديثة في جدة ومكة بمعايير جودة عالية .'
+          : 'Madain Real Estate is a Saudi company specialized in developing and marketing residential real estate, offering modern freehold apartments in Jeddah and Makkah.',
+        url: 'https://madain.sa/services',
+        keywords: isAr
+          ? 'عقارات, شركة مدائن العقارية, شقق تمليك جدة, فلل للبيع, مشاريع سكنية, شراء شقق, عقارات جدة'
+          : 'real estate, Madain Real Estate, freehold apartments Jeddah, villas for sale, residential projects, buy apartments, Jeddah real estate',
+      });
     }
 
     getServices(){

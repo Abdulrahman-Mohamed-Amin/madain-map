@@ -11,6 +11,7 @@ export class NewsService {
   constructor(private http:HttpClient) { }
 
   getNews(){
-    return this.http.get<News[]>(this.url)
+    // transferCache: false — الزائر ياخد بيانات حيّة من الـ API بدل نسخة الـ prerender القديمة
+    return this.http.get<News[]>(this.url, { transferCache: false })
   }
 }
