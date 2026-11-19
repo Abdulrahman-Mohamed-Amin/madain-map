@@ -5,9 +5,6 @@ import { News } from '../../core/interface/news';
 /** صورة الخبر أو فريم من الفيديو بتاعه (مع أيقونة تشغيل) — بتستخدم في قائمة الأخبار والأخبار المقترحة */
 @Component({
   selector: 'app-news-thumb',
-  // البيانات حيّة من الـ API وممكن تختلف عن نسخة الـ prerender (خبر/مشروع اتضاف أو اتغير بعد الـ build).
-  // من غير ده Angular بيعيد استخدام الـ HTML القديم وبيفضل فيه صور/حالات غلط، فبنرسم الجزء ده من جديد في المتصفح.
-  host: { ngSkipHydration: 'true' },
   standalone: true,
   templateUrl: './news-thumb.component.html',
   styleUrl: './news-thumb.component.css'

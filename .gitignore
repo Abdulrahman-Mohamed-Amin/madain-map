@@ -43,3 +43,6 @@ Thumbs.db
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Build output (built by the deploy pipeline, never committed)
+/docs

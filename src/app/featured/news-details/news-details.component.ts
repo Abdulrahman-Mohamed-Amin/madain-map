@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -69,7 +70,13 @@ export class NewsDetailsComponent implements OnInit, OnDestroy {
         this.news = res;
         this.updateMeta();
       },
-      error: () => this._router.navigate(['/404'], { skipLocationChange: true })
+      error: (err: HttpErrorResponse) => {
+        // الخبر مش موجود: صفحة 404 (بـ status 404 حقيقي من السيرفر).
+        // أي خطأ تاني (الـ API واقع مثلاً) مش معناه إن الخبر مش موجود.
+        if (err.status === 404 || err.status === 400) {
+          this._router.navigate(['/404'], { skipLocationChange: true });
+        }
+      }
     });
   }
 
