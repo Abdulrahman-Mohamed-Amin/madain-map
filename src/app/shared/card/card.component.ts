@@ -13,6 +13,9 @@ import { toSlug } from '../../core/utils/slug.util';
 
 @Component({
   selector: 'app-card',
+  // البيانات حيّة من الـ API وممكن تختلف عن نسخة الـ prerender (خبر/مشروع اتضاف أو اتغير بعد الـ build).
+  // من غير ده Angular بيعيد استخدام الـ HTML القديم وبيفضل فيه صور/حالات غلط، فبنرسم الجزء ده من جديد في المتصفح.
+  host: { ngSkipHydration: 'true' },
   standalone: true,
   imports: [RouterModule, TranslateModule, NgClass, CommonModule],
   templateUrl: './card.component.html',

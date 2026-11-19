@@ -1,16 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import {
-  NavigationCancel,
   NavigationEnd,
-  NavigationError,
-  NavigationStart,
   RouterModule,
   Router,
   Scroll
 } from '@angular/router';
 import * as AOS from 'aos';
-import { filter, skip } from 'rxjs';
+import { filter } from 'rxjs';
 import { LoaderService } from './core/loader.service';
 import { LanguageService } from './core/language.service';
 import { LoaderComponent } from './shared/loader/loader.component';
@@ -37,30 +34,13 @@ export class AppComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
 
     // ── تحميل الصفحة الأولي ────────────────────────────────────
-    // اللودر يبدأ ظاهر تلقائياً في loader.component
-    // نطلب إخفاءه بعد انتهاء مدة minDuration
+    // اللودر بيظهر مرة واحدة بس أول ما الزائر يفتح الموقع —
+    // مش مع التنقل بين الصفحات ولا تغيير اللغة (كان مزعج).
+    // show() هنا بتسجّل وقت البداية، و hide() بتخفيه بعد انتهاء مدة minDuration
+    this.loaderSvc.show();
     this.loaderSvc.hide();
     // شاشة البداية الثابتة من index.html بتتشال بعد ما لودر Angular يكون ظهر (مدة fade-in بتاعه 0.3s)
     setTimeout(() => document.getElementById('boot-loader')?.remove(), 350);
-
-    // ── التنقل بين الصفحات ─────────────────────────────────────
-    this.router.events.subscribe(e => {
-      if (e instanceof NavigationStart) {
-        this.loaderSvc.show();
-      } else if (
-        e instanceof NavigationEnd ||
-        e instanceof NavigationCancel ||
-        e instanceof NavigationError
-      ) {
-        this.loaderSvc.hide();
-      }
-    });
-
-    // ── تغيير اللغة ────────────────────────────────────────────
-    this.langSvc.currentLang$.pipe(skip(1)).subscribe(() => {
-      this.loaderSvc.show(2000);
-      this.loaderSvc.hide();
-    });
 
     // ── AOS ────────────────────────────────────────────────────
     AOS.init({ duration: 1200, once: true });

@@ -35,6 +35,7 @@ const STATIC_ROUTES = [
   { path: '/projects/makkah', priority: '0.8' },
   { path: '/projects/madena', priority: '0.8' },
   { path: '/projects-map', priority: '0.6' },
+  { path: '/news', priority: '0.7' },
   { path: '/contact', priority: '0.6' },
 ];
 
@@ -52,11 +53,27 @@ async function main() {
     return;
   }
 
+  // الأخبار اختيارية: لو الـ API بتاعها وقع نكمّل بالمشاريع بس
+  let news = [];
+  try {
+    const res = await fetch(`${apiUrl}News`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    news = await res.json();
+  } catch (err) {
+    console.warn('[seo] تعذّر الوصول لـ API الأخبار، صفحات الأخبار مش هتتعمل لها prerender:', err.message);
+  }
+
   const today = new Date().toISOString().slice(0, 10);
 
-  const dynamicRoutes = projects
+  const projectRoutes = projects
     .filter(p => p && p.id != null)
     .map(p => `/${toSlug(p.enTitle) || 'project'}/${p.id}`);
+
+  const newsRoutes = news
+    .filter(n => n && n.id != null)
+    .map(n => `/news/${n.id}`);
+
+  const dynamicRoutes = [...projectRoutes, ...newsRoutes];
 
   const prerenderRoutes = [...STATIC_PARAM_ROUTES, ...dynamicRoutes];
   writeFileSync(join(root, 'prerender-routes.txt'), prerenderRoutes.join('\n') + '\n', 'utf8');
@@ -73,7 +90,7 @@ async function main() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlEntries.join('\n')}\n</urlset>\n`;
   writeFileSync(join(root, 'public/sitemap.xml'), xml, 'utf8');
 
-  console.log(`[seo] تم توليد sitemap.xml و prerender-routes.txt — عدد صفحات المشاريع: ${dynamicRoutes.length}`);
+  console.log(`[seo] تم توليد sitemap.xml و prerender-routes.txt — عدد صفحات المشاريع: ${projectRoutes.length}، الأخبار: ${newsRoutes.length}`);
 }
 
 main();

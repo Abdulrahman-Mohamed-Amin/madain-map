@@ -1,0 +1,154 @@
+.header {
+  background: var(--blue2);
+}
+
+.nl {
+  background: var(--bg);
+  padding: 50px 0 80px;
+}
+
+.nl__container {
+  max-width: 1050px;
+}
+
+.nl__title {
+  margin: 0;
+  font-size: clamp(24px, 2.2vw, 36px);
+  font-weight: 900;
+  color: var(--blue2);
+  letter-spacing: 1px;
+}
+
+/* كل خبر: الصورة في البداية (يمين في العربي) والكلام جنبها */
+.nl-item {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+  padding: 14px;
+  margin-bottom: 26px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0, 55, 72, .09);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+
+.nl-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0, 55, 72, .14);
+}
+
+.nl-item__media {
+  flex: 0 0 38%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+}
+
+.nl-item:hover .nl-item__media ::ng-deep img {
+  transform: scale(1.05);
+}
+
+.nl-item__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 4px;
+  text-align: start;
+}
+
+.nl-item__title {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.nl-item__title a {
+  color: var(--blue2);
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.nl-item__title a:hover {
+  color: var(--lighit2);
+}
+
+.nl-item__desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nl-item__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: var(--lighit2);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, gap .3s;
+}
+
+.nl-item__more:hover {
+  border-color: var(--lighit2);
+  gap: 12px;
+}
+
+/* Skeleton */
+.sk {
+  background: linear-gradient(90deg, #eef1f3 25%, #f6f8f9 50%, #eef1f3 75%);
+  background-size: 200% 100%;
+  animation: sk 1.2s infinite;
+  border-radius: 10px;
+}
+
+.sk--title { height: 26px; width: 70%; }
+.sk--line { height: 14px; }
+.sk--line.short { width: 55%; }
+
+@keyframes sk {
+  to { background-position: -200% 0; }
+}
+
+/* الموبايل: الصورة فوق والكلام تحتها */
+@media (max-width: 768px) {
+  .nl-item {
+    flex-direction: column;
+    gap: 14px;
+    padding: 10px;
+  }
+
+  .nl-item__media {
+    flex: none;
+    width: 100%;
+  }
+
+  .nl-item__body {
+    padding: 0 8px 10px;
+    gap: 8px;
+  }
+
+  .nl-item__title {
+    font-size: 16px;
+  }
+
+  .nl-item__desc {
+    font-size: 14px;
+  }
+
+  .nl-item__more {
+    font-size: 13px;
+  }
+}

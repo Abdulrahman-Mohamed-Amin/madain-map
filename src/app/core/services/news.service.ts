@@ -14,4 +14,8 @@ export class NewsService {
     // transferCache: false — الزائر ياخد بيانات حيّة من الـ API بدل نسخة الـ prerender القديمة
     return this.http.get<News[]>(this.url, { transferCache: false })
   }
+
+  getNewsById(id: number) {
+    return this.http.get<News>(this.url + '/' + id, { transferCache: false })
+  }
 }

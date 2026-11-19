@@ -1,0 +1,10 @@
+@if (news.imagePaths.length > 0) {
+<img [src]="url + news.imagePaths[0]" [alt]="alt" loading="lazy">
+} @else if (news.videoPath) {
+<!-- #t=2 بيخلي المتصفح يعرض فريم من الثانية التانية بدل شاشة سودا -->
+<video [src]="url + news.videoPath + '#t=2'" [class.is-portrait]="portrait" #v (loadedmetadata)="onMetadata(v)"
+    preload="metadata" muted playsinline aria-hidden="true"></video>
+<span class="play">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
+</span>
+}

@@ -1,0 +1,292 @@
+.header {
+  background: var(--blue2);
+}
+
+.nd {
+  background: var(--bg);
+  padding: 40px 0 80px;
+}
+
+.nd__container {
+  max-width: 900px;
+}
+
+.nd__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--blue1);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color .3s, gap .3s;
+}
+
+.nd__back:hover {
+  color: var(--lighit2);
+  gap: 12px;
+}
+
+.nd__head {
+  margin-bottom: 24px;
+}
+
+.nd__title {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--blue2);
+  margin: 0;
+}
+
+.nd__media {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+.nd__media img,
+.nd__media video {
+  display: block;
+  width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  background: #f3f5f6;
+}
+
+/* الفيديو (حتى لو طولي من الموبايل) يتعرض كامل على خلفية غامقة */
+.nd__media video {
+  max-height: 80vh;
+  background: #000;
+}
+
+.nd__thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.nd__thumb {
+  flex: 0 0 96px;
+  height: 72px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  opacity: .65;
+  transition: opacity .3s, border-color .3s;
+}
+
+.nd__thumb.active,
+.nd__thumb:hover {
+  opacity: 1;
+  border-color: var(--lighit2);
+}
+
+.nd__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nd__body {
+  margin-top: 32px;
+  font-size: 17px;
+  line-height: 2;
+  color: var(--text);
+  /* يحافظ على السطور والفقرات زي ما اتكتبت في لوحة التحكم */
+  white-space: pre-line;
+}
+
+/* أخبار أخرى: عمودين بالنص — "من آخر الأخبار" في البداية (يمين بالعربي) والخبرين في النهاية */
+.nd-related {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.nd-promo {
+  color: var(--blue2);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: start;
+}
+
+/* نفس المربعات التلاتة اللي تحت عناوين الأقسام */
+.nd-promo__squares {
+  width: 8px;
+  height: 8px;
+  margin-inline-start: 18px;
+  border-radius: 2px;
+  background: var(--lighit2);
+  box-shadow: 18px 0 0 var(--lighit1), -18px 0 0 var(--lighit1);
+}
+
+.nd-promo__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.nd-promo__desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.nd-promo__btn {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 24px;
+  border-radius: 10px;
+  background: var(--lighit2);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .3s, gap .3s;
+}
+
+.nd-promo__btn:hover {
+  background: var(--lighit1);
+  color: var(--blue2);
+  gap: 14px;
+}
+
+.nd-related__list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* كل خبر: الصورة في البداية (يمين بالعربي) والعنوان جنبها */
+.nd-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0, 55, 72, .09);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.nd-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 55, 72, .14);
+}
+
+.nd-card__media {
+  flex: 0 0 42%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+}
+
+.nd-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: start;
+}
+
+.nd-card__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nd-card__title a {
+  color: var(--blue2);
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.nd-card__title a:hover {
+  color: var(--lighit2);
+}
+
+.nd-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lighit2);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, gap .3s;
+}
+
+.nd-card__more:hover {
+  border-color: var(--lighit2);
+  gap: 12px;
+}
+
+/* التابلت والموبايل: الاتنين تحت بعض */
+@media (max-width: 768px) {
+  .nd-related {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .nd-promo {
+    padding: 0 4px;
+  }
+
+  .nd-promo__title {
+    font-size: 22px;
+  }
+}
+
+/* Skeleton وقت التحميل */
+.sk {
+  background: linear-gradient(90deg, #eef1f3 25%, #f6f8f9 50%, #eef1f3 75%);
+  background-size: 200% 100%;
+  animation: sk 1.2s infinite;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.sk--title { height: 40px; width: 70%; }
+.sk--media { aspect-ratio: 16 / 9; border-radius: 18px; margin-bottom: 28px; }
+.sk--line { height: 16px; }
+.sk--line.short { width: 60%; }
+
+@keyframes sk {
+  to { background-position: -200% 0; }
+}
+
+@media (max-width: 578px) {
+  .nd { padding: 28px 0 60px; }
+  .nd__body { font-size: 16px; }
+  .nd-related { margin-top: 44px; padding-top: 28px; }
+  .nd-promo__desc { font-size: 14px; }
+  .nd-card__title { font-size: 14px; -webkit-line-clamp: 2; }
+  .nd-card__more { font-size: 13px; }
+}

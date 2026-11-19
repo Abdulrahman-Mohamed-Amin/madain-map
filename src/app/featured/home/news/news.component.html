@@ -9,14 +9,21 @@
                 <div class="swiper-slide news-card">
                     <div class="news-card__image">
                         @if(n.imagePaths.length > 0) {
-                            <img [src]="url + n.imagePaths[0]" [alt]="lang == 'ar' ? n.arTitle : n.enTitle" loading="lazy">
+                            <a [routerLink]="['/news', n.id]">
+                                <img [src]="url + n.imagePaths[0]" [alt]="lang == 'ar' ? n.arTitle : n.enTitle" loading="lazy">
+                            </a>
                         } @else {
-                            <div class="video-player" #videoWrapper>
+                            <div class="video-player" #videoWrapper [class.is-portrait]="videoStates[$index]?.portrait">
+                                <!-- خلفية مموّهة من نفس الفيديو للفيديوهات الطولية (موبايل) -->
+                                <canvas #bgCanvas class="video-bg"></canvas>
                                 <video
                                     #videoEl
                                     [attr.data-src]="url + n.videoPath"
-                                    (timeupdate)="onTimeUpdate(videoEl, $index)"
+                                    (timeupdate)="onTimeUpdate(videoEl, $index); drawBackdrop(videoEl, bgCanvas, $index)"
                                     (loadedmetadata)="onMetadata(videoEl, $index)"
+                                    (loadeddata)="drawBackdrop(videoEl, bgCanvas, $index)"
+                                    (seeked)="drawBackdrop(videoEl, bgCanvas, $index)"
+                                    (canplay)="drawBackdrop(videoEl, bgCanvas, $index)"
                                     (ended)="onEnded($index)"
                                     preload="none"
                                 ></video>
@@ -84,13 +91,14 @@
                             </div>
                         }
                     </div>
-                    <div class="news-card__content">
+                    <div class="news-card__content" [attr.dir]="lang == 'ar' ? 'rtl' : 'ltr'">
                         <h3 class="news-card__title">
-                            {{lang == "ar" ? n.arTitle : n.enTitle}}
+                            <a [routerLink]="['/news', n.id]">{{lang == "ar" ? n.arTitle : n.enTitle}}</a>
                         </h3>
-                        <p class="news-card__desc">
-                            {{lang == "ar" ? n.arDescription : n.enDescription}}
-                        </p>
+                        <a class="news-card__more" [routerLink]="['/news', n.id]">
+                            {{'news.read_more' | translate}}
+                            <i class="fas" [class.fa-arrow-left]="lang == 'ar'" [class.fa-arrow-right]="lang != 'ar'"></i>
+                        </a>
                     </div>
                 </div>
                 }

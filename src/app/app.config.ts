@@ -7,8 +7,12 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+// رقم مع كل تحميل للموقع عشان المتصفح ما يستخدمش نسخة قديمة من ملف الترجمة
+// (من غيره المفاتيح الجديدة بتظهر كده: news.related)
+const i18nVersion = Date.now();
+
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', `.json?v=${i18nVersion}`);
 }
 
 export const appConfig: ApplicationConfig = {

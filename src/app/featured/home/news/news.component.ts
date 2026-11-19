@@ -7,6 +7,7 @@ import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { LanguageService } from '../../../core/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
 
 interface VideoState {
   playing: boolean;
@@ -14,12 +15,17 @@ interface VideoState {
   progress: number;
   currentTime: string;
   duration: string;
+  /** فيديو طولي (مصوّر للموبايل) — بيتعرض كامل بدل ما يتقص */
+  portrait?: boolean;
 }
 
 @Component({
   selector: 'app-news',
+  // البيانات حيّة من الـ API وممكن تختلف عن نسخة الـ prerender (خبر/مشروع اتضاف أو اتغير بعد الـ build).
+  // من غير ده Angular بيعيد استخدام الـ HTML القديم وبيفضل فيه صور/حالات غلط، فبنرسم الجزء ده من جديد في المتصفح.
+  host: { ngSkipHydration: 'true' },
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, RouterLink],
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })
@@ -90,11 +96,11 @@ export class NewsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.swiper) this.swiper.destroy(true, true);
     this.swiper = new Swiper('.mySwiper2', {
       modules: [Navigation, Pagination, Autoplay],
-      spaceBetween: 20,
+      spaceBetween: 28,
+      slidesPerView: 1,
       breakpoints: {
-        1200: { slidesPerView: 3 },
-        768:  { slidesPerView: 2 },
-        578:  { slidesPerView: 1 }
+        1200: { slidesPerView: 3, spaceBetween: 32 },
+        768:  { slidesPerView: 2 }
       },
       loop: true,
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
@@ -149,10 +155,30 @@ export class NewsComponent implements OnInit, AfterViewInit, OnDestroy {
   onMetadata(video: HTMLVideoElement, index: number): void {
     this.initVideoState(index);
     this.videoStates[index]!.duration = this.formatTime(video.duration);
+    this.videoStates[index]!.portrait = video.videoHeight > video.videoWidth;
     // seek to 1s to show a video frame instead of black screen
     if (!this.videoStates[index]!.playing) {
       video.currentTime = Math.min(3, video.duration * 0.05);
     }
+  }
+
+  /**
+   * بيرسم فريم من الفيديو الطولي على canvas صغير يتعرض مموّه ورا الفيديو بدل الفراغ الأسود.
+   * بيتنادى من أكتر من event (loadeddata / seeked / timeupdate) لأن ساعات (زي ملفات .MOV)
+   * الفريم بيبقى لسه مش جاهز وقت الـ seeked، فلو رسمنا مرة واحدة بس بتطلع فاضية.
+   */
+  drawBackdrop(video: HTMLVideoElement, canvas: HTMLCanvasElement, index: number): void {
+    const state = this.videoStates[index];
+    // HAVE_CURRENT_DATA (2): فيه فريم حقيقي نقدر نرسمه
+    if (!state?.portrait || !video.videoWidth || video.readyState < 2) return;
+    // دقة قليلة كفاية لأنه هيتموّه، فالرسم المتكرر مش مكلّف
+    const w = Math.round(video.videoWidth / 8);
+    const h = Math.round(video.videoHeight / 8);
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+    canvas.getContext('2d')?.drawImage(video, 0, 0, w, h);
   }
 
   onEnded(index: number): void {

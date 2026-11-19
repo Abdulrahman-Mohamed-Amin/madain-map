@@ -52,19 +52,23 @@
   box-shadow: 0 28px 70px rgba(0, 55, 72, .18);
 }
 
-/* Image */
+/* Media — نسبة ثابتة بدل ارتفاع 410px عشان الصورة ما تتقصّش وتبان متكدسة */
 .news-card__image {
-  height: 410px;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
+  background: #eef2f4;
+  /* إطار أبيض حوالين الصورة */
+  margin: 12px 12px 0;
+  border-radius: 12px;
 }
 
-.news-card__image img {
+.news-card__image a {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform .6s ease;
 }
 
+.news-card__image img,
 .news-card__image video {
   width: 100%;
   height: 100%;
@@ -73,63 +77,56 @@
 }
 
 .news-card:hover img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
-/* Content */
+/* Content: العنوان + رابط قراءة المزيد بس */
 .news-card__content {
-  padding: 20px;
+  padding: 18px 22px 24px;
+  text-align: start;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  position: relative;
 }
 
 .news-card__title {
-  font-size: 17px;
-  font-weight: bold;
-  color: #fff;
-  background: var(--lighit2);
-  padding: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.45;
   margin: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 44px;
 }
 
-.news-card__desc {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #4c6a75;
-  height: 150px;
-  margin-top: 50px;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Button */
-.news-card__btn {
-  margin-top: auto;
+.news-card__title a {
+  color: var(--blue2);
   text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: var(--teal);
-  color: #fff;
-  width: fit-content;
-  font-weight: 600;
-  transition: .3s;
+  transition: color .3s;
 }
 
-.news-card__btn:hover {
-  background: var(--gold);
+.news-card__title a:hover {
+  color: var(--lighit2);
+}
+
+.news-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: var(--lighit2);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, gap .3s;
+}
+
+.news-card__more:hover {
+  border-color: var(--lighit2);
+  gap: 12px;
 }
 
 
@@ -170,6 +167,34 @@
   object-fit: cover;
   display: block;
   cursor: pointer;
+}
+
+/* الخلفية المموّهة — بتظهر بس مع الفيديو الطولي */
+.video-bg {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(18px) brightness(.75);
+  transform: scale(1.2);
+}
+
+.video-player.is-portrait .video-bg {
+  display: block;
+}
+
+/* الفيديو الطولي يتعرض كامل في نص الكارت بدل ما يتقص */
+/* .swiper .swiper-slide قبلها عشان تغلب قاعدة object-fit: cover اللي فوق */
+.swiper .swiper-slide .video-player.is-portrait video {
+  position: relative;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* في وضع الشاشة الكاملة الفيديو العادي كمان يتعرض كامل */
+.swiper .swiper-slide .video-player:fullscreen video {
+  object-fit: contain;
 }
 
 /* Overlay (shown when paused, fades out when playing) */
@@ -306,69 +331,51 @@
 }
 
 
-@media(max-width:991px) {
-
-  .news-card__desc {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #4c6a75;
-    height: 180px;
-    margin-top:40px;
-    -webkit-line-clamp: 7;
-  }
-
-
+/* كل الكروت بنفس الارتفاع داخل الـ slider */
+.mySwiper2 .swiper-slide {
+  height: auto;
 }
 
 @media(max-width:768px) {
+  .news-card__title {
+    font-size: 16px;
+  }
 
-  .news-card__desc {
+  .news-card__more {
     font-size: 14px;
-    line-height: 1.8;
-    color: #4c6a75;
-    height: 150px;
-    margin-top: 30px;
-    -webkit-line-clamp: 6;
   }
-
-  /* قالب المنشور بارتفاع ثابت للجميع في الموبايل */
-  .mySwiper2 .swiper-slide {
-    height: auto;
-  }
-
-  .news-card {
-    height: 100%;
-  }
-
-  .news-card__image {
-    height: 300px;
-    overflow: hidden;
-  }
-
-  .mySwiper2 .swiper-slide .news-card__image img {
-    height: 100%;
-    max-height: none;
-    object-fit: cover;
-  }
-
-  .news-card__image video {
-    aspect-ratio: auto;
-  }
-
 }
+
 @media(max-width:578px) {
-
   .news-card__image {
-    height: 280px;
+    margin: 10px 10px 0;
   }
 
-  .news-card__desc {
+  .news-card__content {
+    padding: 14px 16px 18px;
+    gap: 10px;
+  }
+
+  .news-card__title {
     font-size: 14px;
-    line-height: 1.8;
-    color: #4c6a75;
-    height: 150px;
-    margin-top: 50px;
-    -webkit-line-clamp: 6;
+    line-height: 1.5;
   }
 
+  .news-card__more {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  /* أسهم السلايدر أصغر في الموبايل */
+  .mySwiper2 .swiper-button-next,
+  .mySwiper2 .swiper-button-prev {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+  }
+
+  .mySwiper2 .swiper-button-next::after,
+  .mySwiper2 .swiper-button-prev::after {
+    font-size: 13px;
+  }
 }

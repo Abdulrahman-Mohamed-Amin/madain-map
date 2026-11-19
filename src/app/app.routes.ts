@@ -57,6 +57,17 @@ export const routes: Routes = [
       import("./featured/brokers/brokers.component").then(m => m.BrokersComponent),
   },
   {
+    path: "news",
+    loadComponent: () =>
+      import("./featured/news-list/news-list.component").then(m => m.NewsListComponent),
+  },
+  // لازم يكون قبل ":slug/:id" وإلا هيتفهم كصفحة مشروع
+  {
+    path: "news/:id",
+    loadComponent: () =>
+      import("./featured/news-details/news-details.component").then(m => m.NewsDetailsComponent),
+  },
+  {
     path: ":slug/:id",
     loadComponent: () =>
       import("./featured/project-detils/project-detils.component").then(

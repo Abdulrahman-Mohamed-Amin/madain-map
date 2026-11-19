@@ -139,15 +139,16 @@ body {
   gap: 0;
 }
 
-/* Three small squares above the title */
+/* Three small squares below the title (order: 1 بيحطها بعد الـ h2 في الـ flex) */
 .section-title::before {
   content: '';
   display: block;
+  order: 1;
   width: 8px;
   height: 8px;
   background: var(--lighit2);
   border-radius: 2px;
-  margin-bottom: 14px;
+  margin-top: 14px;
   box-shadow: 18px 0 0 var(--lighit1), -18px 0 0 var(--lighit1);
   opacity: 0.85;
 }
@@ -158,41 +159,6 @@ body {
   font-weight: 900;
   color: var(--blue2);
   letter-spacing: 1px;
-  position: relative;
-  padding-bottom: 22px;
-}
-
-/* Diamond ornament centered below title */
-.section-title h2::before {
-  content: '◆';
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  color: var(--lighit2);
-  line-height: 1;
-}
-
-/* Flanking lines on both sides of the diamond */
-.section-title h2::after {
-  content: '';
-  position: absolute;
-  bottom: 5px;
-  left: 0;
-  right: 0;
-  height: 1.5px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--lighit2) 8%,
-    var(--lighit2) calc(50% - 13px),
-    transparent calc(50% - 9px),
-    transparent calc(50% + 9px),
-    var(--lighit2) calc(50% + 13px),
-    var(--lighit2) 92%,
-    transparent 100%
-  );
 }
 
 

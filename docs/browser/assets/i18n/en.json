@@ -89,6 +89,12 @@
   },
   "news": {
     "title": "Our News",
+    "read_more": "Read more",
+    "back": "All news",
+    "related": "More news",
+    "latest_title": "Latest News",
+    "latest_desc": "Follow the latest from Madain Real Estate: agreements, partnerships, new projects and events.",
+    "view_all": "View all news",
     "sec1": {
       "title": "Madain Signs a Memorandum of Understanding with Saudi Bayut",
       "des1": "In a move that reflects our commitment to developing the digital real estate sector, Madain Real Estate Company has signed a strategic memorandum of understanding with Bayut, the leading real estate marketing platform in Saudi Arabia.",

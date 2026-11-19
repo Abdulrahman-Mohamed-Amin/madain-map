@@ -1,62 +1,90 @@
 .partners-section {
-  padding: 0 0 40px;
+  padding: 0 0 60px;
 }
 
-/* ── Swiper viewport ──────────────────────────────────────── */
-.swiper {
-  overflow: hidden;
-  margin-top: 28px;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-}
-
-/* ── Swiper track ─────────────────────────────────────────── */
-.swiper-wrapper {
+/* شريط واحد بعرض محدود في نص الصفحة، والأسهم على الجنبين */
+.partners-slider {
+  max-width: 1240px;
+  margin: 28px auto 0;
+  padding: 0 16px;
   display: flex;
   align-items: center;
-  transition-timing-function: linear !important;
+  gap: 16px;
 }
 
-/* ── Slide ───────────────────────────────────────────────── */
-.swiper-slide {
-  width: auto;
-  padding: 0 12px;
+.swiper {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 10px 2px;
 }
 
-/* ── Card ────────────────────────────────────────────────── */
+/* انتقال ناعم بين الخطوات: بيبدأ بسرعة وبيهدى في الآخر (ease-out) فيبان أسلس */
+.swiper-wrapper {
+  transition-timing-function: cubic-bezier(.25, .8, .35, 1);
+}
+
+/* ── Card ─────────────────────────────────────────────── */
 .partner-card {
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 18px;
+  padding: 14px 20px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(0, 55, 72, 0.08);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.25s, transform 0.25s;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: box-shadow .3s, transform .3s, border-color .3s;
 }
 
 .partner-card:hover {
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
   transform: translateY(-3px);
+  border-color: rgba(206, 140, 91, .35);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.09);
 }
 
 .partner-card img {
-  width: 110px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
+  max-width: 150px;
   object-fit: contain;
   display: block;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .partner-card img { width: 80px; height: 60px; }
-  .swiper-slide     { padding: 0 8px; }
-  .partner-card     { padding: 8px 12px; }
+/* ── الأسهم: لون هادي (بيج) وتتلوّن بالبني لما الماوس يقف عليها ── */
+.partners-nav {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(206, 140, 91, .25);
+  background: #f7efe8;
+  color: var(--lighit2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .3s, color .3s, border-color .3s;
 }
 
+.partners-nav:hover {
+  background: var(--lighit2);
+  border-color: var(--lighit2);
+  color: #fff;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .partners-slider { gap: 10px; padding: 0 12px; }
+  .partner-card { height: 96px; padding: 10px 14px; }
+  .partners-nav { width: 34px; height: 34px; font-size: 12px; }
+}
+
+/* الموبايل: 3 لوجوهات في الشريط */
 @media (max-width: 480px) {
-  .partner-card img { width: 60px; height: 48px; }
-  .swiper-slide     { padding: 0 6px; }
-  .partner-card     { padding: 6px 10px; border-radius: 8px; }
+  .partners-slider { gap: 6px; padding: 0 8px; }
+  .partner-card { height: 70px; padding: 6px 8px; border-radius: 10px; }
+  .partners-nav { width: 30px; height: 30px; font-size: 11px; }
 }

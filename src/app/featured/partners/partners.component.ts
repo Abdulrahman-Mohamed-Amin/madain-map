@@ -6,21 +6,24 @@ import { LanguageService } from '../../core/language.service';
 
 @Component({
   selector: 'app-partners',
+  // البيانات حيّة من الـ API وممكن تختلف عن نسخة الـ prerender (خبر/مشروع اتضاف أو اتغير بعد الـ build).
+  // من غير ده Angular بيعيد استخدام الـ HTML القديم وبيفضل فيه صور/حالات غلط، فبنرسم الجزء ده من جديد في المتصفح.
+  host: { ngSkipHydration: 'true' },
   standalone: true,
   imports: [],
   templateUrl: './partners.component.html',
   styleUrl: './partners.component.css'
 })
 export class PartnersComponent implements OnInit, OnDestroy {
-  @ViewChild('swiperRef1') swiperRef1!: ElementRef;
-  @ViewChild('swiperRef2') swiperRef2!: ElementRef;
+  @ViewChild('swiperRef') swiperRef!: ElementRef<HTMLElement>;
+  @ViewChild('prevBtn') prevBtn!: ElementRef<HTMLElement>;
+  @ViewChild('nextBtn') nextBtn!: ElementRef<HTMLElement>;
 
   url = environment.mediaUrl;
   lang = '';
   partners: any[] = [];
 
-  private swiper1: any;
-  private swiper2: any;
+  private swiper: any;
 
   constructor(
     private _partner: PartnerService,
@@ -40,44 +43,39 @@ export class PartnersComponent implements OnInit, OnDestroy {
   }
 
   private async initSwiper(): Promise<void> {
-    const [{ default: Swiper }, { Autoplay }] = await Promise.all([
+    const [{ default: Swiper }, { Autoplay, Navigation }] = await Promise.all([
       import('swiper'),
       import('swiper/modules'),
     ]);
 
-    const commonConfig = {
-      modules: [Autoplay],
+    const el = this.swiperRef?.nativeElement;
+    if (!el) return;
+
+    this.swiper?.destroy(true, true);
+    // حركة بخطوات سريعة: وقفة قصيرة (0.5 ثانية) وانتقال ناعم أطول منها عشان الحركة تبان متصلة
+    this.swiper = new Swiper(el, {
+      modules: [Autoplay, Navigation],
       loop: true,
-      slidesPerView: 'auto' as const,
-      spaceBetween: 0,
-      speed: 2000,
+      slidesPerView: 3,
+      spaceBetween: 10,
+      speed: 550,
       autoplay: {
-        delay: 0,
+        delay: 500,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       },
-      allowTouchMove: false,
-    };
-
-    const el1 = this.swiperRef1?.nativeElement;
-    if (el1) {
-      this.swiper1 = new Swiper(el1, commonConfig);
-    }
-
-    const el2 = this.swiperRef2?.nativeElement;
-    if (el2) {
-      this.swiper2 = new Swiper(el2, {
-        ...commonConfig,
-        autoplay: {
-          ...commonConfig.autoplay,
-          reverseDirection: true,
-        },
-      });
-    }
+      navigation: {
+        prevEl: this.prevBtn.nativeElement,
+        nextEl: this.nextBtn.nativeElement,
+      },
+      breakpoints: {
+        576: { slidesPerView: 3, spaceBetween: 20 },
+        992: { slidesPerView: 4, spaceBetween: 24 },
+      },
+    });
   }
 
   ngOnDestroy(): void {
-    this.swiper1?.destroy();
-    this.swiper2?.destroy();
+    this.swiper?.destroy(true, true);
   }
 }

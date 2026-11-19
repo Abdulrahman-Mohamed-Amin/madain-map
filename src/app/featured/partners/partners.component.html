@@ -3,29 +3,28 @@
     <h2>{{ lang === 'ar' ? 'شركاء النجاح' : 'Partners' }}</h2>
   </div>
 
-  <!-- Row 1: يمشي لليسار -->
-  <div class="swiper" #swiperRef1>
-    <div class="swiper-wrapper">
-      @for (part of partners; track $index) {
-        <div class="swiper-slide">
-          <div class="partner-card">
-            <img [src]="url + part.imagePath" [alt]="(lang === 'ar' ? 'شعار شريك مدائن العقارية' : 'Madain Real Estate partner logo') + ' ' + ($index + 1)" loading="lazy" />
-          </div>
-        </div>
-      }
-    </div>
-  </div>
+  <!-- شريط واحد بعرض محدود + أسهم على الجنبين -->
+  <div class="partners-slider">
+    <button type="button" class="partners-nav partners-nav--prev" #prevBtn
+      [attr.aria-label]="lang === 'ar' ? 'السابق' : 'Previous'">
+      <i class="fas" [class.fa-chevron-right]="lang === 'ar'" [class.fa-chevron-left]="lang !== 'ar'"></i>
+    </button>
 
-  <!-- Row 2: يمشي لليمين -->
-  <div class="swiper swiper--row2" #swiperRef2>
-    <div class="swiper-wrapper mt-3">
-      @for (part of partners; track $index) {
-        <div class="swiper-slide">
-          <div class="partner-card">
-            <img [src]="url + part.imagePath" [alt]="(lang === 'ar' ? 'شعار شريك مدائن العقارية' : 'Madain Real Estate partner logo') + ' ' + ($index + 1)" loading="lazy" />
+    <div class="swiper" #swiperRef>
+      <div class="swiper-wrapper">
+        @for (part of partners; track $index) {
+          <div class="swiper-slide">
+            <div class="partner-card">
+              <img [src]="url + part.imagePath" [alt]="(lang === 'ar' ? 'شعار شريك مدائن العقارية' : 'Madain Real Estate partner logo') + ' ' + ($index + 1)" loading="lazy" />
+            </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
+
+    <button type="button" class="partners-nav partners-nav--next" #nextBtn
+      [attr.aria-label]="lang === 'ar' ? 'التالي' : 'Next'">
+      <i class="fas" [class.fa-chevron-left]="lang === 'ar'" [class.fa-chevron-right]="lang !== 'ar'"></i>
+    </button>
   </div>
 </div>

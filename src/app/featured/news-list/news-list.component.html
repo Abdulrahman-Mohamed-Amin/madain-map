@@ -1,0 +1,44 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+
+<section class="nl">
+    <div class="container nl__container">
+        <header class="section-title">
+            <h1 class="nl__title">{{ 'news.title' | translate }}</h1>
+        </header>
+
+        @if (loading) {
+        @for (s of [1, 2, 3]; track s) {
+        <div class="nl-item nl-item--skeleton" aria-hidden="true">
+            <div class="nl-item__media sk"></div>
+            <div class="nl-item__body">
+                <div class="sk sk--title"></div>
+                <div class="sk sk--line"></div>
+                <div class="sk sk--line short"></div>
+            </div>
+        </div>
+        }
+        } @else {
+        @for (n of news; track n.id) {
+        <article class="nl-item" [attr.dir]="lang == 'ar' ? 'rtl' : 'ltr'">
+            <a class="nl-item__media" [routerLink]="['/news', n.id]" [attr.aria-label]="title(n)">
+                <app-news-thumb [news]="n" [alt]="title(n)"></app-news-thumb>
+            </a>
+            <div class="nl-item__body">
+                <h2 class="nl-item__title">
+                    <a [routerLink]="['/news', n.id]">{{ title(n) }}</a>
+                </h2>
+                <p class="nl-item__desc">{{ description(n) }}</p>
+                <a class="nl-item__more" [routerLink]="['/news', n.id]">
+                    {{ 'news.read_more' | translate }}
+                    <i class="fas" [class.fa-arrow-left]="lang == 'ar'" [class.fa-arrow-right]="lang != 'ar'"></i>
+                </a>
+            </div>
+        </article>
+        }
+        }
+    </div>
+</section>
+
+<app-footer></app-footer>
