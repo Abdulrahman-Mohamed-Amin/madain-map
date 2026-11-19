@@ -5,8 +5,9 @@ import { environment } from '../../../environments/environment';
 import { Project } from '../../core/interface/project';
 import { MetaService } from '../../core/meta.service';
 import { ProjectsService } from '../../core/services/projects.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { LanguageService } from '../../core/language.service';
@@ -36,7 +37,7 @@ export class ProjectDetilsComponent {
   activeThumbIndex = 0;
   private mainSwiper?: Swiper;
 
-  constructor(private meta: MetaService, private _project: ProjectsService, private _route: ActivatedRoute, private _lang: LanguageService, @Inject(PLATFORM_ID) private platformId: Object ) {
+  constructor(private meta: MetaService, private _project: ProjectsService, private _route: ActivatedRoute, private _router: Router, private _lang: LanguageService, @Inject(PLATFORM_ID) private platformId: Object ) {
 
   }
 
@@ -67,9 +68,11 @@ export class ProjectDetilsComponent {
 
   getProject() {
     this._project.getProjetById(this.id).pipe(
-      map(project => ({
+      map(project => {
+        if (!project) throw new HttpErrorResponse({ status: 404 });
+        return {
         ...project,
-        buildings: project.buildings.map(building => ({
+        buildings: (project.buildings ?? []).map(building => ({
           ...building,
           units: [...building.units].sort((a, b) => {
             const [aChar, aNum] = a.arTitle.split('-');
@@ -78,17 +81,27 @@ export class ProjectDetilsComponent {
             return aChar.localeCompare(bChar);
           })
         }))
-      }))
-    ).subscribe(res => {
-      this.project = res;
-      this.surfaceArea = Number(res?.surfaceArea).toFixed();
-      this.groundArea = Number(res?.groundArea).toFixed();
-      this.getSoldUnit();
-      this.updateMeta();
+        };
+      })
+    ).subscribe({
+      next: res => {
+        this.project = res;
+        this.surfaceArea = Number(res?.surfaceArea).toFixed();
+        this.groundArea = Number(res?.groundArea).toFixed();
+        this.getSoldUnit();
+        this.updateMeta();
 
-      if (isPlatformBrowser(this.platformId)) {
-        setTimeout(() => this.initSlider());
-      }
+        if (isPlatformBrowser(this.platformId)) {
+          setTimeout(() => this.initSlider());
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        // Project does not exist: show the 404 page (with a real 404 status on the server).
+        // Other errors (API down) are not treated as "not found".
+        if (err.status === 404 || err.status === 400) {
+          this._router.navigate(['/404'], { skipLocationChange: true });
+        }
+      },
     });
   }
 

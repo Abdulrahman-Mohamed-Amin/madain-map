@@ -6,8 +6,8 @@ import { LanguageService } from '../../core/language.service';
 
 @Component({
   selector: 'app-partners',
-  // البيانات حيّة من الـ API وممكن تختلف عن نسخة الـ prerender (خبر/مشروع اتضاف أو اتغير بعد الـ build).
-  // من غير ده Angular بيعيد استخدام الـ HTML القديم وبيفضل فيه صور/حالات غلط، فبنرسم الجزء ده من جديد في المتصفح.
+  // السلايدر (Swiper) بيعدّل الـ DOM بنفسه (بينسخ الشرائح في وضع loop)، فالجزء ده بيترسم من جديد
+  // في المتصفح بدل ما Angular يحاول يربط على HTML السيرفر.
   host: { ngSkipHydration: 'true' },
   standalone: true,
   imports: [],

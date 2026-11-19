@@ -19,8 +19,7 @@ export class ProjectsService {
 
   getProjets(): Observable<Project[]> {
     if (!this.projectsCache$) {
-      // transferCache: false — الزائر ياخد بيانات حيّة من الـ API بدل نسخة الـ prerender القديمة
-      this.projectsCache$ = this.http.get<Project[]>(this.url, { transferCache: false }).pipe(
+      this.projectsCache$ = this.http.get<Project[]>(this.url).pipe(
         shareReplay({ bufferSize: 1, refCount: false })
       );
     }
@@ -30,7 +29,7 @@ export class ProjectsService {
   getProjetById(id: number): Observable<Project> {
     let cached = this.projectByIdCache.get(id);
     if (!cached) {
-      cached = this.http.get<Project>(this.url + '/' + id, { transferCache: false }).pipe(
+      cached = this.http.get<Project>(this.url + '/' + id).pipe(
         shareReplay({ bufferSize: 1, refCount: false })
       );
       this.projectByIdCache.set(id, cached);

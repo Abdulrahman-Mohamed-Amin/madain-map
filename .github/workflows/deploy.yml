@@ -1,20 +1,34 @@
 name: Build and deploy
 
+# push على staging  → يتحدّث new.madain.sa (للتجربة)
+# push على main     → يتحدّث www.madain.sa (الموقع الأساسي)
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
 
 concurrency:
-  group: deploy
-  cancel-in-progress: true
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Pick target site
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "SITE_USER=madain"            >> "$GITHUB_ENV"
+            echo "SITE_DIR=htdocs/www.madain.sa" >> "$GITHUB_ENV"
+            echo "APP_PORT=4001"               >> "$GITHUB_ENV"
+          elif [ "${{ github.ref_name }}" = "staging" ]; then
+            echo "SITE_USER=madain-new"        >> "$GITHUB_ENV"
+            echo "SITE_DIR=htdocs/new.madain.sa" >> "$GITHUB_ENV"
+            echo "APP_PORT=4000"               >> "$GITHUB_ENV"
+          else
+            echo "No deploy target for branch ${{ github.ref_name }}"; exit 1
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -26,11 +40,46 @@ jobs:
 
       - run: npm run build
 
-      - name: Upload to Hostinger over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: docs/browser/
-          server-dir: public_html/
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload new build
+        run: |
+          tar -czf - -C docs . | ssh -i ~/.ssh/deploy_key "$SITE_USER@${{ secrets.SSH_HOST }}" \
+            "rm -rf ~/$SITE_DIR/docs.new && mkdir -p ~/$SITE_DIR/docs.new && tar -xzf - -C ~/$SITE_DIR/docs.new"
+
+      - name: Switch to new build and restart (rolls back if the site does not answer)
+        run: |
+          ssh -i ~/.ssh/deploy_key "$SITE_USER@${{ secrets.SSH_HOST }}" bash -s -- "$SITE_DIR" "$APP_PORT" <<'EOF'
+          set -e
+          SITE_DIR="$1"; APP_PORT="$2"
+          export PATH="$(ls -d "$HOME"/.nvm/versions/node/*/bin | tail -1):$PATH"
+          cd "$HOME/$SITE_DIR"
+
+          rm -rf docs.old docs.failed
+          [ -d docs ] && mv docs docs.old
+          mv docs.new docs
+          pm2 startOrReload ecosystem.config.cjs --update-env
+
+          ok=0
+          for i in $(seq 1 15); do
+            sleep 2
+            if curl -fsS -o /dev/null "http://127.0.0.1:$APP_PORT/"; then ok=1; break; fi
+          done
+
+          if [ "$ok" != 1 ]; then
+            echo "New build is not responding: rolling back to the previous one"
+            if [ -d docs.old ]; then
+              rm -rf docs.failed && mv docs docs.failed && mv docs.old docs
+              pm2 startOrReload ecosystem.config.cjs --update-env
+            fi
+            exit 1
+          fi
+
+          pm2 save
+          echo "Deployed and responding on port $APP_PORT"
+          EOF

@@ -10,7 +10,6 @@ export class PartnerService {
   constructor(private http:HttpClient) { }
 
   get(){
-    // transferCache: false — الزائر ياخد بيانات حيّة من الـ API بدل نسخة الـ prerender القديمة
-    return this.http.get<any>(this.url, { transferCache: false })
+    return this.http.get<any>(this.url)
   }
 }

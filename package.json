@@ -4,10 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prebuild": "node scripts/generate-seo-files.mjs",
     "build": "ng build",
-    "postbuild": "node scripts/postbuild.mjs",
-    "build:pages": "npm run build -- --base-href /madain-map/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
